@@ -1,13 +1,3 @@
-/**
- * This class is meant as a skeleton for the odometer class to be used.
- * 
- * @author Rodrigo Silva
- * @author Dirk Dubois
- * @author Derek Yu
- * @author Karim El-Baba
- * @author Michael Smith
- */
-
 package ca.mcgill.ecse211.odometer;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -39,7 +29,8 @@ public class Odometer extends OdometerData implements Runnable {
    * @param leftMotor
    * @param rightMotor
    * @throws OdometerExceptions
-   */
+   * */
+   
   private Odometer(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
       final double TRACK, final double WHEEL_RAD) throws OdometerExceptions {
     odoData = OdometerData.getOdometerData(); // Allows access to x,y,z
@@ -65,7 +56,7 @@ public class Odometer extends OdometerData implements Runnable {
    * @param rightMotor
    * @return new or existing Odometer Object
    * @throws OdometerExceptions
-   */
+   **/
   public synchronized static Odometer getOdometer(EV3LargeRegulatedMotor leftMotor,
       EV3LargeRegulatedMotor rightMotor, final double TRACK, final double WHEEL_RAD)
       throws OdometerExceptions {
@@ -77,9 +68,7 @@ public class Odometer extends OdometerData implements Runnable {
     }
   }
 
-  /**
-   * This class is meant to return the existing Odometer Object. It is meant to be used only if an
-   * odometer object has been created
+ /**   * This class is meant to return the existing Odometer Object. It is meant to be used only if an/   * odometer object has been created
    * 
    * @return error if no previous odometer exists
    */
@@ -95,7 +84,7 @@ public class Odometer extends OdometerData implements Runnable {
   /**
    * This method is where the logic for the odometer will run. Use the methods provided from the
    * OdometerData class to implement the odometer.
-   */
+ */
   // run method (required for Thread)
   public void run() {
     long updateStart, updateEnd;
@@ -142,5 +131,22 @@ public class Odometer extends OdometerData implements Runnable {
       }
     }
   }
+  
+  /**
+   * Get the left and the right motor
+   * @return
+   */
+  public EV3LargeRegulatedMotor [] getMotors() {
+		return new EV3LargeRegulatedMotor[] {this.leftMotor, this.rightMotor};
+  }
+  
+  /**
+   * Get the wheel radius
+   * @return
+   */
+  public double getWheelRadius(){
+		return this.WHEEL_RAD;
+  }
 
 }
+
