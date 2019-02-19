@@ -12,6 +12,7 @@ import lejos.hardware.sensor.SensorModes;
 import lejos.robotics.SampleProvider;
 import ca.mcgill.ecse211.odometer.Odometer;
 import ca.mcgill.ecse211.odometer.OdometerExceptions;
+import ca.mcgill.ecse211.searchzonelocator.SearchZoneLocator;
 import ca.mcgill.ecse211.localization.*;
 
 public class Lab5 {
@@ -22,6 +23,9 @@ public class Lab5 {
 	private static final TextLCD LCD = LocalEV3.get().getTextLCD();
 	private static final Port US_PORT = LocalEV3.get().getPort("S1");
 	private static final Port CS_PORT = LocalEV3.get().getPort("S4");
+	
+	private static final int LLx = 0, LLy = 0, URx = 0, URy = 0; // SearchZone description
+	private static final int SC = 0; //Starting corner
 	
 	//Robot related parameters
 	public static final double WHEEL_RAD = 2.2;
@@ -64,7 +68,8 @@ public class Lab5 {
 
 		Thread odoDisplayThread = new Thread(odometryDisplay);
 		odoDisplayThread.start();
-
+		
+		// Localization (Ultrasonic and Light)
 		UltrasonicLocalizer ultrasonicLocalizer = new UltrasonicLocalizer(LEFT_MOTOR, RIGHT_MOTOR, usDistance, usData);
 		LightLocalizer lightLocatizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData);
 
@@ -72,8 +77,10 @@ public class Lab5 {
 
 		lightLocatizer.lightLocalize();
 		
+		// Search Zone Locator
+		SearchZoneLocator searchZonelocator = new SearchZoneLocator(SC, LLx, LLy, URx, URy);
+		searchZonelocator.goToSearchZone();
 		
-        
 		while (Button.waitForAnyPress() != Button.ID_ESCAPE);
 		System.exit(0);
 	}

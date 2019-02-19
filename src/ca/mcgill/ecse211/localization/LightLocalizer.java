@@ -9,13 +9,18 @@ import ca.mcgill.ecse211.lab5.*;
 
 public class LightLocalizer {
 
-
   public final static int ROTATION_SPEED = 100;
   private final static int FORWARD_SPEED = 80;
   private final static int ROTATE_SPEED = 100;  
   
   private final static int COLOUR_DIFF = 20;  
   private final static double LIGHT_LOC_DISTANCE = 14.3;
+  
+  private static final double TILE_SIZE = 30.48;
+  
+  private double radius = Lab5.WHEEL_RAD;
+  private double track = Lab5.TRACK;
+  
   
   private Odometer odo;
   private EV3LargeRegulatedMotor leftMotor, rightMotor;
@@ -34,9 +39,8 @@ public class LightLocalizer {
   private float[] csData;
 
   public LightLocalizer(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
-		  SampleProvider csLineDetector, float[] csData) throws OdometerExceptions {
-
-	this.odo = Odometer.getOdometer();
+		  				  SampleProvider csLineDetector, float[] csData) throws OdometerExceptions {
+	odo = Odometer.getOdometer();
 	this.leftMotor = leftMotor;
 	this.rightMotor = rightMotor;
 	this.csLineDetector = csLineDetector;
@@ -44,14 +48,7 @@ public class LightLocalizer {
 	linePosition = new double[4];
 	}
 
-	/**
-	 * This method localizes the robot using the light sensor to precisely move to
-	 * the right location
-	 * @param sample
-	 * @param count
-	 */
   public void lightLocalize() {
-	  
 	  int count = 0;
 	  leftMotor.setSpeed(ROTATION_SPEED);
 	  rightMotor.setSpeed(ROTATION_SPEED);
@@ -70,11 +67,11 @@ public class LightLocalizer {
           linePosition[count] = odo.getXYT()[2];
 		  Sound.beep();
 		  count++;
-			}
 		}
+	  }
 
-		leftMotor.stop(true);
-		rightMotor.stop();
+	  leftMotor.stop(true);
+	  rightMotor.stop();
 
 	  double deltax, deltay, anglex, angley, deltathetaY;
 
@@ -94,17 +91,16 @@ public class LightLocalizer {
       leftMotor.setSpeed(ROTATION_SPEED / 2);
 	  rightMotor.setSpeed(ROTATION_SPEED / 2);
 
-	  
 	  if (odo.getXYT()[2] <= 350 && odo.getXYT()[2] >= 10.0) {
 		Sound.beep();
-		leftMotor.rotate(convertAngle(Lab5.WHEEL_RAD, Lab5.TRACK, -odo.getXYT()[2]+ deltathetaY), true);
-		rightMotor.rotate(-convertAngle(Lab5.WHEEL_RAD, Lab5.TRACK, -odo.getXYT()[2] + deltathetaY), false);
+		leftMotor.rotate(convertAngle(radius, track, -odo.getXYT()[2]+ deltathetaY), true);
+		rightMotor.rotate(-convertAngle(radius, track, -odo.getXYT()[2] + deltathetaY), false);
 		}
 
 		leftMotor.stop(true);
 		rightMotor.stop();
 
-	}
+  }
 
   public void moveCloseOrigin() {
 	  
@@ -125,37 +121,36 @@ public class LightLocalizer {
 	  leftMotor.stop(true);
 	  rightMotor.stop();
 	  
-      leftMotor.rotate(convertDistance(Lab5.WHEEL_RAD, -LIGHT_LOC_DISTANCE), true);
-	  rightMotor.rotate(convertDistance(Lab5.WHEEL_RAD, -LIGHT_LOC_DISTANCE), false);
+      leftMotor.rotate(convertDistance(radius, -LIGHT_LOC_DISTANCE), true);
+	  rightMotor.rotate(convertDistance(radius, -LIGHT_LOC_DISTANCE), false);
 
-	}
+  }
   
   public void travelTo(double x, double y) {
-	  currentx = odo.getXYT()[0];
-	  currenty = odo.getXYT()[1];
+	currentx = odo.getXYT()[0];
+	currenty = odo.getXYT()[1];
 
-	  deltax = x - currentx;
-	  deltay = y - currenty;
+	deltax = x * TILE_SIZE - currentx;
+	deltay = y * TILE_SIZE - currenty;
 	
+	currentTheta = (odo.getXYT()[2]) * Math.PI / 180;
 	
-	  currentTheta = (odo.getXYT()[2]) * Math.PI / 180;
-	  double mTheta = Math.atan2(deltax, deltay) - currentTheta;
+	double mTheta = Math.atan2(deltax, deltay) - currentTheta;
 	
-	  double traveldistance = Math.hypot(deltax, deltay);
+	double traveldistance = Math.hypot(deltax, deltay);
 
 	
-	  turnTo(mTheta);
+	turnTo(mTheta);
 
-	  leftMotor.setSpeed(FORWARD_SPEED);
-	  rightMotor.setSpeed(FORWARD_SPEED);
+	leftMotor.setSpeed(FORWARD_SPEED);
+	rightMotor.setSpeed(FORWARD_SPEED);
 
-	  leftMotor.rotate(convertDistance(Lab5.WHEEL_RAD, traveldistance), true);
-	  rightMotor.rotate(convertDistance(Lab5.WHEEL_RAD, traveldistance), false);
+	leftMotor.rotate(convertDistance(radius, traveldistance), true);
+	rightMotor.rotate(convertDistance(radius, traveldistance), false);
 
-		
-	  leftMotor.stop(true);
-	  rightMotor.stop(true);
-	}
+	leftMotor.stop(true);
+	rightMotor.stop(true);
+  }
 
   public void turnTo(double theta) {
 	
@@ -171,8 +166,8 @@ public class LightLocalizer {
 
 	leftMotor.setSpeed(ROTATE_SPEED);
 	rightMotor.setSpeed(ROTATE_SPEED);
-	leftMotor.rotate(convertAngle(Lab5.WHEEL_RAD, Lab5.TRACK, deltatheta), true);
-	rightMotor.rotate(-convertAngle(Lab5.WHEEL_RAD, Lab5.TRACK, deltatheta), false);
+	leftMotor.rotate(convertAngle(radius, track, deltatheta), true);
+	rightMotor.rotate(-convertAngle(radius, track, deltatheta), false);
 
   }
   

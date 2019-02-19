@@ -13,15 +13,15 @@ import lejos.robotics.SampleProvider;
 public class SearchZoneLocator {
 
 	private Odometer odo;
-	private static int FORWARD_SPEED = 100;
-	private int LLx, LLy, UPx, URy, SC;
+	private static final int FORWARD_SPEED = 100;
+	private int LLx, LLy, URx, URy, SC;
 	
-	public SearchZoneLocator(Odometer odo, int SC, int LLx, int LLy, int UPx, int URy) {
-		this.odo = odo;
+	public SearchZoneLocator(int SC, int LLx, int LLy, int URx, int URy) throws OdometerExceptions {
+		odo = Odometer.getOdometer();
 		this.SC = SC;	
 		this.LLx = LLx;
 		this.LLy = LLy;
-		this.UPx = UPx;
+		this.URx = URx;
 		this.URy = URy;
 	}
 	
@@ -29,30 +29,37 @@ public class SearchZoneLocator {
 	 *  it was placed to begin, the EV3 will make its way to the search zone
 	 * and corrects its angle to follow the convention given in Lab 5.
 	 */
-	
-	private void goToSearchZone(){
+	public void goToSearchZone(){
 		
-		switch(this.SC){ //NOTE, check if splitting LLx LLy is more accurate
+		switch(SC){ //NOTE, check if splitting LLx LLy is more accurate
 			case 0: 
 				//current position is (1,1)
 				//go to LLy, turn 90 RIGHT
 				//go to LLx, turn 90 LEFT
+				odo.setXYT(1.0, 1.0, 0.0);
 				break;
 			case 1: 
 				//current position is (7,1)
 				//go to LLx, then turn 90 RIGHT and reset angle to zero
 				//go to LLy
+				odo.setXYT(7.0, 1.0, 270.0); 
 				break;
 			case 2: 
 				//current position is (7,7)
 				//go to LLy, turn 90 RIGHT
 				//go to LLx, turn 90 RIGHT and reset angle to zero
+				odo.setXYT(7.0, 7.0, 180.0);
 				break;
 			case 3:	
 				//current position is (1,7)
-				//go to LLy, turn 90 LEFT
-				//go to LLx, turn 90 LEFT and reset angle to zero
+				//go to LLx, turn 90 RIGHT
+				//go to LLy, turn 180 RIGHT and reset angle to zero
+				odo.setXYT(1.0, 7.0, 90.0);
 				break;
+		    default:
+		    	System.out.println("Error - invalid button"); // None of the above - abort
+		        System.exit(-1);
+		        break;
 		}
 		
 	}  

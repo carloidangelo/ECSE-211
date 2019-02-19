@@ -8,7 +8,7 @@ import ca.mcgill.ecse211.lab5.*;
 public class UltrasonicLocalizer {
 
 	public static final int ROTATION_SPEED = 100;
-	// Ultrasonic constants
+	
 	public static final double CRITICAL_DISTANCE = 18.00;
 	public static final double NOISE_MARGIN = 2.00;
 
@@ -26,7 +26,7 @@ public class UltrasonicLocalizer {
 
 	public UltrasonicLocalizer(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
 		SampleProvider usDistance, float[] usData) throws OdometerExceptions {
-		this.odo = Odometer.getOdometer();
+		odo = Odometer.getOdometer();
 		this.leftMotor = leftMotor;
 		this.rightMotor = rightMotor;
 		this.usDistance = usDistance;
