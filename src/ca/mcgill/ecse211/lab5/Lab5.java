@@ -71,6 +71,8 @@ public class Lab5 {
 		ultrasonicLocalizer.fallingEdge();
 
 		lightLocatizer.lightLocalize();
+		
+		
         
 		while (Button.waitForAnyPress() != Button.ID_ESCAPE);
 		System.exit(0);

@@ -14,11 +14,7 @@ public class SearchZoneLocator {
 
 	private Odometer odo;
 	private static int FORWARD_SPEED = 100;
-	
-	private int LLx, LLy, UPx, URy,TR,SC;
-	
-	private SampleProvider colorSensor;
-	private float[] colorData;
+	private int LLx, LLy, UPx, URy, SC;
 	
 	public SearchZoneLocator(Odometer odo, int SC, int LLx, int LLy, int UPx, int URy) {
 		this.odo = odo;
