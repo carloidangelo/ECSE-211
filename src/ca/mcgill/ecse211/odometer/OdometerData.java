@@ -4,6 +4,16 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * This class stores and provides thread safe access to the odometer data.
+ * 
+ * @author Rodrigo Silva
+ * @author Dirk Dubois
+ * @author Derek Yu
+ * @author Karim El-Baba
+ * @author Michael Smith
+ */
+
 public class OdometerData {
 
   // Position parameters

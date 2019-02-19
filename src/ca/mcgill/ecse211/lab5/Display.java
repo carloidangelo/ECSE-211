@@ -1,13 +1,15 @@
-package ca.mcgill.ecse211.odometer;
+package ca.mcgill.ecse211.lab5;
 
 import java.text.DecimalFormat;
-
+import ca.mcgill.ecse211.odometer.Odometer;
+import ca.mcgill.ecse211.odometer.OdometerExceptions;
 import lejos.hardware.lcd.TextLCD;
 
 /**
  * This class is used to display the content of the odometer variables (x, y, Theta)
+ *  @author Group 6
  */
-public class OdometryDisplay implements Runnable {
+public class Display implements Runnable {
 
   private Odometer odo;
   private TextLCD lcd;
@@ -21,7 +23,7 @@ public class OdometryDisplay implements Runnable {
    * @param odoData
    * @throws OdometerExceptions 
    */
-  public OdometryDisplay(TextLCD lcd) throws OdometerExceptions {
+  public Display(TextLCD lcd) throws OdometerExceptions {
     odo = Odometer.getOdometer();
     this.lcd = lcd;
   }
@@ -32,7 +34,7 @@ public class OdometryDisplay implements Runnable {
    * @param odoData
    * @throws OdometerExceptions 
    */
-  public OdometryDisplay(TextLCD lcd, long timeout) throws OdometerExceptions {
+  public Display(TextLCD lcd, long timeout) throws OdometerExceptions {
     odo = Odometer.getOdometer();
     this.timeout = timeout;
     this.lcd = lcd;

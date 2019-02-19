@@ -10,13 +10,12 @@ public class Odometer extends OdometerData implements Runnable {
   // Motors and related variables
   private int leftMotorTachoCount;
   private int rightMotorTachoCount;
-  //previous values of motor's tacho count
-  private int leftMotorTachoCountOld;
-  private int rightMotorTachoCountOld;
-  private double Theta;
   private EV3LargeRegulatedMotor leftMotor;
   private EV3LargeRegulatedMotor rightMotor;
 
+  //Variables that help with the implementation of the odometer
+  private double distL, distR, deltaD, deltaT, dX, dY; 
+  
   private final double TRACK;
   private final double WHEEL_RAD;
 
@@ -29,8 +28,7 @@ public class Odometer extends OdometerData implements Runnable {
    * @param leftMotor
    * @param rightMotor
    * @throws OdometerExceptions
-   * */
-   
+   */
   private Odometer(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
       final double TRACK, final double WHEEL_RAD) throws OdometerExceptions {
     odoData = OdometerData.getOdometerData(); // Allows access to x,y,z
@@ -56,7 +54,7 @@ public class Odometer extends OdometerData implements Runnable {
    * @param rightMotor
    * @return new or existing Odometer Object
    * @throws OdometerExceptions
-   **/
+   */
   public synchronized static Odometer getOdometer(EV3LargeRegulatedMotor leftMotor,
       EV3LargeRegulatedMotor rightMotor, final double TRACK, final double WHEEL_RAD)
       throws OdometerExceptions {
@@ -68,7 +66,9 @@ public class Odometer extends OdometerData implements Runnable {
     }
   }
 
- /**   * This class is meant to return the existing Odometer Object. It is meant to be used only if an/   * odometer object has been created
+  /**
+   * This class is meant to return the existing Odometer Object. It is meant to be used only if an
+   * odometer object has been created
    * 
    * @return error if no previous odometer exists
    */
@@ -84,41 +84,29 @@ public class Odometer extends OdometerData implements Runnable {
   /**
    * This method is where the logic for the odometer will run. Use the methods provided from the
    * OdometerData class to implement the odometer.
- */
+   */
   // run method (required for Thread)
   public void run() {
     long updateStart, updateEnd;
 
     while (true) {
       updateStart = System.currentTimeMillis();
-      
-      //get tacho count
+
       leftMotorTachoCount = leftMotor.getTachoCount();
       rightMotorTachoCount = rightMotor.getTachoCount();
       
-      double distL, distR, deltaD, deltaT, dX, dY;
-      //compute wheel displacements
-      distL = Math.PI * WHEEL_RAD * (leftMotorTachoCount - leftMotorTachoCountOld) / 180;
-      distR = Math.PI * WHEEL_RAD * (rightMotorTachoCount - rightMotorTachoCountOld) / 180;
-
-      //getting previous tacho count values
-      leftMotorTachoCountOld = leftMotorTachoCount;
-      rightMotorTachoCountOld = rightMotorTachoCount;
-      
-      //compute vehicle displacement
-      deltaD = 0.5*(distL+distR);
-      
-      //compute change in heading
-      deltaT = ((distL-distR)/TRACK)* 180/Math.PI;
-      
-      //update heading
-      Theta += deltaT;
-      
-      //compute X and Y of displacement
-      dX = deltaD*Math.sin(Theta*Math.PI/180);
-      dY = deltaD*Math.cos(Theta*Math.PI/180);
-      
+      distL = (Math.PI * WHEEL_RAD * (leftMotorTachoCount) / 180.0);     // compute wheel   
+      distR = (Math.PI * WHEEL_RAD * (rightMotorTachoCount) / 180.0);   // displacements   
+      deltaD = 0.5 * (distL + distR);      // compute vehicle displacement   
+      deltaT = ((distL - distR) / TRACK);   // compute change in heading          
+      dX = deltaD * Math.sin((Math.toRadians(this.getXYT()[2]) + deltaT));    // compute X component of displacement   
+      dY = deltaD * Math.cos((Math.toRadians(this.getXYT()[2]) + deltaT));  // compute Y component of displacement
+      deltaT = Math.toDegrees(deltaT);
+ 
       odo.update(dX, dY, deltaT);
+      
+      leftMotor.resetTachoCount();
+      rightMotor.resetTachoCount();
 
       // this ensures that the odometer only runs once every period
       updateEnd = System.currentTimeMillis();
@@ -131,22 +119,5 @@ public class Odometer extends OdometerData implements Runnable {
       }
     }
   }
-  
-  /**
-   * Get the left and the right motor
-   * @return
-   */
-  public EV3LargeRegulatedMotor [] getMotors() {
-		return new EV3LargeRegulatedMotor[] {this.leftMotor, this.rightMotor};
-  }
-  
-  /**
-   * Get the wheel radius
-   * @return
-   */
-  public double getWheelRadius(){
-		return this.WHEEL_RAD;
-  }
 
 }
-
