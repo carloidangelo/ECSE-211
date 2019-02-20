@@ -1,7 +1,7 @@
 package ca.mcgill.ecse211.lab5;
 
 import lejos.hardware.Button;
-
+import lejos.hardware.Sound;
 import lejos.hardware.ev3.LocalEV3;
 import lejos.hardware.lcd.TextLCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -56,31 +56,39 @@ public class Lab5 {
 			// ask the user whether robot should do Rising Edge or Falling Edge
 			LCD.drawString("< Left | Right >", 0, 0);
 			LCD.drawString("       |        ", 0, 1);
-			LCD.drawString("Falling|	    ", 0, 2);
-			LCD.drawString(" Edge  |        ", 0, 3);
+			LCD.drawString(" Field |Color   ", 0, 2);
+			LCD.drawString(" Test  |Class.  ", 0, 3);
 			LCD.drawString("       |        ", 0, 4);
 
 			buttonChoice = Button.waitForAnyPress();
-		} while (buttonChoice != Button.ID_LEFT);
+		} while (buttonChoice != Button.ID_LEFT && buttonChoice != Button.ID_RIGHT);
 
-		Thread odoThread = new Thread(odometer);
-		odoThread.start();
+			if (buttonChoice == Button.ID_LEFT) { // do Field Test
+				
+				Thread odoThread = new Thread(odometer);
+				odoThread.start();
 
-		Thread odoDisplayThread = new Thread(odometryDisplay);
-		odoDisplayThread.start();
-		
-		// Localization (Ultrasonic and Light)
-		UltrasonicLocalizer ultrasonicLocalizer = new UltrasonicLocalizer(LEFT_MOTOR, RIGHT_MOTOR, usDistance, usData);
-		LightLocalizer lightLocatizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData);
+				Thread odoDisplayThread = new Thread(odometryDisplay);
+				odoDisplayThread.start();
+				
+				// Localization (Ultrasonic and Light)
+				UltrasonicLocalizer ultrasonicLocalizer = new UltrasonicLocalizer(LEFT_MOTOR, RIGHT_MOTOR, usDistance, usData);
+				LightLocalizer lightLocatizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData);
 
-		ultrasonicLocalizer.fallingEdge();
+				ultrasonicLocalizer.fallingEdge();
 
-		lightLocatizer.lightLocalize();
-		
-		// Search Zone Locator
-		SearchZoneLocator searchZonelocator = new SearchZoneLocator(SC, LLx, LLy, URx, URy);
-		searchZonelocator.goToSearchZone();
-		
+				lightLocatizer.lightLocalize();
+				
+				// Search Zone Locator
+				SearchZoneLocator searchZonelocator = new SearchZoneLocator(SC, LLx, LLy, URx, URy);
+				searchZonelocator.goToSearchZone();
+				
+				Sound.beep(); // Must BEEP after navigation to search zone is finished
+				
+			} else {
+				// do color classification
+			}
+
 		while (Button.waitForAnyPress() != Button.ID_ESCAPE);
 		System.exit(0);
 	}

@@ -14,6 +14,7 @@ public class SearchZoneLocator {
 
 	private Odometer odo;
 	private static final int FORWARD_SPEED = 100;
+	private static final double TILE_SIZE = 30.48;
 	private int LLx, LLy, URx, URy, SC;
 	
 	public SearchZoneLocator(int SC, int LLx, int LLy, int URx, int URy) throws OdometerExceptions {
@@ -34,27 +35,31 @@ public class SearchZoneLocator {
 		switch(SC){ //NOTE, check if splitting LLx LLy is more accurate
 			case 0: 
 				//current position is (1,1)
+				odo.setXYT(1.0 * TILE_SIZE, 1.0 * TILE_SIZE, 0.0);
+				
 				//go to LLy, turn 90 RIGHT
 				//go to LLx, turn 90 LEFT
-				odo.setXYT(1.0, 1.0, 0.0);
 				break;
 			case 1: 
 				//current position is (7,1)
+				odo.setXYT(7.0 * TILE_SIZE, 1.0 * TILE_SIZE, 270.0);
+				
 				//go to LLx, then turn 90 RIGHT and reset angle to zero
 				//go to LLy
-				odo.setXYT(7.0, 1.0, 270.0); 
 				break;
 			case 2: 
 				//current position is (7,7)
+				odo.setXYT(7.0 * TILE_SIZE, 7.0 * TILE_SIZE, 180.0);
+				
 				//go to LLy, turn 90 RIGHT
-				//go to LLx, turn 90 RIGHT and reset angle to zero
-				odo.setXYT(7.0, 7.0, 180.0);
+				//go to LLx, turn 90 RIGHT and reset angle to zero				
 				break;
 			case 3:	
 				//current position is (1,7)
+				odo.setXYT(1.0 * TILE_SIZE, 7.0 * TILE_SIZE, 90.0);
+				
 				//go to LLx, turn 90 RIGHT
 				//go to LLy, turn 180 RIGHT and reset angle to zero
-				odo.setXYT(1.0, 7.0, 90.0);
 				break;
 		    default:
 		    	System.out.println("Error - invalid button"); // None of the above - abort

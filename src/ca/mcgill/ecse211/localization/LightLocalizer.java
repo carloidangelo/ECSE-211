@@ -21,7 +21,6 @@ public class LightLocalizer {
   private double radius = Lab5.WHEEL_RAD;
   private double track = Lab5.TRACK;
   
-  
   private Odometer odo;
   private EV3LargeRegulatedMotor leftMotor, rightMotor;
  
@@ -29,11 +28,11 @@ public class LightLocalizer {
   private float sample;
   double[] linePosition;
   
-  private double currentx;
-  private double currenty;	
-  private double currentTheta;
-  private double deltax;
-  private double deltay;
+  private double currentX;
+  private double currentY;	
+  private double currentT;
+  private double deltaX;
+  private double deltaY;
   
   private SampleProvider csLineDetector;
   private float[] csData;
@@ -43,9 +42,9 @@ public class LightLocalizer {
 	odo = Odometer.getOdometer();
 	this.leftMotor = leftMotor;
 	this.rightMotor = rightMotor;
+	linePosition = new double[4];
 	this.csLineDetector = csLineDetector;
 	this.csData = csData;
-	linePosition = new double[4];
 	}
 
   public void lightLocalize() {
@@ -73,19 +72,18 @@ public class LightLocalizer {
 	  leftMotor.stop(true);
 	  rightMotor.stop();
 
-	  double deltax, deltay, anglex, angley, deltathetaY;
+	  double deltaX, deltaY, anglex, angley, deltathetaY;
 
-	  
 	  angley = linePosition[3] - linePosition[1];
 	  anglex = linePosition[2] - linePosition[0];
 
-	  deltax = -LIGHT_LOC_DISTANCE * Math.cos(Math.toRadians(angley / 2));
-	  deltay = -LIGHT_LOC_DISTANCE * Math.cos(Math.toRadians(anglex / 2));
+	  deltaX = -LIGHT_LOC_DISTANCE * Math.cos(Math.toRadians(angley / 2));
+	  deltaY = -LIGHT_LOC_DISTANCE * Math.cos(Math.toRadians(anglex / 2));
 	  
 	  deltathetaY = (Math.PI / 2.0) - linePosition[3] + Math.PI + (angley / 2.0);
 
 	  
-	  odo.setXYT(deltax, deltay, odo.getXYT()[2]);
+	  odo.setXYT(deltaX, deltaY, odo.getXYT()[2]);
 	  travelTo(0.0, 0.0);
 
       leftMotor.setSpeed(ROTATION_SPEED / 2);
@@ -127,17 +125,17 @@ public class LightLocalizer {
   }
   
   public void travelTo(double x, double y) {
-	currentx = odo.getXYT()[0];
-	currenty = odo.getXYT()[1];
+	currentX = odo.getXYT()[0];
+	currentY = odo.getXYT()[1];
 
-	deltax = x * TILE_SIZE - currentx;
-	deltay = y * TILE_SIZE - currenty;
+	deltaX = x * TILE_SIZE - currentX;
+	deltaY = y * TILE_SIZE - currentY;
 	
-	currentTheta = (odo.getXYT()[2]) * Math.PI / 180;
+	currentT = (odo.getXYT()[2]) * Math.PI / 180;
 	
-	double mTheta = Math.atan2(deltax, deltay) - currentTheta;
+	double mTheta = Math.atan2(deltaX, deltaY) - currentT;
 	
-	double traveldistance = Math.hypot(deltax, deltay);
+	double traveldistance = Math.hypot(deltaX, deltaY);
 
 	
 	turnTo(mTheta);
