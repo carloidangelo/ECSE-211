@@ -46,13 +46,12 @@ public class LightLocalizer {
 	this.csData = csData;
 	}
 
-  public void lightLocalize() {
-	  int count = 0;
-	  leftMotor.setSpeed(ROTATION_SPEED);
+  public void lightLocalize(double pointX, double pointY) {
+	  
+      leftMotor.setSpeed(ROTATION_SPEED);
 	  rightMotor.setSpeed(ROTATION_SPEED);
 	  
-	  moveCloseOrigin();
-
+	  int count = 0;
 	  firstReading = readLineDarkness();
 	  while (count < 4) {
 
@@ -79,28 +78,27 @@ public class LightLocalizer {
 	  deltaX = -LIGHT_LOC_DISTANCE * Math.cos(Math.toRadians(angleY / 2));
 	  deltaY = -LIGHT_LOC_DISTANCE * Math.cos(Math.toRadians(angleX / 2));
 	  
-	  deltaA = (Math.PI / 2.0) - linePosition[3] + Math.PI + (angleY / 2.0);
+	  deltaA = 90 - linePosition[3] + 180 + (angleY / 2.0);
 
-	  
-	  odo.setXYT(deltaX, deltaY, odo.getXYT()[2]);
-	  travelTo(0.0, 0.0);
+	  odo.setXYT(pointX - deltaX, pointY - deltaY, odo.getXYT()[2]);
+	  travelTo(pointX, pointY);
 
       leftMotor.setSpeed(ROTATION_SPEED / 2);
 	  rightMotor.setSpeed(ROTATION_SPEED / 2);
 
 	  if (odo.getXYT()[2] <= 350 && odo.getXYT()[2] >= 10.0) {
-		Sound.beep();
-		leftMotor.rotate(convertAngle(radius, track, -odo.getXYT()[2]+ deltaA), true);
+		leftMotor.rotate(convertAngle(radius, track, -odo.getXYT()[2] + deltaA), true);
 		rightMotor.rotate(-convertAngle(radius, track, -odo.getXYT()[2] + deltaA), false);
-		}
-
-		leftMotor.stop(true);
-		rightMotor.stop();
+	  }
+	  leftMotor.stop(true);
+	  rightMotor.stop();
 
   }
 
   public void moveCloseOrigin() {
-	  
+	 
+	leftMotor.setSpeed(ROTATION_SPEED);
+	rightMotor.setSpeed(ROTATION_SPEED);
 	firstReading = readLineDarkness();
 	
     turnTo(45);
@@ -190,6 +188,6 @@ public class LightLocalizer {
   private float readLineDarkness() {
 	  csLineDetector.fetchSample(csData, 0);
 	  return csData[0] * 1000;
-	}
+  }
 	
 }

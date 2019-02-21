@@ -79,10 +79,11 @@ public class Lab5 {
 
 				ultrasonicLocalizer.fallingEdge();
 
-				lightLocatizer.lightLocalize();
+				lightLocatizer.moveCloseOrigin();
+				lightLocatizer.lightLocalize(0,0);
 				
 				// Search Zone Locator
-				SearchZoneLocator searchZonelocator = new SearchZoneLocator(LEFT_MOTOR, RIGHT_MOTOR,SC, LLx, LLy, URx, URy);
+				SearchZoneLocator searchZonelocator = new SearchZoneLocator(SC, LLx, LLy, lightLocatizer);
 				searchZonelocator.goToSearchZone();
 				
 				Sound.beep(); // Must BEEP after navigation to search zone is finished
