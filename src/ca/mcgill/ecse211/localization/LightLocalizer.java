@@ -10,8 +10,7 @@ import ca.mcgill.ecse211.lab5.*;
 public class LightLocalizer {
 
   public final static int ROTATION_SPEED = 100;
-  private final static int FORWARD_SPEED = 80;
-  private final static int ROTATE_SPEED = 100;  
+  private final static int FORWARD_SPEED = 80; 
   
   private final static int COLOUR_DIFF = 20;  
   private final static double LIGHT_LOC_DISTANCE = 14.3;
@@ -30,7 +29,7 @@ public class LightLocalizer {
   
   private double currentX;
   private double currentY;	
-  private double currentT;
+  private double currentA;
   private double deltaX;
   private double deltaY;
   
@@ -72,15 +71,15 @@ public class LightLocalizer {
 	  leftMotor.stop(true);
 	  rightMotor.stop();
 
-	  double deltaX, deltaY, anglex, angley, deltathetaY;
+	  double deltaX, deltaY, angleX, angleY, deltaA;
 
-	  angley = linePosition[3] - linePosition[1];
-	  anglex = linePosition[2] - linePosition[0];
+	  angleY = linePosition[3] - linePosition[1];
+	  angleX = linePosition[2] - linePosition[0];
 
-	  deltaX = -LIGHT_LOC_DISTANCE * Math.cos(Math.toRadians(angley / 2));
-	  deltaY = -LIGHT_LOC_DISTANCE * Math.cos(Math.toRadians(anglex / 2));
+	  deltaX = -LIGHT_LOC_DISTANCE * Math.cos(Math.toRadians(angleY / 2));
+	  deltaY = -LIGHT_LOC_DISTANCE * Math.cos(Math.toRadians(angleX / 2));
 	  
-	  deltathetaY = (Math.PI / 2.0) - linePosition[3] + Math.PI + (angley / 2.0);
+	  deltaA = (Math.PI / 2.0) - linePosition[3] + Math.PI + (angleY / 2.0);
 
 	  
 	  odo.setXYT(deltaX, deltaY, odo.getXYT()[2]);
@@ -91,8 +90,8 @@ public class LightLocalizer {
 
 	  if (odo.getXYT()[2] <= 350 && odo.getXYT()[2] >= 10.0) {
 		Sound.beep();
-		leftMotor.rotate(convertAngle(radius, track, -odo.getXYT()[2]+ deltathetaY), true);
-		rightMotor.rotate(-convertAngle(radius, track, -odo.getXYT()[2] + deltathetaY), false);
+		leftMotor.rotate(convertAngle(radius, track, -odo.getXYT()[2]+ deltaA), true);
+		rightMotor.rotate(-convertAngle(radius, track, -odo.getXYT()[2] + deltaA), false);
 		}
 
 		leftMotor.stop(true);
@@ -103,10 +102,8 @@ public class LightLocalizer {
   public void moveCloseOrigin() {
 	  
 	firstReading = readLineDarkness();
-    turnTo(Math.PI / 4);
-
-	leftMotor.setSpeed(ROTATION_SPEED);
-	rightMotor.setSpeed(ROTATION_SPEED);
+	
+    turnTo(45);
 
 	sample = readLineDarkness();
 
@@ -131,48 +128,39 @@ public class LightLocalizer {
 	deltaX = x * TILE_SIZE - currentX;
 	deltaY = y * TILE_SIZE - currentY;
 	
-	currentT = (odo.getXYT()[2]) * Math.PI / 180;
+	currentA = odo.getXYT()[2];
 	
-	double mTheta = Math.atan2(deltaX, deltaY) - currentT;
+	// find minimum angle
+	double minAng = - currentA + Math.atan2(deltaX, deltaY) * 180 / Math.PI;
 	
-	double traveldistance = Math.hypot(deltaX, deltaY);
-
+	// special cases so that robot does not turn at maximum angle
+	if (minAng < 0 && (Math.abs(minAng) >= 180)) {
+		minAng += 360;
+	}else if (minAng > 0 && (Math.abs(minAng) >= 180)){
+		minAng -= 360;
+	}
+	turnTo(minAng);
 	
-	turnTo(mTheta);
+	double distance = Math.hypot(deltaX, deltaY);
 
 	leftMotor.setSpeed(FORWARD_SPEED);
 	rightMotor.setSpeed(FORWARD_SPEED);
 
-	leftMotor.rotate(convertDistance(radius, traveldistance), true);
-	rightMotor.rotate(convertDistance(radius, traveldistance), false);
+	leftMotor.rotate(convertDistance(radius, distance), true);
+	rightMotor.rotate(convertDistance(radius, distance), false);
 
 	leftMotor.stop(true);
 	rightMotor.stop(true);
+	
   }
 
   public void turnTo(double theta) {
-	
-	double currentT = (odo.getXYT()[2]) * Math.PI / 180;
-   
-	double deltatheta = (theta - currentT) * 180 / Math.PI;
-	
-    deltatheta = (deltatheta + 360) % 360;
-    
-    if (Math.abs(deltatheta - 360) < deltatheta) {
-      deltatheta -= 360;
-	  }
-
-	leftMotor.setSpeed(ROTATE_SPEED);
-	rightMotor.setSpeed(ROTATE_SPEED);
-	leftMotor.rotate(convertAngle(radius, track, deltatheta), true);
-	rightMotor.rotate(-convertAngle(radius, track, deltatheta), false);
+	leftMotor.setSpeed(ROTATION_SPEED);
+	rightMotor.setSpeed(ROTATION_SPEED);
+	leftMotor.rotate(convertAngle(radius, track, theta), true);
+	rightMotor.rotate(-convertAngle(radius, track, theta), false);
 
   }
-  
-  private float readLineDarkness() {
-	  csLineDetector.fetchSample(csData, 0);
-	  return csData[0] * 1000;
-	}
   
 	/**
 	 * This method allows the conversion of a distance to the total rotation of each wheel needed to
@@ -198,5 +186,10 @@ public class LightLocalizer {
   private static int convertAngle(double radius, double width, double angle) {
 	return convertDistance(radius, Math.PI * width * angle / 360.0);
   }  
+  
+  private float readLineDarkness() {
+	  csLineDetector.fetchSample(csData, 0);
+	  return csData[0] * 1000;
+	}
 	
 }

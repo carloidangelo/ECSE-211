@@ -17,7 +17,7 @@ import ca.mcgill.ecse211.localization.*;
 
 public class Lab5 {
 
-	// Motor Objects, and Robot related parameters
+	// Motor and Sensor Ports
 	private static final EV3LargeRegulatedMotor LEFT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
 	private static final EV3LargeRegulatedMotor RIGHT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
 	private static final TextLCD LCD = LocalEV3.get().getTextLCD();
@@ -39,11 +39,13 @@ public class Lab5 {
 		Odometer odometer = Odometer.getOdometer(LEFT_MOTOR, RIGHT_MOTOR, TRACK, WHEEL_RAD);
 		Display odometryDisplay = new Display(LCD); 
 
+		// Ultrasonic sensor
 		@SuppressWarnings("resource") // Because we don't bother to close this resource
 		SensorModes usSensor = new EV3UltrasonicSensor(US_PORT);
 		SampleProvider usDistance = usSensor.getMode("Distance");
 		float[] usData = new float[usDistance.sampleSize()];
 		
+		// Light Sensor (Localization)
 		@SuppressWarnings("resource") // Because we don't bother to close this resource
 		SensorModes csSensor = new EV3ColorSensor(CS_PORT);
 		SampleProvider csLineDetector = csSensor.getMode("Red");
@@ -80,7 +82,7 @@ public class Lab5 {
 				lightLocatizer.lightLocalize();
 				
 				// Search Zone Locator
-				SearchZoneLocator searchZonelocator = new SearchZoneLocator(SC, LLx, LLy, URx, URy);
+				SearchZoneLocator searchZonelocator = new SearchZoneLocator(LEFT_MOTOR, RIGHT_MOTOR,SC, LLx, LLy, URx, URy);
 				searchZonelocator.goToSearchZone();
 				
 				Sound.beep(); // Must BEEP after navigation to search zone is finished
