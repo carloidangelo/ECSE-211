@@ -37,6 +37,7 @@ public class Lab5 {
 
 		// Odometer related objects
 		Odometer odometer = Odometer.getOdometer(LEFT_MOTOR, RIGHT_MOTOR, TRACK, WHEEL_RAD);
+		Navigation navigator = new Navigation(LEFT_MOTOR,RIGHT_MOTOR);
 		Display odometryDisplay = new Display(LCD); 
 
 		// Ultrasonic sensor
@@ -75,7 +76,7 @@ public class Lab5 {
 				
 				// Localization (Ultrasonic and Light)
 				UltrasonicLocalizer ultrasonicLocalizer = new UltrasonicLocalizer(LEFT_MOTOR, RIGHT_MOTOR, usDistance, usData);
-				LightLocalizer lightLocatizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData);
+				LightLocalizer lightLocatizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData, navigator);
 
 				ultrasonicLocalizer.fallingEdge();
 
@@ -83,7 +84,7 @@ public class Lab5 {
 				lightLocatizer.lightLocalize(0,0);
 				
 				// Search Zone Locator
-				SearchZoneLocator searchZonelocator = new SearchZoneLocator(SC, LLx, LLy, lightLocatizer);
+				SearchZoneLocator searchZonelocator = new SearchZoneLocator(SC, LLx, LLy, lightLocatizer, navigator);
 				searchZonelocator.goToSearchZone();
 				
 				Sound.beep(); // Must BEEP after navigation to search zone is finished
