@@ -29,7 +29,7 @@ public class Lab5 {
 	
 	//Robot related parameters
 	public static final double WHEEL_RAD = 2.2;
-	public static final double TRACK = 14.7;
+	public static final double TRACK = 13.5;
 
 	public static void main(String[] args) throws OdometerExceptions {
 

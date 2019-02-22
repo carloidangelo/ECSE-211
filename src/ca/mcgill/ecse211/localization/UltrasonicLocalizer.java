@@ -7,12 +7,12 @@ import ca.mcgill.ecse211.lab5.*;
 
 public class UltrasonicLocalizer {
 
-	public static final int ROTATION_SPEED = 100;
+	public static final int ROTATION_SPEED = 125;
 	
 	public static final double CRITICAL_DISTANCE = 30.00;
 	public static final double NOISE_MARGIN = 2.00;
 
-	private static final double TURN_ERROR = 3.5;
+	private static final double TURN_ERROR = 15;
   
 	private double radius = Lab5.WHEEL_RAD;
 	private double track = Lab5.TRACK;
@@ -38,7 +38,7 @@ public class UltrasonicLocalizer {
 
 	public void fallingEdge() {
 
-		double angleA, angleB, turningAngle;
+		double angleA, angleB, turningAngle = 0;
 
 		
 		while (readUSDistance() < CRITICAL_DISTANCE + NOISE_MARGIN) {
@@ -68,13 +68,13 @@ public class UltrasonicLocalizer {
 		rightMotor.stop();
 
 		if (angleA < angleB) {
-			deltaTheta = -angleB + ((angleA + angleB) / 2) + 135;
+			deltaTheta = (360 - angleB) + ((angleA + angleB) / 2) - 225 + TURN_ERROR;
+			turningAngle = deltaTheta;
 
 		} else if (angleA > angleB) {
-			deltaTheta = -angleB + (angleA + angleB) / 2 - 45;
+			deltaTheta = -angleB + (angleA + angleB) / 2 - 45 + TURN_ERROR;
+			turningAngle = deltaTheta;
 		}
-
-		turningAngle = deltaTheta - TURN_ERROR;
 
 		leftMotor.rotate(convertAngle(radius, track, turningAngle), true);
 		rightMotor.rotate(-convertAngle(radius, track, turningAngle), false);

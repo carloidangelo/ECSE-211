@@ -6,7 +6,7 @@ import ca.mcgill.ecse211.odometer.*;
 public class Navigation {
 
   public final static int ROTATION_SPEED = 100;
-  private final static int FORWARD_SPEED = 80; 
+  private final static int FORWARD_SPEED = 150; 
   
   private static final double TILE_SIZE = 30.48;
   
@@ -34,7 +34,7 @@ public class Navigation {
 	double currentA = odo.getXYT()[2];
 	
 	// find minimum angle
-	minAng = - currentA + Math.atan2(deltaX, deltaY) * 180 / Math.PI;
+	minAng = -currentA + Math.atan2(deltaX, deltaY) * 180 / Math.PI;
 	
 	// special cases so that robot does not turn at maximum angle
 	if (minAng < 0 && (Math.abs(minAng) >= 180)) {
@@ -51,9 +51,6 @@ public class Navigation {
 
 	leftMotor.rotate(convertDistance(radius, distance), true);
 	rightMotor.rotate(convertDistance(radius, distance), false);
-
-	leftMotor.stop(true);
-	rightMotor.stop(true);
 	
   }
 
