@@ -37,7 +37,7 @@ public class SearchZoneLocator {
 				//go to LLy
 				navigator.travelTo(LLx,1);
 				if (LLx != 1) {
-					navigator.turnTo(45);
+					navigator.turnTo(-45);
 					lightLocalizer.lightLocalize(LLx, 1);
 				}
 				navigator.travelTo(LLx,LLy);
@@ -50,7 +50,7 @@ public class SearchZoneLocator {
 				//go to LLy
 				navigator.travelTo(LLx,1);
 				if (LLx != 7) {
-					navigator.turnTo(45);
+					navigator.turnTo(135);
 					lightLocalizer.lightLocalize(LLx, 1);
 				}
 				navigator.travelTo(LLx,LLy);
@@ -63,7 +63,7 @@ public class SearchZoneLocator {
 				//go to LLy
 				navigator.travelTo(LLx,7);
 				if (LLx != 7) {
-					navigator.turnTo(45);
+					navigator.turnTo(135);
 					lightLocalizer.lightLocalize(LLx, 7);
 				}
 				navigator.travelTo(LLx,LLy);
@@ -77,7 +77,7 @@ public class SearchZoneLocator {
 				//go to LLy
 				navigator.travelTo(LLx,7);
 				if (LLx != 1) {
-					navigator.turnTo(45);
+					navigator.turnTo(-45);
 					lightLocalizer.lightLocalize(LLx, 7);
 				}
 				navigator.travelTo(LLx,LLy);
