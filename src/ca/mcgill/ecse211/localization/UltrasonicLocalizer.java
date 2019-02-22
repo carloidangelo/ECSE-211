@@ -1,5 +1,6 @@
 package ca.mcgill.ecse211.localization;
 
+import lejos.hardware.Sound;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.robotics.SampleProvider;
 import ca.mcgill.ecse211.odometer.*;
@@ -9,7 +10,7 @@ public class UltrasonicLocalizer {
 
 	public static final int ROTATION_SPEED = 100;
 	
-	public static final double CRITICAL_DISTANCE = 18.00;
+	public static final double CRITICAL_DISTANCE = 30.00;
 	public static final double NOISE_MARGIN = 2.00;
 
 	private static final double TURN_ERROR = 3.5;
@@ -42,25 +43,25 @@ public class UltrasonicLocalizer {
 
 		
 		while (readUSDistance() < CRITICAL_DISTANCE + NOISE_MARGIN) {
-			leftMotor.backward();
-			rightMotor.forward();
+			leftMotor.forward();
+			rightMotor.backward();
 		}
 		
 		while (readUSDistance() > CRITICAL_DISTANCE) {
-			leftMotor.backward();
-			rightMotor.forward();
+			leftMotor.forward();
+			rightMotor.backward();
 		}
 		
 		angleA = odo.getXYT()[2];
 
 		while (readUSDistance() < CRITICAL_DISTANCE + NOISE_MARGIN) {
-			leftMotor.forward();
-			rightMotor.backward();
+			leftMotor.backward();
+			rightMotor.forward();
 		}
 
 		while (readUSDistance() > CRITICAL_DISTANCE) {
-			leftMotor.forward();
-			rightMotor.backward();
+			leftMotor.backward();
+			rightMotor.forward();
 		}
 		angleB = odo.getXYT()[2];
 
@@ -68,17 +69,16 @@ public class UltrasonicLocalizer {
 		rightMotor.stop();
 
 		if (angleA < angleB) {
-			deltaTheta = 45 - (angleA + angleB) / 2;
+			deltaTheta = -angleB + ((angleA + angleB) / 2) + 135;
 
 		} else if (angleA > angleB) {
-			deltaTheta = 225 - (angleA + angleB) / 2;
+			deltaTheta = -angleB + (angleA + angleB) / 2 - 45;
 		}
 
-		turningAngle = deltaTheta + odo.getXYT()[2];
+		turningAngle = deltaTheta;
 
-		leftMotor.rotate(-convertAngle(radius, track, turningAngle-TURN_ERROR), true);
-		rightMotor.rotate(convertAngle(radius, track, turningAngle-TURN_ERROR), false);
-
+		leftMotor.rotate(convertAngle(radius, track, turningAngle-TURN_ERROR), true);
+		rightMotor.rotate(-convertAngle(radius, track, turningAngle-TURN_ERROR), false);
 		odo.setTheta(0.0);
 
 	}

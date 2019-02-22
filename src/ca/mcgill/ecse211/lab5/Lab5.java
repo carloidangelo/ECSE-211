@@ -24,7 +24,7 @@ public class Lab5 {
 	private static final Port US_PORT = LocalEV3.get().getPort("S1");
 	private static final Port CS_PORT = LocalEV3.get().getPort("S4");
 	
-	private static final int LLx = 0, LLy = 0, URx = 0, URy = 0; // SearchZone description
+	private static final int LLx = 3, LLy = 3, URx = 7, URy = 7; // SearchZone description
 	private static final int SC = 0; //Starting corner
 	
 	//Robot related parameters
