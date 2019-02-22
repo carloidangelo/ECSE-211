@@ -11,6 +11,7 @@ public class LightLocalizer {
 
   public final static int ROTATION_SPEED = 100;
   private final static int FORWARD_SPEED = 150; 
+  private static final double TILE_SIZE = 30.48;
   
   private final static int COLOUR_DIFF = 20;  
   private final static double LIGHT_LOC_DISTANCE = 14.5;
@@ -78,7 +79,7 @@ public class LightLocalizer {
 	  leftMotor.rotate(convertAngle(radius, track, deltaA), true);
 	  rightMotor.rotate(-convertAngle(radius, track, deltaA));
 
-	  odo.setXYT(pointX + deltaX, pointY + deltaY, 0.0);
+	  odo.setXYT(pointX * TILE_SIZE + deltaX, pointY * TILE_SIZE + deltaY, 0.0);
 	  
 	  navigator.travelTo(pointX, pointY);
 

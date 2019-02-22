@@ -7,7 +7,7 @@ import ca.mcgill.ecse211.lab5.*;
 
 public class UltrasonicLocalizer {
 
-	public static final int ROTATION_SPEED = 125;
+	public static final int ROTATION_SPEED = 110;
 	
 	public static final double CRITICAL_DISTANCE = 30.00;
 	public static final double NOISE_MARGIN = 2.00;

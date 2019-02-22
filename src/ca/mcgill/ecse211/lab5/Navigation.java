@@ -62,6 +62,14 @@ public class Navigation {
 
   }
   
+  public void driveBack(int distance) {
+	  leftMotor.setSpeed(FORWARD_SPEED);
+	  rightMotor.setSpeed(FORWARD_SPEED);
+
+	  leftMotor.rotate(-convertDistance(radius, distance), true);
+	  rightMotor.rotate(-convertDistance(radius, distance), false);
+  }
+  
 	/**
 	 * This method allows the conversion of a distance to the total rotation of each wheel needed to
 	 * cover that distance.
