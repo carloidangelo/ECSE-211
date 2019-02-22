@@ -23,15 +23,8 @@ public class LightLocalizer {
   private Odometer odo;
   private EV3LargeRegulatedMotor leftMotor, rightMotor;
  
-  private double firstReading;
-  private float sample;
   double[] linePosition;
-  
-  private double currentX;
-  private double currentY;	
-  private double currentA;
-  private double deltaX;
-  private double deltaY;
+  private double minAng;
   
   private SampleProvider csLineDetector;
   private float[] csData;
@@ -52,7 +45,8 @@ public class LightLocalizer {
 	  rightMotor.setSpeed(ROTATION_SPEED);
 	  
 	  int count = 0;
-	  firstReading = readLineDarkness();
+	  float firstReading = readLineDarkness();
+	  float sample;
 	  while (count < 4) {
 
 		leftMotor.forward();
@@ -78,18 +72,18 @@ public class LightLocalizer {
 	  deltaX = -LIGHT_LOC_DISTANCE * Math.cos(Math.toRadians(angleY / 2));
 	  deltaY = -LIGHT_LOC_DISTANCE * Math.cos(Math.toRadians(angleX / 2));
 	  
-	  deltaA = 90 - linePosition[3] + 180 + (angleY / 2.0);
+	  deltaA = 90 - (angleY / 2.0);
+	  
+	  leftMotor.rotate(convertAngle(radius, track, deltaA), true);
+	  rightMotor.rotate(-convertAngle(radius, track, deltaA));
 
-	  odo.setXYT(pointX - deltaX, pointY - deltaY, odo.getXYT()[2]);
+	  odo.setXYT(pointX - deltaX, pointY - deltaY, 0.0);
+	  
 	  travelTo(pointX, pointY);
 
-      leftMotor.setSpeed(ROTATION_SPEED / 2);
-	  rightMotor.setSpeed(ROTATION_SPEED / 2);
-
-	  if (odo.getXYT()[2] <= 350 && odo.getXYT()[2] >= 10.0) {
-		leftMotor.rotate(convertAngle(radius, track, -odo.getXYT()[2] + deltaA), true);
-		rightMotor.rotate(-convertAngle(radius, track, -odo.getXYT()[2] + deltaA), false);
-	  }
+	  leftMotor.rotate(-convertAngle(radius, track, minAng), true);
+	  rightMotor.rotate(convertAngle(radius, track, minAng));
+	  
 	  leftMotor.stop(true);
 	  rightMotor.stop();
 
@@ -99,11 +93,11 @@ public class LightLocalizer {
 	 
 	leftMotor.setSpeed(ROTATION_SPEED);
 	rightMotor.setSpeed(ROTATION_SPEED);
-	firstReading = readLineDarkness();
+	float firstReading = readLineDarkness();
 	
     turnTo(45);
 
-	sample = readLineDarkness();
+	float sample = readLineDarkness();
 
 	while (100*Math.abs(sample - firstReading)/firstReading < COLOUR_DIFF) {
 	  sample = readLineDarkness();
@@ -115,21 +109,21 @@ public class LightLocalizer {
 	  rightMotor.stop();
 	  
       leftMotor.rotate(convertDistance(radius, -LIGHT_LOC_DISTANCE), true);
-	  rightMotor.rotate(convertDistance(radius, -LIGHT_LOC_DISTANCE), false);
+	  rightMotor.rotate(convertDistance(radius, -LIGHT_LOC_DISTANCE));
 
   }
   
   public void travelTo(double x, double y) {
-	currentX = odo.getXYT()[0];
-	currentY = odo.getXYT()[1];
+	double currentX = odo.getXYT()[0];
+	double currentY = odo.getXYT()[1];
 
-	deltaX = x * TILE_SIZE - currentX;
-	deltaY = y * TILE_SIZE - currentY;
+	double deltaX = x * TILE_SIZE - currentX;
+	double deltaY = y * TILE_SIZE - currentY;
 	
-	currentA = odo.getXYT()[2];
+	double currentA = odo.getXYT()[2];
 	
 	// find minimum angle
-	double minAng = - currentA + Math.atan2(deltaX, deltaY) * 180 / Math.PI;
+	minAng = - currentA + Math.atan2(deltaX, deltaY) * 180 / Math.PI;
 	
 	// special cases so that robot does not turn at maximum angle
 	if (minAng < 0 && (Math.abs(minAng) >= 180)) {

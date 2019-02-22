@@ -1,6 +1,5 @@
 package ca.mcgill.ecse211.localization;
 
-import lejos.hardware.Sound;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.robotics.SampleProvider;
 import ca.mcgill.ecse211.odometer.*;
@@ -75,10 +74,10 @@ public class UltrasonicLocalizer {
 			deltaTheta = -angleB + (angleA + angleB) / 2 - 45;
 		}
 
-		turningAngle = deltaTheta;
+		turningAngle = deltaTheta - TURN_ERROR;
 
-		leftMotor.rotate(convertAngle(radius, track, turningAngle-TURN_ERROR), true);
-		rightMotor.rotate(-convertAngle(radius, track, turningAngle-TURN_ERROR), false);
+		leftMotor.rotate(convertAngle(radius, track, turningAngle), true);
+		rightMotor.rotate(-convertAngle(radius, track, turningAngle), false);
 		odo.setTheta(0.0);
 
 	}
