@@ -6,7 +6,7 @@ import ca.mcgill.ecse211.odometer.*;
 public class Navigation {
 
   public final static int ROTATION_SPEED = 100;
-  private final static int FORWARD_SPEED = 150; 
+  private final static int FORWARD_SPEED = 200; 
   
   private static final double TILE_SIZE = 30.48;
   
