@@ -34,9 +34,9 @@ public class CanDetect {
 		case "yellow   ":
 			return 3;
 		case "blue     ":
-			return 2;
-		case "green    ":
 			return 1;
+		case "green    ":
+			return 2;
 		default:
 			return 0;	
 		}
