@@ -70,7 +70,7 @@ public class Navigation {
 	  rightMotor.rotate(-convertDistance(radius, distance), false);
   }
   
-  public void moveToCan(float distance) {
+  public void moveToCan(double distance) {
 	  leftMotor.setSpeed(FORWARD_SPEED);
 	  rightMotor.setSpeed(FORWARD_SPEED);
 

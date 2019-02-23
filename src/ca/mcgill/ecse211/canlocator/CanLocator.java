@@ -16,7 +16,7 @@ public class CanLocator {
 	
 	private static int FORWARD_SPEED = 100;
 	private static final double TILE_SIZE = 30.48;
-	private static final float CAN_DISTANCE = 27.5;
+	private static final double CAN_DISTANCE = 27.5;
 	
 	/**
 	*TR is the variable that stores the integer defining the target can color we are looking
@@ -53,6 +53,7 @@ public class CanLocator {
 	}	
 	
 	private boolean checkForCan(){
+		return false;
 		
 		//read sensor and see if can detected in a TILE_SIZE
 		/*if(sensor distance <= TILE_SIZE) { 
