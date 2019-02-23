@@ -16,7 +16,7 @@ public class CanLocator {
 	
 	private static int FORWARD_SPEED = 100;
 	private static final double TILE_SIZE = 30.48;
-	private static final double CAN_DISTANCE = 27.00;
+	private static final float CAN_DISTANCE = 27.5;
 	
 	/**
 	*TR is the variable that stores the integer defining the target can color we are looking
@@ -41,46 +41,45 @@ public class CanLocator {
 	
 	public void RunLocator(){
 		
-		while (true) {
+		while (true) {	
 			
-		}
-		
-		//check front
-			//if object check color
-				//if color correct, signal & go to UR
+			//check front
+			//if object, check color
+				//if color correct, go to UR
 				//else dodge to next
 			//else goToNext()
-		
-		/*
-		switch(TR){
-			case 1: //blue can
-				
-				break;
-			case 2: //green can
-				
-				break;
-			case 3: //yellow can
-				
-				break;
-			case 4:	//red can
-				
-				break;
-		}*/
+			
+		}
 	}	
 	
 	private boolean checkForCan(){
 		
-		if (!(count == 0)) {
+		//read sensor and see if can detected in a TILE_SIZE
+		/*if(sensor distance <= TILE_SIZE) { 
+			
+			navigator.moveToCan(CAN_DISTANCE);
+			if (TR == current color) Sound.beep();
+			else {
+				Sound.beep(); 
+				Sound.beep();
+			}
+			
+			//dodges
+		} 
+		
+		else if() {
 			
 			
-			
-			count++;
 		}
 		
-		//read sensor and see if can detected in a TILE_SIZE
-		//if yes, move towards can
+		//no can was detected
+		else { 
+			
+			goToNext();
+			
+		}
 		
-	}
+	*/}
 	
 	private void goToNext() { //navigator.travelTo(LLx,1);
 				
