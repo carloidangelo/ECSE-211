@@ -4,6 +4,7 @@ import ca.mcgill.ecse211.lab5.ColorClassification;
 import ca.mcgill.ecse211.lab5.Navigation;
 import ca.mcgill.ecse211.odometer.Odometer;
 import ca.mcgill.ecse211.odometer.OdometerExceptions;
+import lejos.hardware.Sound;
 import lejos.robotics.SampleProvider;
 
 public class CanLocator {
