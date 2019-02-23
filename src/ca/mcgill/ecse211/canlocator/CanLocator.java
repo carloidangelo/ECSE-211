@@ -44,48 +44,54 @@ public class CanLocator {
 		while (true) {	
 			
 			//check front
-			//if object, check color
+			//if can detected, check color
 				//if color correct, go to UR
 				//else dodge to next
 			//else goToNext()
 			
+			
+			/*
+			//no can was detected/////////////////////////////
+			false { 
+				if (count > 0) turn 90 deg left;
+				//if there is a can, check color;
+				goToNext();
+				count++;
+			}
+		
+			*/
 		}
 	}	
 	
-	private boolean checkForCan(){
-		return false;
+	private void checkColor(){
 		
-		//read sensor and see if can detected in a TILE_SIZE
-		/*if(sensor distance <= TILE_SIZE) { 
-			
-			navigator.moveToCan(CAN_DISTANCE);
-			if (TR == current color) Sound.beep();
-			else {
-				Sound.beep(); 
-				Sound.beep();
-			}
-			
-			//dodges
-		} 
+		navigator.moveToCan(CAN_DISTANCE);
 		
-		else if() {
-			
-			
+		//if the can color is the target color, beep once
+		if (TR == current color) Sound.beep();
+		
+		//otherwise, beep twice
+		else {
+			Sound.beep(); 
+			Sound.beep();
 		}
+	} 	
+	
+	private boolean checkCan(){
+	
+		//read sensor and see if a can is detected in range
+		if(measured distance <= TILE_SIZE) return true;
+		else return false;
 		
-		//no can was detected
-		else { 
-			
-			goToNext();
-			
-		}
-		
-	*/}
+	}
 	
 	private void goToNext() { //navigator.travelTo(LLx,1);
 				
-		//go forward one tile
-		//turn 90 deg right
+		//if on border
+			//go forward one tile
+			//turn 90 deg right
+		//else outside
+			
 		
 	}
 	
