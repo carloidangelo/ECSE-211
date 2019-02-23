@@ -16,6 +16,7 @@ import ca.mcgill.ecse211.searchzonelocator.SearchZoneLocator;
 
 import java.text.DecimalFormat;
 
+import ca.mcgill.ecse211.canlocator.CanDetect;
 import ca.mcgill.ecse211.localization.*;
 
 public class Lab5 {
@@ -65,6 +66,7 @@ public class Lab5 {
         colorId.fetchSample(colorData, 0);
 		
         ColorClassification ClrClassify= new ColorClassification (colorData, colorId);
+        CanDetect canDetect = new CanDetect(SENSOR_MOTOR, ClrClassify);
         
 		do {
 			
