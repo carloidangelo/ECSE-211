@@ -17,7 +17,7 @@ public class CanLocator {
 	private SampleProvider usDistance;
 	private float[] usData;
 	
-	public CanLocator(ColorClassification csFront, SampleProvider usDistance, 
+	public CanLocator(ColorClassification csFront, SampleProvider usDistance,
 						float[] usData, int TR) throws OdometerExceptions {
 		odo = Odometer.getOdometer();
 		this.lightData = new double [4]; //"angles"
@@ -32,6 +32,13 @@ public class CanLocator {
 		while (true) {
 			
 		}
+		
+		//check front
+			//if object check color
+				//if color correct, signal & go to UR
+				//else dodge to next
+			//else goToNext()
+		
 		/*
 		switch(TR){
 			case 1: //blue can
@@ -48,6 +55,30 @@ public class CanLocator {
 				break;
 		}*/
 	}	
+	
+	private void goToNext() {
+		
+		//
+		
+	}
+	
+	private void borderDodge() {
+		
+		//
+		
+	}
+	
+	private void outsideDodge() {
+		
+		//
+		
+	}
+	
+	private void outsideDodge() {
+		
+		//
+		
+	}
 	
 	private int readUSDistance() {
 		usDistance.fetchSample(usData, 0);
