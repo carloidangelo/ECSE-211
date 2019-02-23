@@ -13,6 +13,9 @@ import lejos.robotics.SampleProvider;
 import ca.mcgill.ecse211.odometer.Odometer;
 import ca.mcgill.ecse211.odometer.OdometerExceptions;
 import ca.mcgill.ecse211.searchzonelocator.SearchZoneLocator;
+
+import java.text.DecimalFormat;
+
 import ca.mcgill.ecse211.localization.*;
 
 public class Lab5 {
@@ -23,6 +26,8 @@ public class Lab5 {
 	private static final TextLCD LCD = LocalEV3.get().getTextLCD();
 	private static final Port US_PORT = LocalEV3.get().getPort("S1");
 	private static final Port CS_PORT = LocalEV3.get().getPort("S4");
+	private static final EV3ColorSensor CS_FRONT =
+		      new EV3ColorSensor(LocalEV3.get().getPort("S3")); // sensor for color calssification
 	
 	private static final int LLx = 3, LLy = 3, URx = 7, URy = 7; // SearchZone description
 	private static final int SC = 0; //Starting corner
@@ -51,6 +56,9 @@ public class Lab5 {
 		SensorModes csSensor = new EV3ColorSensor(CS_PORT);
 		SampleProvider csLineDetector = csSensor.getMode("Red");
 		float[] csData = new float[csLineDetector.sampleSize()];
+		
+		// Light Sensor (Color Classification)
+		ColorClassification clr = new ColorClassification(CS_FRONT);
 		
 		do {
 			
@@ -91,6 +99,14 @@ public class Lab5 {
 				
 			} else {
 				// do color classification
+				do {
+					LCD.clear();
+				    clr.run();
+				        
+				    DecimalFormat numberFormat = new DecimalFormat("######0.00");
+				        
+				    LCD.drawString("Sensor value" +numberFormat.format(clr.run()), 0, 2);
+				    }while (Button.waitForAnyPress() != Button.ID_ESCAPE); 
 			}
 
 		while (Button.waitForAnyPress() != Button.ID_ESCAPE);

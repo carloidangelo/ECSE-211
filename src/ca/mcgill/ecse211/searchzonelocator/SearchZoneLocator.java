@@ -36,11 +36,11 @@ public class SearchZoneLocator {
 				//go to LLx
 				//go to LLy
 				navigator.travelTo(LLx,1);
-				if (LLx != 1) {
+				/*if (LLx != 1) {
 					navigator.turnTo(-45);
 					navigator.driveBack(5);
 					lightLocalizer.lightLocalize(LLx, 1);
-				}
+				}*/
 				navigator.travelTo(LLx,LLy);
 				navigator.turnTo(45);
 				navigator.driveBack(5);

@@ -102,21 +102,6 @@ public class LightLocalizer {
 	
 	leftMotor.rotate(convertDistance(radius, EXTRA_DISTANCE), true);
 	rightMotor.rotate(convertDistance(radius, EXTRA_DISTANCE));
-	
-	/*
-	float sample = readLineDarkness();
-	while (100*Math.abs(sample - firstReading)/firstReading < COLOUR_DIFF) {
-	  sample = readLineDarkness();
-	  leftMotor.forward();
-	  rightMotor.forward();
-
-	}
-	leftMotor.stop(true);
-	rightMotor.stop();
-	  
-    leftMotor.rotate(convertDistance(radius, -(LIGHT_LOC_DISTANCE + EXTRA_DISTANCE)), true);
-	rightMotor.rotate(convertDistance(radius, -(LIGHT_LOC_DISTANCE + EXTRA_DISTANCE)));
-	*/
 
   }
   

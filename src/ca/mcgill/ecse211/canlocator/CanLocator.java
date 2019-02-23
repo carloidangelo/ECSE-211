@@ -1,13 +1,8 @@
 package ca.mcgill.ecse211.canlocator;
 
+import ca.mcgill.ecse211.lab5.ColorClassification;
 import ca.mcgill.ecse211.odometer.Odometer;
 import ca.mcgill.ecse211.odometer.OdometerExceptions;
-import lejos.hardware.*;
-import lejos.hardware.ev3.LocalEV3;
-import lejos.hardware.lcd.TextLCD;
-import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.port.Port;
-import lejos.hardware.sensor.*;
 import lejos.robotics.SampleProvider;
 
 public class CanLocator {
@@ -18,19 +13,26 @@ public class CanLocator {
 	
 	private int TR;
 	
-	private SampleProvider colorSensor;
-	private float[] colorData;
+	ColorClassification csFront;
+	private SampleProvider usDistance;
+	private float[] usData;
 	
-	public CanLocator(Odometer odo, SampleProvider colorSensor, float[] colorData, int TR) {
-		this.odo = odo;
+	public CanLocator(ColorClassification csFront, SampleProvider usDistance, 
+						float[] usData, int TR) throws OdometerExceptions {
+		odo = Odometer.getOdometer();
 		this.lightData = new double [4]; //"angles"
-		this.colorSensor = colorSensor;
-		this.colorData = colorData;
+		this.usDistance = usDistance;
+		this.usData = usData;
+		this.csFront = csFront;
 		this.TR = TR;
 	}
 	
 	public void RunLocator(){
-	
+		
+		while (true) {
+			
+		}
+		/*
 		switch(TR){
 			case 1: //blue can
 				
@@ -44,7 +46,12 @@ public class CanLocator {
 			case 4:	//red can
 				
 				break;
-		}
+		}*/
 	}	
+	
+	private int readUSDistance() {
+		usDistance.fetchSample(usData, 0);
+		return (int) (usData[0] * 100);
+	}
   
 }
