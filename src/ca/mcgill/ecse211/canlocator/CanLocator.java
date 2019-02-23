@@ -10,7 +10,7 @@ public class CanLocator {
 
 	private Odometer odo;
 	private Navigation navigator;
-	private ColorClassification csFront;
+	private CanDetect csFront;
 	private SampleProvider usDistance;
 	private float[] usData;
 	
@@ -29,7 +29,7 @@ public class CanLocator {
 	private int cX,xY = 0;
 	private int count = 0;
 	
-	public CanLocator(ColorClassification csFront, SampleProvider usDistance, float[] usData, 
+	public CanLocator(CanDetect csFront, SampleProvider usDistance, float[] usData, 
 			Navigation navigator, int TR) throws OdometerExceptions {
 		odo = Odometer.getOdometer();
 		this.usDistance = usDistance;

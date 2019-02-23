@@ -53,9 +53,9 @@ public class ColorClassification {
     float nB = colorData[2] / eucDistance;
     // use a counter and difference in RGB values to classify the color
     for (int i = 0; i < 4; i++) {
-      float deltaR = Math.abs(nR - (meanRGB[i][0]/eucDistance)) / 1f;
-      float deltaG = Math.abs(nG - (meanRGB[i][1]/eucDistance)) / 1f;
-      float deltaB = Math.abs(nB - (meanRGB[i][2]/eucDistance)) / 1f;
+      float deltaR = Math.abs(nR - (meanRGB[i][0]/eucDistance));
+      float deltaG = Math.abs(nG - (meanRGB[i][1]/eucDistance));
+      float deltaB = Math.abs(nB - (meanRGB[i][2]/eucDistance));
       
      // System.out.println(deltaB);
  

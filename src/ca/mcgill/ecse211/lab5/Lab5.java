@@ -63,6 +63,8 @@ public class Lab5 {
         float[] colorData = new float[colorId.sampleSize()];
         colorId.fetchSample(colorData, 0);
 		
+        ColorClassification ClrClassify= new ColorClassification (colorData, colorId);
+        
 		do {
 			
 			LCD.clear();
@@ -103,7 +105,6 @@ public class Lab5 {
 			} else {
 				LCD.clear();
 				  
-				ColorClassification ClrClassify= new ColorClassification (colorData, colorId);
 				while(true) {
 					
 					if (ClrClassify.run() !="no object") {//if there is a can detected
