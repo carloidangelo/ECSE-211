@@ -26,8 +26,7 @@ public class Lab5 {
 	private static final TextLCD LCD = LocalEV3.get().getTextLCD();
 	private static final Port US_PORT = LocalEV3.get().getPort("S1");
 	private static final Port CS_PORT = LocalEV3.get().getPort("S4");
-	private static final EV3ColorSensor CS_FRONT =
-		      new EV3ColorSensor(LocalEV3.get().getPort("S3")); // sensor for color calssification
+	private static final Port CS_FRONT_PORT = LocalEV3.get().getPort("S2");
 	
 	private static final int LLx = 3, LLy = 3, URx = 7, URy = 7; // SearchZone description
 	private static final int SC = 0; //Starting corner
@@ -51,14 +50,18 @@ public class Lab5 {
 		SampleProvider usDistance = usSensor.getMode("Distance");
 		float[] usData = new float[usDistance.sampleSize()];
 		
-		// Light Sensor (Localization)
+		// Color Sensor (Localization)
 		@SuppressWarnings("resource") // Because we don't bother to close this resource
 		SensorModes csSensor = new EV3ColorSensor(CS_PORT);
 		SampleProvider csLineDetector = csSensor.getMode("Red");
 		float[] csData = new float[csLineDetector.sampleSize()];
 		
-		// Light Sensor (Color Classification)
-		ColorClassification clr = new ColorClassification(CS_FRONT);
+		 // Color Sensor (Color Classification)
+        @SuppressWarnings("resource") // Because we don't bother to close this resource
+        SensorModes clrSensor = new EV3ColorSensor(CS_FRONT_PORT);
+        SampleProvider colorId =  clrSensor.getMode("RGB");
+        float[] colorData = new float[colorId.sampleSize()];
+        colorId.fetchSample(colorData, 0);
 		
 		do {
 			
@@ -98,15 +101,26 @@ public class Lab5 {
 				Sound.beep(); // Must BEEP after navigation to search zone is finished
 				
 			} else {
-				// do color classification
-				do {
-					LCD.clear();
-				    clr.run();
-				        
-				    DecimalFormat numberFormat = new DecimalFormat("######0.00");
-				        
-				    LCD.drawString("Sensor value" +numberFormat.format(clr.run()), 0, 2);
-				    }while (Button.waitForAnyPress() != Button.ID_ESCAPE); 
+				LCD.clear();
+				  
+				ColorClassification ClrClassify= new ColorClassification (colorData, colorId);
+				while(true) {
+					
+					if (ClrClassify.run() !="no object") {//if there is a can detected
+				    LCD.drawString("Object Detected", 1,1);
+				    LCD.drawString(ClrClassify.run(), 1, 2);
+				    
+				    } else {
+				    	LCD.clear();
+				    }
+//
+//				    colorId.fetchSample(colorData, 0);
+//				    LCD.drawString("R: " + colorData[0], 1, 3);
+//			        LCD.drawString("G: " + colorData[1], 1, 4);
+//			        LCD.drawString("B: " + colorData[2], 1, 5);
+//				  
+				 }
+				
 			}
 
 		while (Button.waitForAnyPress() != Button.ID_ESCAPE);
