@@ -1,6 +1,7 @@
 package ca.mcgill.ecse211.canlocator;
 
 import ca.mcgill.ecse211.lab5.ColorClassification;
+import ca.mcgill.ecse211.lab5.Navigation;
 import ca.mcgill.ecse211.odometer.Odometer;
 import ca.mcgill.ecse211.odometer.OdometerExceptions;
 import lejos.robotics.SampleProvider;
@@ -12,18 +13,19 @@ public class CanLocator {
 	double [] lightData; //"angles"
 	
 	private int TR;
-	
-	ColorClassification csFront;
+	private Navigation navigator;
+	private ColorClassification csFront;
 	private SampleProvider usDistance;
 	private float[] usData;
 	
-	public CanLocator(ColorClassification csFront, SampleProvider usDistance,
-						float[] usData, int TR) throws OdometerExceptions {
+	public CanLocator(ColorClassification csFront, SampleProvider usDistance, float[] usData, 
+			Navigation navigator, int TR) throws OdometerExceptions {
 		odo = Odometer.getOdometer();
 		this.lightData = new double [4]; //"angles"
 		this.usDistance = usDistance;
 		this.usData = usData;
 		this.csFront = csFront;
+		this.navigator = navigator;
 		this.TR = TR;
 	}
 	
