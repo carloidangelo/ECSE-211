@@ -23,6 +23,7 @@ public class Lab5 {
 	// Motor and Sensor Ports
 	private static final EV3LargeRegulatedMotor LEFT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
 	private static final EV3LargeRegulatedMotor RIGHT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
+	private static final EV3LargeRegulatedMotor SENSOR_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
 	private static final TextLCD LCD = LocalEV3.get().getTextLCD();
 	private static final Port US_PORT = LocalEV3.get().getPort("S1");
 	private static final Port CS_PORT = LocalEV3.get().getPort("S4");
