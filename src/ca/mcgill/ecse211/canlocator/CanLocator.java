@@ -16,7 +16,7 @@ public class CanLocator {
 	private float[] usData;
 	
 	private static int FORWARD_SPEED = 100;
-	private static final double TILE_SIZE = 30.48;
+	private static final int TILE_SIZE = 31;
 	private static final double CAN_DISTANCE = 27.5;
 	
 	/**
@@ -49,10 +49,10 @@ public class CanLocator {
 				//if color correct, go to UR
 				//else dodge to next
 			//else goToNext()
-			
+			////////////////////////////
 			
 			/*
-			//no can was detected/////////////////////////////
+			
 			false { 
 				if (count > 0) turn 90 deg left;
 				//if there is a can, check color;
@@ -69,7 +69,7 @@ public class CanLocator {
 		navigator.moveToCan(CAN_DISTANCE);
 		
 		//if the can color is the target color, beep once
-		if (TR == current color) Sound.beep();
+		if (TR == canDetect.run()) Sound.beep();
 		
 		//otherwise, beep twice
 		else {
@@ -81,25 +81,60 @@ public class CanLocator {
 	private boolean checkCan(){
 	
 		//read sensor and see if a can is detected in range
-		if(measured distance <= TILE_SIZE) return true;
+		if(readUSDistance() <= TILE_SIZE) return true;
 		else return false;
 		
 	}
 	
-	private void goToNext() { //navigator.travelTo(LLx,1);
+	private void goToNext() { //navigator.travelTo(LLx,1);///////////////
 				
-		//if on border
+		//if x == LLx && y == LLy || y
 			//go forward one tile
 			//turn 90 deg right
 		//else outside
-			
+			//go forward half tile
 		
 	}
 	
 	private void borderToUR() {
 		
-		//
+		if (cY > 0 && cX == 0){
 		
+		navigator.travelTo(LLx,curY-0.5);
+		navigator.travelTo(LLx-0.5,curY-0.5);
+		navigator.travelTo(LLx-0.5,URy+0.5);
+		navigator.travelTo(URx,URy+0.5);
+		navigator.travelTo(URx,URy);
+		
+		}
+		
+		if (cX > 0 && cY == 0){
+		
+		navigator.travelTo(curX-0.5,URy);
+		navigator.travelTo(curX-0.5,URy+0.5);
+		navigator.travelTo(URx,URy+0.5);
+		navigator.travelTo(URx,URy);
+		
+		}
+		
+		if (cY < 0 && cX == 0){
+		
+		navigator.travelTo(URx,curY+0.5);
+		navigator.travelTo(URx+0.5,curY+0.5);
+		navigator.travelTo(URx+0.5,URy);
+		navigator.travelTo(URx,URy);
+		
+		}
+		
+		if (cX < 0 && cY == 0){
+		
+		navigator.travelTo(curX+0.5,LLy);
+		navigator.travelTo(curX+0.5,LLy-0.5);
+		navigator.travelTo(URx+0.5,LLy-0.5);
+		navigator.travelTo(URx+0.5,URy);
+		navigator.travelTo(URx,URy);
+		
+		}
 	}
 	
 	private void outsideToUR() {
