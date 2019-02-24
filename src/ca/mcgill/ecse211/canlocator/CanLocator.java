@@ -16,18 +16,13 @@ public class CanLocator {
 	private float[] usData;
 	
 	private static int FORWARD_SPEED = 100;
+	private static double OFFSET = 0.5;
 	private static final int TILE_SIZE = 31;
-	private static final double CAN_DISTANCE = 27.5;
+	private static final double CAN_DISTANCE_ON_BORDER = 27.5;
+	private static final double CAN_DISTANCE_FROM_OUT = 12.75;
+	private static final double ANGLE_ERROR = 10.0;
 	
-	/**
-	*TR is the variable that stores the integer defining the target can color we are looking
-	*cX,cY store the changes in x and why distance so that the EV3 knows which ways to turn.
-	*i.e if cX is zero but cY is a positive number, then the EV3 is traveling straight
-	*up the search zone.
-	*/
-	
-	private int TR;
-	private int cX,xY = 0;
+	private int TR;  //this variable stores the integer defining the target can color.
 	private int count = 0;
 	
 	public CanLocator(CanDetect canDetect, SampleProvider usDistance, float[] usData, 
@@ -64,17 +59,21 @@ public class CanLocator {
 		}
 	}	
 	
-	private void checkColor(){
+	private boolean checkColor(){
 		
 		navigator.moveToCan(CAN_DISTANCE);
 		
 		//if the can color is the target color, beep once
-		if (TR == canDetect.run()) Sound.beep();
+		if (TR == canDetect.run()) {
+			Sound.beep();
+			return true;
+		}
 		
 		//otherwise, beep twice
 		else {
 			Sound.beep(); 
 			Sound.beep();
+			return false;
 		}
 	} 	
 	
@@ -98,42 +97,42 @@ public class CanLocator {
 	
 	private void borderToUR() {
 		
-		if (cY > 0 && cX == 0){
+		if ( (odo.getXYT()[2] >= 0-ANGLE_ERROR) || 
+		    	(odo.getXYT()[2] <= 0+ANGLE_ERROR)){
 		
-		navigator.travelTo(LLx,curY-0.5);
-		navigator.travelTo(LLx-0.5,curY-0.5);
-		navigator.travelTo(LLx-0.5,URy+0.5);
-		navigator.travelTo(URx,URy+0.5);
-		navigator.travelTo(URx,URy);
-		
+			navigator.driveBack(CAN_DISTANCE_ON_BORDER);
+			navigator.travelTo(LLx-OFFSET, odo.getXYT()[1]);
+			navigator.travelTo(LLx-OFFSET,URy+OFFSET);
+			navigator.travelTo(URx,URy+OFFSET);
+			navigator.travelTo(URx,URy);		
 		}
 		
-		if (cX > 0 && cY == 0){
-		
-		navigator.travelTo(curX-0.5,URy);
-		navigator.travelTo(curX-0.5,URy+0.5);
-		navigator.travelTo(URx,URy+0.5);
-		navigator.travelTo(URx,URy);
-		
+		else if ( (odo.getXYT()[2] >= 90-ANGLE_ERROR) || 
+		    	(odo.getXYT()[2] <= 90+ANGLE_ERROR) ){
+			
+			navigator.driveBack(CAN_DISTANCE_ON_BORDER);
+			navigator.travelTo((odo.getXYT()[0],URy+OFFSET);
+			navigator.travelTo(URx,URy+OFFSET);
+			navigator.travelTo(URx,URy);
 		}
 		
-		if (cY < 0 && cX == 0){
+		else if ( (odo.getXYT()[2] >= 180-ANGLE_ERROR) || 
+		    	(odo.getXYT()[2] <= 180+ANGLE_ERROR) ){
 		
-		navigator.travelTo(URx,curY+0.5);
-		navigator.travelTo(URx+0.5,curY+0.5);
-		navigator.travelTo(URx+0.5,URy);
-		navigator.travelTo(URx,URy);
-		
+			navigator.driveBack(CAN_DISTANCE_ON_BORDER);
+			navigator.travelTo(URx+OFFSET,odo.getXYT()[1]);
+			navigator.travelTo(URx+OFFSET,URy);
+			navigator.travelTo(URx,URy);
 		}
 		
-		if (cX < 0 && cY == 0){
+		else if ( (odo.getXYT()[2] >= 270-ANGLE_ERROR) || 
+		    	(odo.getXYT()[2] <= 270+ANGLE_ERROR) ){
 		
-		navigator.travelTo(curX+0.5,LLy);
-		navigator.travelTo(curX+0.5,LLy-0.5);
-		navigator.travelTo(URx+0.5,LLy-0.5);
-		navigator.travelTo(URx+0.5,URy);
-		navigator.travelTo(URx,URy);
-		
+			navigator.driveBack(CAN_DISTANCE_ON_BORDER);
+			navigator.travelTo(odo.getXYT()[0],LLy-OFFSET);
+			navigator.travelTo(URx+OFFSET,LLy-OFFSET);
+			navigator.travelTo(URx+OFFSET,URy);
+			navigator.travelTo(URx,URy);
 		}
 	}
 	
