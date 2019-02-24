@@ -102,6 +102,7 @@ public class CanLocator {
 	} 
 	
 	/**
+<<<<<<< HEAD
 	*goToNext() moves the EV3 forward to the next position when no cans are detected.
 	*/
 
@@ -117,6 +118,8 @@ public class CanLocator {
 	}
 	
 	/**
+=======
+>>>>>>> c2490e12b6881d057ee9ee52992769163707a083
 	*travelToURBorder() is called when the correct can is found on the edge of the search zone. This
 	*method will use travelTo() from the Navigator class to get the EV3 to the upper right corner.
 	*/
