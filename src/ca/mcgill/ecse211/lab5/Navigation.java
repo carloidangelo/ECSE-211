@@ -62,7 +62,7 @@ public class Navigation {
 
   }
   
-  public void driveBack(int distance) {
+  public void driveBack(double distance) {
 	  leftMotor.setSpeed(FORWARD_SPEED);
 	  rightMotor.setSpeed(FORWARD_SPEED);
 
