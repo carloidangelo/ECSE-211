@@ -83,9 +83,9 @@ public class CanLocator {
 	*Otherwise, it will beep twice and return false.
 	*/
 	
-	private boolean checkColor(){
-		
-		navigator.moveToCan(CAN_DISTANCE_ON_BORDER);
+	private boolean checkColor(double distance){
+
+		navigator.moveToCan(distance);
 		
 		//if the can color is the target color, beep once
 		if (TR == canDetect.run()) {
@@ -208,11 +208,7 @@ public class CanLocator {
 			navigator.travelTo(URx,URy);
 		}
 		
-			navigator.driveBack(CAN_DISTANCE_FROM_OUT);
-			navigator.travelTo(URx+OFFSET,odo.getXYT()[1]/TILE_SIZE);
-			navigator.travelTo(URx+OFFSET,URy);
-			navigator.travelTo(URx,URy);
-		}
+	}
 	
 	/**
 	*borderDodge() is called when an incorrect color of a can is detected. 
