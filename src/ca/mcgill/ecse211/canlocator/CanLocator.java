@@ -78,9 +78,9 @@ public class CanLocator {
 	*Otherwise, it will beep twice and return false.
 	*/
 	
-	private boolean checkColor(){
+	private boolean checkColor(double distance){
 		
-		navigator.moveToCan(CAN_DISTANCE);
+		navigator.moveToCan(distance);
 		
 		//if the can color is the target color, beep once
 		if (TR == canDetect.run()) {
