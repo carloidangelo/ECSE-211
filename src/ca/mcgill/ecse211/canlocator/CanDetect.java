@@ -9,7 +9,8 @@ public class CanDetect {
 	private EV3LargeRegulatedMotor csMotor;
 	private ColorClassification csFront;
 	private double radius = Lab5.WHEEL_RAD;
-	public static final double ROTATE_DIS = 5;
+	public static final double ROTATE_DIS = 7;
+	public final static int ROTATION_SPEED = 10;
 	
 	public CanDetect(EV3LargeRegulatedMotor csMotor, ColorClassification csFront) {
 		this.csMotor = csMotor;
@@ -17,7 +18,8 @@ public class CanDetect {
 	}
 	
 	public int run() {
-		
+		csMotor.setAcceleration(10);
+		csMotor.setSpeed(ROTATION_SPEED);
 		int count = 0;
 		while(csFront.run() == "no object") {
 			csMotor.rotate(-convertDistance(radius, ROTATE_DIS));
@@ -26,6 +28,7 @@ public class CanDetect {
 		
 		csMotor.stop();
 		String result = csFront.run();
+		System.out.println(result);
 		csMotor.rotate(convertDistance(radius, ROTATE_DIS) * count);
 		
 		switch (result) {

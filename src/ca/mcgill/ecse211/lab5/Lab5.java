@@ -107,7 +107,7 @@ public class Lab5 {
 				
 			} else {
 				LCD.clear();
-				  
+				canDetect.run();
 				while(true) {
 					
 					if (ClrClassify.run() !="no object") {//if there is a can detected
