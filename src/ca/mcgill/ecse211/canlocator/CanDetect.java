@@ -1,5 +1,8 @@
 package ca.mcgill.ecse211.canlocator;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import ca.mcgill.ecse211.lab5.ColorClassification;
 import ca.mcgill.ecse211.lab5.Lab5;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -10,6 +13,7 @@ public class CanDetect {
 	private ColorClassification csFront;
 	private double radius = Lab5.WHEEL_RAD;
 	public static final double ROTATE_DIS = 7;
+	public static final int ROTATE_COUNT = 20;
 	public final static int ROTATION_SPEED = 10;
 	
 	public CanDetect(EV3LargeRegulatedMotor csMotor, ColorClassification csFront) {
@@ -20,29 +24,24 @@ public class CanDetect {
 	public int run() {
 		csMotor.setAcceleration(10);
 		csMotor.setSpeed(ROTATION_SPEED);
+		ArrayList<String> canColor = new ArrayList<String>();
+		ArrayList<Integer> frequency = new ArrayList<Integer>();
 		int count = 0;
-		while(csFront.run() == "no object") {
+		while (count < ROTATE_COUNT) {
 			csMotor.rotate(-convertDistance(radius, ROTATE_DIS));
+			canColor.add(csFront.run());
 			count++;
 		}
-		
 		csMotor.stop();
-		String result = csFront.run();
-		System.out.println(result);
-		csMotor.rotate(convertDistance(radius, ROTATE_DIS) * count);
-		
-		switch (result) {
-		case "red      ":
-			return 4;
-		case "yellow   ":
-			return 3;
-		case "blue     ":
-			return 1;
-		case "green    ":
-			return 2;
-		default:
-			return 0;	
-		}
+		csMotor.rotate(convertDistance(radius, ROTATE_DIS) * ROTATE_COUNT);
+		frequency.add(Collections.frequency(canColor, "blue     "));
+		frequency.add(Collections.frequency(canColor, "green    "));
+		frequency.add(Collections.frequency(canColor, "yellow   "));
+		frequency.add(Collections.frequency(canColor, "red      "));
+		Integer obj = Collections.max(frequency);
+		int index = frequency.indexOf(obj);
+		System.out.println(index + 1);
+		return index + 1;	
 	}
 	
 	/**
