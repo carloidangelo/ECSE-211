@@ -5,6 +5,12 @@ import lejos.robotics.SampleProvider;
 import ca.mcgill.ecse211.odometer.*;
 import ca.mcgill.ecse211.lab5.*;
 
+/**
+ * This class simulates the function of ultrasonic localization
+ * 
+ * @author Carlo D'Angelo
+ *
+ */
 public class UltrasonicLocalizer {
 
 	public static final int ROTATION_SPEED = 110;
@@ -23,7 +29,15 @@ public class UltrasonicLocalizer {
 	private EV3LargeRegulatedMotor leftMotor, rightMotor;
   
 	private double deltaTheta;
-
+	
+	/**
+	 * This is the default constructor of this class
+	 * @param leftMotor left motor of robot
+	 * @param rightMotor right motor of robot
+	 * @param usDistance sample provider from which to fetch ultrasonic sensor data
+	 * @param usData array in which to receive the ultrasonic sensor data
+	 * @throws OdometerExceptions
+	 */
 	public UltrasonicLocalizer(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
 		SampleProvider usDistance, float[] usData) throws OdometerExceptions {
 		odo = Odometer.getOdometer();
@@ -35,12 +49,15 @@ public class UltrasonicLocalizer {
 		leftMotor.setSpeed(ROTATION_SPEED);
 		rightMotor.setSpeed(ROTATION_SPEED);
 	}
-
+	
+	/**
+	 * Method that allows the robot to perform falling edge localization 
+	 */
 	public void fallingEdge() {
 
 		double angleA, angleB, turningAngle = 0;
 
-		
+		// Get first angle
 		while (readUSDistance() < CRITICAL_DISTANCE + NOISE_MARGIN) {
 			leftMotor.forward();
 			rightMotor.backward();
@@ -53,6 +70,7 @@ public class UltrasonicLocalizer {
 		
 		angleA = odo.getXYT()[2];
 
+		// Get second angle
 		while (readUSDistance() < CRITICAL_DISTANCE + NOISE_MARGIN) {
 			leftMotor.backward();
 			rightMotor.forward();
@@ -67,6 +85,7 @@ public class UltrasonicLocalizer {
 		leftMotor.stop(true);
 		rightMotor.stop();
 
+		// Calculation of angle that makes robot's heading face 0 degrees
 		if (angleA < angleB) {
 			deltaTheta = (360 - angleB) + ((angleA + angleB) / 2) - 225 + TURN_ERROR;
 			turningAngle = deltaTheta;
@@ -76,40 +95,18 @@ public class UltrasonicLocalizer {
 			turningAngle = deltaTheta;
 		}
 
-		leftMotor.rotate(convertAngle(radius, track, turningAngle), true);
-		rightMotor.rotate(-convertAngle(radius, track, turningAngle), false);
+		leftMotor.rotate(Navigation.convertAngle(radius, track, turningAngle), true);
+		rightMotor.rotate(-Navigation.convertAngle(radius, track, turningAngle), false);
 		odo.setTheta(0.0);
 
 	}
-
+	/**
+	 * Method that fetches data from the ultrasonic sensor
+	 * @return distance (cm) from the wall
+	 */
 	private int readUSDistance() {
 		usDistance.fetchSample(usData, 0);
 		return (int) (usData[0] * 100);
 	}
-
-	/**
-	 * This method allows the conversion of a distance to the total rotation of each wheel needed to
-	 * cover that distance.
-	 * 
-	 * @param radius
-	 * @param distance
-	 * @return
-	 */
-	private static int convertDistance(double radius, double distance) {
-	  return (int) ((180.0 * distance) / (Math.PI * radius));
-	}
-	
-	/**
-	 * This method allows the conversion of a robot's rotation in place into 
-	 * the total number of rotations of each wheel needed to cause that rotation.
-	 * 
-	 * @param radius
-	 * @param width
-	 * @param angle
-	 * @return
-	 */
-	private static int convertAngle(double radius, double width, double angle) {
-	  return convertDistance(radius, Math.PI * width * angle / 360.0);
-	}  
 
 }

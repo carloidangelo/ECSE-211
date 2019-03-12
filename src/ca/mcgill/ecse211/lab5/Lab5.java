@@ -17,6 +17,7 @@ import ca.mcgill.ecse211.searchzonelocator.SearchZoneLocator;
 import java.text.DecimalFormat;
 
 import ca.mcgill.ecse211.canlocator.CanDetect;
+import ca.mcgill.ecse211.canlocator.CanLocator;
 import ca.mcgill.ecse211.localization.*;
 
 public class Lab5 {
@@ -30,13 +31,15 @@ public class Lab5 {
 	private static final Port CS_PORT = LocalEV3.get().getPort("S4");
 	private static final Port CS_FRONT_PORT = LocalEV3.get().getPort("S2");
 	
-	public static final int LLx = 3, LLy = 3, URx = 7, URy = 7; // SearchZone description
+	public static final int LLx = 0, LLy = 0, URx = 1, URy = 1; // SearchZone description
 	private static final int SC = 0; //Starting corner
+	private static final int TR = 4; //target color
 	
 	//Robot related parameters
 	public static final double WHEEL_RAD = 2.2;
-	public static final double TRACK = 13.5;
-
+	//public static final double TRACK = 13.5;
+	public static final double TRACK = 13.2;
+	
 	public static void main(String[] args) throws OdometerExceptions {
 
 		int buttonChoice;
@@ -92,37 +95,52 @@ public class Lab5 {
 				
 				// Localization (Ultrasonic and Light)
 				UltrasonicLocalizer ultrasonicLocalizer = new UltrasonicLocalizer(LEFT_MOTOR, RIGHT_MOTOR, usDistance, usData);
-				LightLocalizer lightLocatizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData, navigator);
+				LightLocalizer lightLocalizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData, navigator);
 
 				ultrasonicLocalizer.fallingEdge();
 
-				lightLocatizer.moveCloseOrigin();
-				lightLocatizer.lightLocalize(0,0);
+				lightLocalizer.moveClose();
+				lightLocalizer.lightLocalize(0,0);
 				
 				// Search Zone Locator
-				SearchZoneLocator searchZonelocator = new SearchZoneLocator(SC, LLx, LLy, lightLocatizer, navigator);
+				SearchZoneLocator searchZonelocator = new SearchZoneLocator(SC, LLx, LLy, lightLocalizer, navigator);
 				searchZonelocator.goToSearchZone();
 				
 				Sound.beep(); // Must BEEP after navigation to search zone is finished
 				
+				CanLocator canLocator = new CanLocator(canDetect, usDistance, usData, 
+			navigator,lightLocalizer, TR, LLx, LLy, URx, URy);
+				canLocator.RunLocator();
+				
+				
 			} else {
 				LCD.clear();
+				
+				/*Thread odoThread = new Thread(odometer);
+				odoThread.start();
+
+				Thread odoDisplayThread = new Thread(odometryDisplay);
+				odoDisplayThread.start();
+				LightLocalizer lightLocalizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData, navigator);
+				CanLocator canLocator = new CanLocator(canDetect, usDistance, usData, 
+						navigator,lightLocalizer, TR, LLx, LLy, URx, URy);
+				canLocator.RunLocator();*/
 				canDetect.run();
 				while(true) {
 					
-					if (ClrClassify.run() !="no object") {//if there is a can detected
+					if (ClrClassify.run() !="no object") {	//if there is a can detected
 				    LCD.drawString("Object Detected", 1,1);
 				    LCD.drawString(ClrClassify.run(), 1, 2);
 				    
 				    } else {
 				    	LCD.clear();
 				    }
-//
-//				    colorId.fetchSample(colorData, 0);
-//				    LCD.drawString("R: " + colorData[0], 1, 3);
-//			        LCD.drawString("G: " + colorData[1], 1, 4);
-//			        LCD.drawString("B: " + colorData[2], 1, 5);
-//				  
+
+				    colorId.fetchSample(colorData, 0);
+				    LCD.drawString("R: " + colorData[0], 1, 3);
+			        LCD.drawString("G: " + colorData[1], 1, 4);
+			        LCD.drawString("B: " + colorData[2], 1, 5);
+				  
 				 }
 				
 			}

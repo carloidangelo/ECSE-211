@@ -13,10 +13,10 @@ public class ColorClassification {
   public static String detected_color;
 
   private final float[][] meanRGB = {// the mean RGB values for cans
-      {0.0656862865f, 0.0127450985f, 0.0117643253f}, // red can
-      {0.0404248312f, 0.0287563221f, 0.0134254234f}, // yellow can
-      {0.0147062342f, 0.0405322324f, 0.0444449999f}, // blue can
-      {0.0137257231f, 0.0232034322f, 0.0114382312f} // green can
+      {0.0481924454f, 0.0107023890f, 0.0065211908f}, // red can
+      {0.0275519090f, 0.0167073221f, 0.0058014234f}, // yellow can
+      {0.0055042342f, 0.0206447724f, 0.0235459889f}, // blue can
+      {0.0057257231f, 0.0232034322f, 0.0075382312f} // green can
   };
 
   // constructor

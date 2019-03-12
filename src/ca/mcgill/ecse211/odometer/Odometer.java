@@ -2,6 +2,13 @@ package ca.mcgill.ecse211.odometer;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
+/**
+ * This class simulates the function of an odometer. It extends the OdometerData
+ * class and implements the Runnable interface
+ * 
+ * @author Carlo D'Angelo and Mohamed Samee
+ *
+ */
 public class Odometer extends OdometerData implements Runnable {
 
   private OdometerData odoData;
@@ -82,8 +89,7 @@ public class Odometer extends OdometerData implements Runnable {
   }
 
   /**
-   * This method is where the logic for the odometer will run. Use the methods provided from the
-   * OdometerData class to implement the odometer.
+   * This method is where the logic for the odometer will run.
    */
   // run method (required for Thread)
   public void run() {

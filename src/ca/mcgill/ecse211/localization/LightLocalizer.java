@@ -7,6 +7,12 @@ import lejos.robotics.SampleProvider;
 import ca.mcgill.ecse211.odometer.*;
 import ca.mcgill.ecse211.lab5.*;
 
+/**
+ * This class simulates the function of light localization
+ * 
+ * @author Carlo D'Angelo
+ *
+ */
 public class LightLocalizer {
 
   public final static int ROTATION_SPEED = 100;
@@ -30,6 +36,15 @@ public class LightLocalizer {
   private SampleProvider csLineDetector;
   private float[] csData;
 
+  /**
+   * This is the default constructor of this class
+   * @param leftMotor left motor of robot
+   * @param rightMotor right motor of robot
+   * @param csLineDetector sample provider from which to fetch light sensor data
+   * @param csData array in which to receive the light sensor data
+   * @param navigator instance of Navigator class
+   * @throws OdometerExceptions
+   */
   public LightLocalizer(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
 		  				  SampleProvider csLineDetector, float[] csData, Navigation navigator) throws OdometerExceptions {
 	odo = Odometer.getOdometer();
@@ -41,6 +56,11 @@ public class LightLocalizer {
 	this.navigator = navigator;
 	}
 
+  /**
+   * Method that allows the robot to perform light localization
+   * @param pointX x coordinate of desired localization point
+   * @param pointY y coordinate of desired localization point
+   */
   public void lightLocalize(double pointX, double pointY) {
 	  
       leftMotor.setSpeed(ROTATION_SPEED);
@@ -76,60 +96,41 @@ public class LightLocalizer {
 	  
 	  deltaA = 90 - (angleY / 2.0) - TURN_ERROR;
 	  
-	  leftMotor.rotate(convertAngle(radius, track, deltaA), true);
-	  rightMotor.rotate(-convertAngle(radius, track, deltaA));
+	  leftMotor.rotate(Navigation.convertAngle(radius, track, deltaA), true);
+	  rightMotor.rotate(-Navigation.convertAngle(radius, track, deltaA));
 
 	  odo.setXYT(pointX * TILE_SIZE + deltaX, pointY * TILE_SIZE + deltaY, 0.0);
 	  
 	  navigator.travelTo(pointX, pointY);
 
-	  leftMotor.rotate(-convertAngle(radius, track, Navigation.minAng), true);
-	  rightMotor.rotate(convertAngle(radius, track, Navigation.minAng));
+	  leftMotor.rotate(-Navigation.convertAngle(radius, track, Navigation.minAng), true);
+	  rightMotor.rotate(Navigation.convertAngle(radius, track, Navigation.minAng));
 	  
 	  leftMotor.stop(true);
 	  rightMotor.stop();
 
   }
-
-  public void moveCloseOrigin() {
-	 
-	//float firstReading = readLineDarkness();
+  
+  /**
+   * Method that moves the robot closer to the localization point in preparation
+   * for the actual light localization
+   */
+  public void moveClose() {
 	
     navigator.turnTo(45);
 
 	leftMotor.setSpeed(FORWARD_SPEED);
 	rightMotor.setSpeed(FORWARD_SPEED);
 	
-	leftMotor.rotate(convertDistance(radius, EXTRA_DISTANCE), true);
-	rightMotor.rotate(convertDistance(radius, EXTRA_DISTANCE));
+	leftMotor.rotate(Navigation.convertDistance(radius, EXTRA_DISTANCE), true);
+	rightMotor.rotate(Navigation.convertDistance(radius, EXTRA_DISTANCE));
 
   }
   
-	/**
-	 * This method allows the conversion of a distance to the total rotation of each wheel needed to
-	 * cover that distance.
-	 * 
-	 * @param radius
-	 * @param distance
-	 * @return
-	 */
-  private static int convertDistance(double radius, double distance) {
-	  return (int) ((180.0 * distance) / (Math.PI * radius));
-  }
-	
-	/**
-	 * This method allows the conversion of a robot's rotation in place into 
-	 * the total number of rotations of each wheel needed to cause that rotation.
-	 * 
-	 * @param radius
-	 * @param width
-	 * @param angle
-	 * @return
-	 */
-  private static int convertAngle(double radius, double width, double angle) {
-	return convertDistance(radius, Math.PI * width * angle / 360.0);
-  }  
-  
+  /**
+   * Method that fetches data from the light sensor
+   * @return darkness (value between 0-1) of what the light sensor is reading multiplied by 1000 
+   */
   private float readLineDarkness() {
 	  csLineDetector.fetchSample(csData, 0);
 	  return csData[0] * 1000;

@@ -5,6 +5,13 @@ import ca.mcgill.ecse211.localization.LightLocalizer;
 import ca.mcgill.ecse211.odometer.Odometer;
 import ca.mcgill.ecse211.odometer.OdometerExceptions;
 
+/**
+ * This class handles the robot's navigation from the starting corner
+ * to the search zone after localization is complete
+ * 
+ * @author Carlo D'Angelo
+ *
+ */
 public class SearchZoneLocator {
 
 	private Odometer odo;
@@ -13,6 +20,15 @@ public class SearchZoneLocator {
 	private LightLocalizer lightLocalizer;
 	private Navigation navigator;
 	
+	/**
+	 * This is the default constructor of this class
+	 * @param SC starting corner of robot
+	 * @param LLx x position of lower left corner of search zone
+	 * @param LLy x position of lower left corner of search zone
+	 * @param lightLocalizer instance of LightLocalizer class
+	 * @param navigator instance of Navigator class
+	 * @throws OdometerExceptions
+	 */
 	public SearchZoneLocator(int SC, int LLx, int LLy, LightLocalizer lightLocalizer,
 			Navigation navigator) throws OdometerExceptions {
 		odo = Odometer.getOdometer();
@@ -23,24 +39,24 @@ public class SearchZoneLocator {
 		this.navigator= navigator;
 	}
 	
-	/** CheckSC() checks the starting corner of the EV3. Depending on where
-	 *  it was placed to begin, the EV3 will make its way to the search zone
-	 * and corrects its angle to follow the convention given in Lab 5.
+	/** 
+	 * Method that allows the robot to make its way to the search zone
+	 * The path the robot takes will depend on the starting corner (SC) parameter
 	 */
 	public void goToSearchZone(){
 		
-		switch(SC){ //NOTE, check if splitting LLx LLy is more accurate
+		switch(SC){
 			case 0: 
 				//current position is (1,1)
 				odo.setXYT(1.0 * TILE_SIZE, 1.0 * TILE_SIZE, 0.0);
 				//go to LLx
 				//go to LLy
 				navigator.travelTo(LLx,1);
-				/*if (LLx != 1) {
+				if (LLx != 1) {
 					navigator.turnTo(-45);
 					navigator.driveBack(5);
 					lightLocalizer.lightLocalize(LLx, 1);
-				}*/
+				}
 				navigator.travelTo(LLx,LLy);
 				navigator.turnTo(45);
 				navigator.driveBack(5);
@@ -54,9 +70,12 @@ public class SearchZoneLocator {
 				navigator.travelTo(LLx,1);
 				if (LLx != 7) {
 					navigator.turnTo(135);
+					navigator.driveBack(5);
 					lightLocalizer.lightLocalize(LLx, 1);
 				}
 				navigator.travelTo(LLx,LLy);
+				navigator.turnTo(45);
+				navigator.driveBack(5);
 				lightLocalizer.lightLocalize(LLx, LLy);
 				break;
 			case 2: 
@@ -64,13 +83,19 @@ public class SearchZoneLocator {
 				odo.setXYT(7.0 * TILE_SIZE, 7.0 * TILE_SIZE, 180.0);
 				//go to LLx
 				//go to LLy
-				navigator.travelTo(LLx,7);
-				if (LLx != 7) {
-					navigator.turnTo(135);
-					lightLocalizer.lightLocalize(LLx, 7);
-				}
+				navigator.travelTo(LLx - 1,7);
+				navigator.turnTo(135);
+				navigator.driveBack(5);
+				lightLocalizer.lightLocalize(LLx - 1, 7);
+				
+				navigator.travelTo(LLx - 1,LLy);
+				navigator.turnTo(-135);
+				navigator.driveBack(5);
+				lightLocalizer.lightLocalize(LLx - 1, LLy);
+				
 				navigator.travelTo(LLx,LLy);
-				navigator.turnTo(-180);
+				navigator.turnTo(-45);
+				navigator.driveBack(5);
 				lightLocalizer.lightLocalize(LLx, LLy);
 				break;
 			case 3:	
@@ -78,13 +103,19 @@ public class SearchZoneLocator {
 				odo.setXYT(1.0 * TILE_SIZE, 7.0 * TILE_SIZE, 90.0);
 				//go to LLx
 				//go to LLy
-				navigator.travelTo(LLx,7);
-				if (LLx != 1) {
-					navigator.turnTo(-45);
-					lightLocalizer.lightLocalize(LLx, 7);
-				}
+				navigator.travelTo(LLx - 1,7);
+				navigator.turnTo(-45);
+				navigator.driveBack(5);
+				lightLocalizer.lightLocalize(LLx - 1, 7);
+				
+				navigator.travelTo(LLx - 1,LLy);
+				navigator.turnTo(-135);
+				navigator.driveBack(5);
+				lightLocalizer.lightLocalize(LLx - 1, LLy);
+				
 				navigator.travelTo(LLx,LLy);
-				navigator.turnTo(-180);
+				navigator.turnTo(-45);
+				navigator.driveBack(5);
 				lightLocalizer.lightLocalize(LLx, LLy);
 				break;
 		    default:

@@ -3,6 +3,13 @@ package ca.mcgill.ecse211.lab5;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import ca.mcgill.ecse211.odometer.*;
 
+/**
+ * This class contains all the methods that contribute to making
+ * the robot move
+ * 
+ * @author Carlo D'Angelo
+ *
+ */
 public class Navigation {
 
   public final static int ROTATION_SPEED = 100;
@@ -18,12 +25,23 @@ public class Navigation {
  
   public static double minAng;
 
+  /**
+   * This is the default constructor of this class
+   * @param leftMotor left motor of robot
+   * @param rightMotor right motor of robot
+   * @throws OdometerExceptions
+   */
   public Navigation(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor) throws OdometerExceptions {
 	odo = Odometer.getOdometer();
 	this.leftMotor = leftMotor;
 	this.rightMotor = rightMotor;
 	}
   
+  /**
+   * Method that allows robot to travel from its current position to any other point
+   * @param x x coordinate of desired destination
+   * @param y y coordinate of desired destination
+   */
   public void travelTo(double x, double y) {
 	double currentX = odo.getXYT()[0];
 	double currentY = odo.getXYT()[1];
@@ -54,6 +72,10 @@ public class Navigation {
 	
   }
 
+  /**
+   * Method that allows the robot to rotate in place 
+   * @param theta angle amount (in degrees) that you want the robot to rotate in place
+   */
   public void turnTo(double theta) {
 	leftMotor.setSpeed(ROTATION_SPEED);
 	rightMotor.setSpeed(ROTATION_SPEED);
@@ -62,6 +84,10 @@ public class Navigation {
 
   }
   
+  /**
+   * Method that allows the robot to move backward
+   * @param distance distance that you want the robot to travel backward
+   */
   public void driveBack(double distance) {
 	  leftMotor.setSpeed(FORWARD_SPEED);
 	  rightMotor.setSpeed(FORWARD_SPEED);
@@ -70,6 +96,10 @@ public class Navigation {
 	  rightMotor.rotate(-convertDistance(radius, distance), false);
   }
   
+  /**
+   * Method that allows the robot to move forward
+   * @param distance distance that you want the robot to travel forward
+   */
   public void driveForward(double distance) {
 	  leftMotor.setSpeed(FORWARD_SPEED);
 	  rightMotor.setSpeed(FORWARD_SPEED);
@@ -78,6 +108,10 @@ public class Navigation {
 	  rightMotor.rotate(convertDistance(radius, distance), false);
   }
   
+  /**
+   * Method that allows the robot to approach a can
+   * @param distance distance that you want the robot to travel forward
+   */
   public void moveToCan(double distance) {
 	  leftMotor.setSpeed(FORWARD_SPEED);
 	  rightMotor.setSpeed(FORWARD_SPEED);
@@ -87,28 +121,28 @@ public class Navigation {
   }
   
 	/**
-	 * This method allows the conversion of a distance to the total rotation of each wheel needed to
-	 * cover that distance.
+	 * This method converts a distance into the total rotation (in degrees) of 
+	 * each wheel needed to cover that distance 
 	 * 
-	 * @param radius
-	 * @param distance
-	 * @return
+	 * @param radius radius of wheel
+	 * @param distance distance that you want the robot to move
+	 * @return total rotation (in degrees) of each wheel needed to cover a distance
 	 */
-  private static int convertDistance(double radius, double distance) {
+	public static int convertDistance(double radius, double distance) {
 	  return (int) ((180.0 * distance) / (Math.PI * radius));
-  }
+	}
 	
 	/**
-	 * This method allows the conversion of a robot's rotation in place into 
-	 * the total number of rotations of each wheel needed to cause that rotation.
+	 * This method converts a rotation in place into the total 
+	 * rotation (in degrees) of each wheel needed to cause that rotation
 	 * 
-	 * @param radius
-	 * @param width
-	 * @param angle
-	 * @return
+	 * @param radius radius of wheel
+	 * @param width distance between centers of wheels
+	 * @param angle angle (in place) that you want the robot to rotate
+	 * @return total rotation (in degrees) of each wheel needed to cause a rotation in place
 	 */
-  private static int convertAngle(double radius, double width, double angle) {
-	return convertDistance(radius, Math.PI * width * angle / 360.0);
-  }  
+	public static int convertAngle(double radius, double width, double angle) {
+	  return convertDistance(radius, Math.PI * width * angle / 360.0);
+	}  
   
 }
