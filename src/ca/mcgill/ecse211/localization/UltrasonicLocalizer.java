@@ -27,8 +27,6 @@ public class UltrasonicLocalizer {
 	private SampleProvider usDistance;
 	private float[] usData;
 	private EV3LargeRegulatedMotor leftMotor, rightMotor;
-  
-	private double deltaTheta;
 	
 	/**
 	 * This is the default constructor of this class
@@ -87,12 +85,10 @@ public class UltrasonicLocalizer {
 
 		// Calculation of angle that makes robot's heading face 0 degrees
 		if (angleA < angleB) {
-			deltaTheta = (360 - angleB) + ((angleA + angleB) / 2) - 225 + TURN_ERROR;
-			turningAngle = deltaTheta;
+			turningAngle = (360 - angleB) + ((angleA + angleB) / 2) - 225 + TURN_ERROR;
 
 		} else if (angleA > angleB) {
-			deltaTheta = -angleB + (angleA + angleB) / 2 - 45 + TURN_ERROR;
-			turningAngle = deltaTheta;
+			turningAngle = -angleB + (angleA + angleB) / 2 - 45 + TURN_ERROR;
 		}
 
 		leftMotor.rotate(Navigation.convertAngle(radius, track, turningAngle), true);
