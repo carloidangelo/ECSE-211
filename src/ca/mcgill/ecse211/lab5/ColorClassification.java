@@ -8,11 +8,9 @@ public class ColorClassification {
 
   // use an array to collect color data
   private float[] colorData;
-  private SampleProvider colorId;
+  private SampleProvider colorID;
 
-  public static String detected_color;
-
-  private final float[][] meanRGB = {// the mean RGB values for cans
+  private final float[][] MEAN_RGB = {// the mean RGB values for cans
       {0.0481924454f, 0.0107023890f, 0.0065211908f}, // red can
       {0.0275519090f, 0.0167073221f, 0.0058014234f}, // yellow can
       {0.0055042342f, 0.0206447724f, 0.0235459889f}, // blue can
@@ -22,7 +20,7 @@ public class ColorClassification {
   // constructor
   public ColorClassification(float[] colorData, SampleProvider colorId) {
     this.colorData = colorData;
-    this.colorId = colorId;
+    this.colorID = colorId;
  
     
 
@@ -44,7 +42,7 @@ public class ColorClassification {
   }
 
 
-  public int findColor(float[] colorData) {
+  private int findColor(float[] colorData) {
     float eucDistance = (float) Math.sqrt((Math.pow(colorData[0], 2) + Math.pow(colorData[1], 2) + Math.pow(colorData[2], 2)));
 
     // normalize R,G,B values
@@ -53,9 +51,9 @@ public class ColorClassification {
     float nB = colorData[2] / eucDistance;
     // use a counter and difference in RGB values to classify the color
     for (int i = 0; i < 4; i++) {
-      float deltaR = Math.abs(nR - (meanRGB[i][0]/eucDistance));
-      float deltaG = Math.abs(nG - (meanRGB[i][1]/eucDistance));
-      float deltaB = Math.abs(nB - (meanRGB[i][2]/eucDistance));
+      float deltaR = Math.abs(nR - (MEAN_RGB[i][0]/eucDistance));
+      float deltaG = Math.abs(nG - (MEAN_RGB[i][1]/eucDistance));
+      float deltaB = Math.abs(nB - (MEAN_RGB[i][2]/eucDistance));
       
      // System.out.println(deltaB);
  
@@ -69,8 +67,8 @@ public class ColorClassification {
     return 4;
   }
   
-  public float[] sampleData(){
-  colorId.fetchSample(colorData, 0);
+  private float[] sampleData(){
+  colorID.fetchSample(colorData, 0);
   return colorData;
   }
 
