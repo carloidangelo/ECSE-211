@@ -10,17 +10,18 @@ import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.sensor.SensorModes;
 import lejos.robotics.SampleProvider;
-import ca.mcgill.ecse211.odometer.Odometer;
-import ca.mcgill.ecse211.odometer.OdometerExceptions;
-import ca.mcgill.ecse211.searchzonelocator.SearchZoneLocator;
+import ca.mcgill.ecse211.model.AssessCanColor;
+import ca.mcgill.ecse211.model.CanLocator;
+import ca.mcgill.ecse211.model.ColorClassification;
+import ca.mcgill.ecse211.model.LightLocalizer;
+import ca.mcgill.ecse211.model.Navigation;
+import ca.mcgill.ecse211.model.Odometer;
+import ca.mcgill.ecse211.model.OdometerExceptions;
+import ca.mcgill.ecse211.model.Robot;
+import ca.mcgill.ecse211.model.SearchZoneLocator;
+import ca.mcgill.ecse211.model.UltrasonicLocalizer;
 
-import java.text.DecimalFormat;
-
-import ca.mcgill.ecse211.canlocator.CanDetect;
-import ca.mcgill.ecse211.canlocator.CanLocator;
-import ca.mcgill.ecse211.localization.*;
-
-public class Lab5 {
+public class Project {
 
 	// Motor and Sensor Ports
 	private static final EV3LargeRegulatedMotor LEFT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
@@ -34,18 +35,13 @@ public class Lab5 {
 	public static final int LLx = 0, LLy = 0, URx = 1, URy = 1; // SearchZone description
 	private static final int SC = 0; //Starting corner
 	private static final int TR = 4; //target color
-	
-	//Robot related parameters
-	public static final double WHEEL_RAD = 2.2;
-	//public static final double TRACK = 13.5;
-	public static final double TRACK = 13.2;
-	
+
 	public static void main(String[] args) throws OdometerExceptions {
 
 		int buttonChoice;
 
 		// Odometer related objects
-		Odometer odometer = Odometer.getOdometer(LEFT_MOTOR, RIGHT_MOTOR, TRACK, WHEEL_RAD);
+		Odometer odometer = Odometer.getOdometer(LEFT_MOTOR, RIGHT_MOTOR, Robot.TRACK, Robot.WHEEL_RAD);
 		Navigation navigator = new Navigation(LEFT_MOTOR,RIGHT_MOTOR);
 		Display odometryDisplay = new Display(LCD); 
 
@@ -69,7 +65,7 @@ public class Lab5 {
         colorId.fetchSample(colorData, 0);
 		
         ColorClassification ClrClassify= new ColorClassification (colorData, colorId);
-        CanDetect canDetect = new CanDetect(SENSOR_MOTOR, ClrClassify);
+        AssessCanColor canDetect = new AssessCanColor(SENSOR_MOTOR, ClrClassify);
         
 		do {
 			

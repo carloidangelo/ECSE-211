@@ -1,11 +1,8 @@
-package ca.mcgill.ecse211.canlocator;
+package ca.mcgill.ecse211.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import ca.mcgill.ecse211.lab5.ColorClassification;
-import ca.mcgill.ecse211.lab5.Lab5;
-import ca.mcgill.ecse211.lab5.Navigation;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 /**
@@ -14,11 +11,11 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
  * @author Carlo D'Angelo
  *
  */
-public class CanDetect {
+public class AssessCanColor {
 	
 	private EV3LargeRegulatedMotor csMotor;
 	private ColorClassification csFront;
-	private double radius = Lab5.WHEEL_RAD;
+	private double radius = Robot.WHEEL_RAD;
 	public static final double ROTATE_DIS = 0.5;
 	public static final int ROTATE_COUNT = 20;
 	public final static int ROTATION_SPEED = 50;
@@ -29,7 +26,7 @@ public class CanDetect {
 	 * @param csMotor motor in charge of rotating the light sensor that scans the cans
 	 * @param csFront instance of the ColorClassification class
 	 */
-	public CanDetect(EV3LargeRegulatedMotor csMotor, ColorClassification csFront) {
+	public AssessCanColor(EV3LargeRegulatedMotor csMotor, ColorClassification csFront) {
 		this.csMotor = csMotor;
 		this.csFront = csFront;
 	}

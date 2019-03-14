@@ -1,9 +1,4 @@
-package ca.mcgill.ecse211.searchzonelocator;
-
-import ca.mcgill.ecse211.lab5.Navigation;
-import ca.mcgill.ecse211.localization.LightLocalizer;
-import ca.mcgill.ecse211.odometer.Odometer;
-import ca.mcgill.ecse211.odometer.OdometerExceptions;
+package ca.mcgill.ecse211.model;
 
 /**
  * This class handles the robot's navigation from the starting corner

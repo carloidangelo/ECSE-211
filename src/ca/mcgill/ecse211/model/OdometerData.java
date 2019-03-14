@@ -1,4 +1,4 @@
-package ca.mcgill.ecse211.odometer;
+package ca.mcgill.ecse211.model;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;

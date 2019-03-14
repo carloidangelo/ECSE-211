@@ -1,8 +1,9 @@
 package ca.mcgill.ecse211.lab5;
 
 import java.text.DecimalFormat;
-import ca.mcgill.ecse211.odometer.Odometer;
-import ca.mcgill.ecse211.odometer.OdometerExceptions;
+
+import ca.mcgill.ecse211.model.Odometer;
+import ca.mcgill.ecse211.model.OdometerExceptions;
 import lejos.hardware.lcd.TextLCD;
 
 /**

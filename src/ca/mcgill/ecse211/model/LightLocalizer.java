@@ -1,11 +1,9 @@
-package ca.mcgill.ecse211.localization;
+package ca.mcgill.ecse211.model;
 
 import lejos.hardware.Sound;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.robotics.SampleProvider;
-import ca.mcgill.ecse211.odometer.*;
-import ca.mcgill.ecse211.lab5.*;
 
 /**
  * This class simulates the function of light localization
@@ -24,8 +22,8 @@ public class LightLocalizer {
   private final static int EXTRA_DISTANCE = 5;
   private static final double TURN_ERROR = 10;
   
-  private double radius = Lab5.WHEEL_RAD;
-  private double track = Lab5.TRACK;
+  private final double RADIUS = Robot.WHEEL_RAD;
+  private final double TRACK = Robot.TRACK;
   
   private Odometer odo;
   private EV3LargeRegulatedMotor leftMotor, rightMotor;
@@ -96,15 +94,15 @@ public class LightLocalizer {
 	  
 	  deltaA = 90 - (angleY / 2.0) - TURN_ERROR;
 	  
-	  leftMotor.rotate(Navigation.convertAngle(radius, track, deltaA), true);
-	  rightMotor.rotate(-Navigation.convertAngle(radius, track, deltaA));
+	  leftMotor.rotate(Navigation.convertAngle(RADIUS, TRACK, deltaA), true);
+	  rightMotor.rotate(-Navigation.convertAngle(RADIUS, TRACK, deltaA));
 
 	  odo.setXYT(pointX * TILE_SIZE + deltaX, pointY * TILE_SIZE + deltaY, 0.0);
 	  
 	  navigator.travelTo(pointX, pointY);
 
-	  leftMotor.rotate(-Navigation.convertAngle(radius, track, Navigation.minAng), true);
-	  rightMotor.rotate(Navigation.convertAngle(radius, track, Navigation.minAng));
+	  leftMotor.rotate(-Navigation.convertAngle(RADIUS, TRACK, Navigation.minAng), true);
+	  rightMotor.rotate(Navigation.convertAngle(RADIUS, TRACK, Navigation.minAng));
 	  
 	  leftMotor.stop(true);
 	  rightMotor.stop();
@@ -122,8 +120,8 @@ public class LightLocalizer {
 	leftMotor.setSpeed(FORWARD_SPEED);
 	rightMotor.setSpeed(FORWARD_SPEED);
 	
-	leftMotor.rotate(Navigation.convertDistance(radius, EXTRA_DISTANCE), true);
-	rightMotor.rotate(Navigation.convertDistance(radius, EXTRA_DISTANCE));
+	leftMotor.rotate(Navigation.convertDistance(RADIUS, EXTRA_DISTANCE), true);
+	rightMotor.rotate(Navigation.convertDistance(RADIUS, EXTRA_DISTANCE));
 
   }
   

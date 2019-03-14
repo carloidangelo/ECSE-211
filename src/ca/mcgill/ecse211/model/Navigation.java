@@ -1,7 +1,6 @@
-package ca.mcgill.ecse211.lab5;
+package ca.mcgill.ecse211.model;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import ca.mcgill.ecse211.odometer.*;
 
 /**
  * This class contains all the methods that contribute to making
@@ -17,8 +16,8 @@ public class Navigation {
   
   private static final double TILE_SIZE = 30.48;
   
-  private double radius = Lab5.WHEEL_RAD;
-  private double track = Lab5.TRACK;
+  private final double RADIUS = Robot.WHEEL_RAD;
+  private final double TRACK = Robot.TRACK;
   
   private Odometer odo;
   private EV3LargeRegulatedMotor leftMotor, rightMotor;
@@ -67,8 +66,8 @@ public class Navigation {
 	leftMotor.setSpeed(FORWARD_SPEED);
 	rightMotor.setSpeed(FORWARD_SPEED);
 
-	leftMotor.rotate(convertDistance(radius, distance), true);
-	rightMotor.rotate(convertDistance(radius, distance), false);
+	leftMotor.rotate(convertDistance(RADIUS, distance), true);
+	rightMotor.rotate(convertDistance(RADIUS, distance), false);
 	
   }
 
@@ -79,8 +78,8 @@ public class Navigation {
   public void turnTo(double theta) {
 	leftMotor.setSpeed(ROTATION_SPEED);
 	rightMotor.setSpeed(ROTATION_SPEED);
-	leftMotor.rotate(convertAngle(radius, track, theta), true);
-	rightMotor.rotate(-convertAngle(radius, track, theta), false);
+	leftMotor.rotate(convertAngle(RADIUS, TRACK, theta), true);
+	rightMotor.rotate(-convertAngle(RADIUS, TRACK, theta), false);
 
   }
   
@@ -92,8 +91,8 @@ public class Navigation {
 	  leftMotor.setSpeed(FORWARD_SPEED);
 	  rightMotor.setSpeed(FORWARD_SPEED);
 
-	  leftMotor.rotate(-convertDistance(radius, distance), true);
-	  rightMotor.rotate(-convertDistance(radius, distance), false);
+	  leftMotor.rotate(-convertDistance(RADIUS, distance), true);
+	  rightMotor.rotate(-convertDistance(RADIUS, distance), false);
   }
   
   /**
@@ -104,8 +103,8 @@ public class Navigation {
 	  leftMotor.setSpeed(FORWARD_SPEED);
 	  rightMotor.setSpeed(FORWARD_SPEED);
 
-	  leftMotor.rotate(convertDistance(radius, distance), true);
-	  rightMotor.rotate(convertDistance(radius, distance), false);
+	  leftMotor.rotate(convertDistance(RADIUS, distance), true);
+	  rightMotor.rotate(convertDistance(RADIUS, distance), false);
   }
   
   /**
@@ -116,33 +115,33 @@ public class Navigation {
 	  leftMotor.setSpeed(FORWARD_SPEED);
 	  rightMotor.setSpeed(FORWARD_SPEED);
 
-	  leftMotor.rotate(convertDistance(radius, distance), true);
-	  rightMotor.rotate(convertDistance(radius, distance), false);
+	  leftMotor.rotate(convertDistance(RADIUS, distance), true);
+	  rightMotor.rotate(convertDistance(RADIUS, distance), false);
   }
   
 	/**
 	 * This method converts a distance into the total rotation (in degrees) of 
 	 * each wheel needed to cover that distance 
 	 * 
-	 * @param radius radius of wheel
+	 * @param RADIUS RADIUS of wheel
 	 * @param distance distance that you want the robot to move
 	 * @return total rotation (in degrees) of each wheel needed to cover a distance
 	 */
-	public static int convertDistance(double radius, double distance) {
-	  return (int) ((180.0 * distance) / (Math.PI * radius));
+	public static int convertDistance(double RADIUS, double distance) {
+	  return (int) ((180.0 * distance) / (Math.PI * RADIUS));
 	}
 	
 	/**
 	 * This method converts a rotation in place into the total 
 	 * rotation (in degrees) of each wheel needed to cause that rotation
 	 * 
-	 * @param radius radius of wheel
+	 * @param RADIUS RADIUS of wheel
 	 * @param width distance between centers of wheels
 	 * @param angle angle (in place) that you want the robot to rotate
 	 * @return total rotation (in degrees) of each wheel needed to cause a rotation in place
 	 */
-	public static int convertAngle(double radius, double width, double angle) {
-	  return convertDistance(radius, Math.PI * width * angle / 360.0);
+	public static int convertAngle(double RADIUS, double width, double angle) {
+	  return convertDistance(RADIUS, Math.PI * width * angle / 360.0);
 	}  
   
 }

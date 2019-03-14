@@ -1,9 +1,5 @@
-package ca.mcgill.ecse211.canlocator;
+package ca.mcgill.ecse211.model;
 
-import ca.mcgill.ecse211.lab5.Navigation;
-import ca.mcgill.ecse211.localization.LightLocalizer;
-import ca.mcgill.ecse211.odometer.Odometer;
-import ca.mcgill.ecse211.odometer.OdometerExceptions;
 import lejos.hardware.Sound;
 import lejos.robotics.SampleProvider;
 
@@ -11,7 +7,7 @@ public class CanLocator {
 
 	private Odometer odo;
 	private Navigation navigator;
-	private CanDetect canDetect;
+	private AssessCanColor canDetect;
 	private SampleProvider usDistance;
 	private float[] usData;
 	private LightLocalizer lightLocalizer;
@@ -30,7 +26,7 @@ public class CanLocator {
 	private int count = 0;
 	private int LLx, LLy, URx, URy;
 	
-	public CanLocator(CanDetect canDetect, SampleProvider usDistance, float[] usData, 
+	public CanLocator(AssessCanColor canDetect, SampleProvider usDistance, float[] usData, 
 			Navigation navigator, LightLocalizer lightLocalizer, int TR, int LLx, int LLy, int URx, int URy) throws OdometerExceptions {
 		odo = Odometer.getOdometer();
 		this.usDistance = usDistance;

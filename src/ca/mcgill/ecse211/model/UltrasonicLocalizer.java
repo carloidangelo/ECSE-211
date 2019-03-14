@@ -1,9 +1,7 @@
-package ca.mcgill.ecse211.localization;
+package ca.mcgill.ecse211.model;
 
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.robotics.SampleProvider;
-import ca.mcgill.ecse211.odometer.*;
-import ca.mcgill.ecse211.lab5.*;
 
 /**
  * This class simulates the function of ultrasonic localization
@@ -20,8 +18,8 @@ public class UltrasonicLocalizer {
 
 	private static final double TURN_ERROR = 15;
   
-	private double radius = Lab5.WHEEL_RAD;
-	private double track = Lab5.TRACK;
+	private final double RADIUS = Robot.WHEEL_RAD;
+	private final double TRACK = Robot.TRACK;
  
 	private Odometer odo;
 	private SampleProvider usDistance;
@@ -91,8 +89,8 @@ public class UltrasonicLocalizer {
 			turningAngle = -angleB + (angleA + angleB) / 2 - 45 + TURN_ERROR;
 		}
 
-		leftMotor.rotate(Navigation.convertAngle(radius, track, turningAngle), true);
-		rightMotor.rotate(-Navigation.convertAngle(radius, track, turningAngle), false);
+		leftMotor.rotate(Navigation.convertAngle(RADIUS, TRACK, turningAngle), true);
+		rightMotor.rotate(-Navigation.convertAngle(RADIUS, TRACK, turningAngle), false);
 		odo.setTheta(0.0);
 
 	}
