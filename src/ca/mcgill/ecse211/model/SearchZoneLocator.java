@@ -73,5 +73,9 @@ public class SearchZoneLocator {
 		}
 		
 	} 
+	
+	private void transitTunnel() {
+		
+	}
   
 }
