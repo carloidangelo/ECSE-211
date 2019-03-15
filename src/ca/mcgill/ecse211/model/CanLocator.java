@@ -23,19 +23,19 @@ public class CanLocator {
 	private static final double DISTANCE_ERROR = 7.0;
 	private int ENDX = 0, ENDY = 0;
 	private int Cx = 0,Cy = 0;
-	private int TR;  //this variable stores the integer defining the target can color.
 	
+	private int TR;  //this variable stores the integer defining the target can color.
 	private int searchZoneLLX, searchZoneLLY, searchZoneURX, searchZoneURY;
 	private int islandLLX, islandLLY, islandURX, islandURY;
 	
 	public CanLocator(Robot robot, AssessCanColor assessCanColor, SampleProvider usDistance, float[] usData, 
-			Navigation navigator, LightLocalizer lightLocalizer, int TR) throws OdometerExceptions {
+			Navigation navigator, LightLocalizer lightLocalizer) throws OdometerExceptions {
 		odo = Odometer.getOdometer();
 		this.usDistance = usDistance;
 		this.usData = usData;
 		this.assessCanColor = assessCanColor;
 		this.navigator = navigator;
-		this.TR = TR;
+		TR = robot.getGreenTeam();
 		searchZoneLLX = robot.getSearchZoneLLX();
 		searchZoneLLY = robot.getSearchZoneLLY();
 		searchZoneURX = robot.getSearchZoneURX();

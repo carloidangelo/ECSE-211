@@ -38,10 +38,6 @@ public class Project {
 	private static final Port CS_PORT = LocalEV3.get().getPort("S4");
 	private static final Port CS_FRONT_PORT = LocalEV3.get().getPort("S2");
 	
-	public static final int LLx = 0, LLy = 0, URx = 1, URy = 1; // SearchZone description
-	private static final int SC = 0; //Starting corner
-	private static final int TR = 4; //target color
-	
 	public static final int TEAM_NUMBER = 10;
 	private static final String SERVER_IP = "192.168.2.3";
 	// Enable/disable printing of debug info from the WiFi class
@@ -124,7 +120,7 @@ public class Project {
 				Sound.beep(); // Must BEEP after navigation to search zone is finished
 				
 				CanLocator canLocator = new CanLocator(robot, assessCanColor, usDistance, usData, 
-											navigator,lightLocalizer, TR);
+											navigator,lightLocalizer);
 				canLocator.RunLocator();
 				
 				
