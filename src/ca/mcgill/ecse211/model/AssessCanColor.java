@@ -15,10 +15,10 @@ public class AssessCanColor {
 	
 	private EV3LargeRegulatedMotor csMotor;
 	private ColorClassification csFront;
-	public static final int ROTATE_AMOUNT = 20;
-	public static final int ROTATE_COUNT = 20;
-	public final static int ROTATION_SPEED = 50;
-	
+	private static final int ROTATE_AMOUNT = 20;
+	private static final int ROTATE_COUNT = 20;
+	private static final int ROTATION_SPEED = 50;
+	private static final int TURN_ERROR = 10;
 	/**
 	 * This is the default constructor of this class
 	 * @param csMotor motor in charge of rotating the light sensor that scans the cans
@@ -46,7 +46,7 @@ public class AssessCanColor {
 		}
 		csMotor.stop();
 		csMotor.setAcceleration(1000);
-		csMotor.rotate(ROTATE_AMOUNT * ROTATE_COUNT);
+		csMotor.rotate(ROTATE_AMOUNT * ROTATE_COUNT - TURN_ERROR);
 		frequency.add(Collections.frequency(canColor, "blue     "));
 		frequency.add(Collections.frequency(canColor, "green    "));
 		frequency.add(Collections.frequency(canColor, "yellow   "));

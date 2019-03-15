@@ -23,8 +23,8 @@ public class SearchZoneLocator {
 	 * @param navigator
 	 * @throws OdometerExceptions
 	 */
-	public SearchZoneLocator(Robot robot, LightLocalizer lightLocalizer,
-			Navigation navigator) throws OdometerExceptions {
+	public SearchZoneLocator(Robot robot, LightLocalizer lightLocalizer, 
+								Navigation navigator) throws OdometerExceptions {
 		odo = Odometer.getOdometer();
 		startingCorner = robot.getStartingCorner();	
 		homeZoneLLX = robot.getHomeZoneLLX();
