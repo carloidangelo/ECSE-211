@@ -10,108 +10,61 @@ package ca.mcgill.ecse211.model;
 public class SearchZoneLocator {
 
 	private Odometer odo;
-	private static final double TILE_SIZE = 30.48;
-	private int LLx, LLy, SC;
+	private final double TILE_SIZE = Navigation.TILE_SIZE;
+	private int startingCorner, homeZoneLLX, homeZoneLLY, homeZoneURX, homeZoneURY,
+					tunnelLLX, tunnelLLY, tunnelURX, tunnelURY;
 	private LightLocalizer lightLocalizer;
 	private Navigation navigator;
 	
 	/**
-	 * This is the default constructor of this class
-	 * @param SC starting corner of robot
-	 * @param LLx x position of lower left corner of search zone
-	 * @param LLy x position of lower left corner of search zone
-	 * @param lightLocalizer instance of LightLocalizer class
-	 * @param navigator instance of Navigator class
+	 * 
+	 * @param robot
+	 * @param lightLocalizer
+	 * @param navigator
 	 * @throws OdometerExceptions
 	 */
-	public SearchZoneLocator(int SC, int LLx, int LLy, LightLocalizer lightLocalizer,
+	public SearchZoneLocator(Robot robot, LightLocalizer lightLocalizer,
 			Navigation navigator) throws OdometerExceptions {
 		odo = Odometer.getOdometer();
-		this.SC = SC;	
-		this.LLx = LLx;
-		this.LLy = LLy;
+		startingCorner = robot.getStartingCorner();	
+		homeZoneLLX = robot.getHomeZoneLLX();
+		homeZoneLLY = robot.getHomeZoneLLY();
+		homeZoneURX = robot.getHomeZoneURX();
+		homeZoneURY = robot.getHomeZoneURY();
+		tunnelLLX = robot.getTunnelLLX();
+		tunnelLLY = robot.getTunnelLLY();
+		tunnelURX = robot.getTunnelURX();
+		tunnelURY = robot.getTunnelURY();
 		this.lightLocalizer = lightLocalizer;
 		this.navigator= navigator;
 	}
 	
 	/** 
 	 * Method that allows the robot to make its way to the search zone
-	 * The path the robot takes will depend on the starting corner (SC) parameter
+	 * The path the robot takes will depend on the starting corner (startingCorner) parameter
 	 */
 	public void goToSearchZone(){
 		
-		switch(SC){
+		switch(startingCorner){
 			case 0: 
 				//current position is (1,1)
 				odo.setXYT(1.0 * TILE_SIZE, 1.0 * TILE_SIZE, 0.0);
-				//go to LLx
-				//go to LLy
-				navigator.travelTo(LLx,1);
-				if (LLx != 1) {
-					navigator.turnTo(-45);
-					navigator.driveBack(5);
-					lightLocalizer.lightLocalize(LLx, 1);
-				}
-				navigator.travelTo(LLx,LLy);
-				navigator.turnTo(45);
-				navigator.driveBack(5);
-				lightLocalizer.lightLocalize(LLx, LLy);
+
 				break;
 			case 1: 
 				//current position is (7,1)
 				odo.setXYT(7.0 * TILE_SIZE, 1.0 * TILE_SIZE, 270.0);
-				//go to LLx
-				//go to LLy
-				navigator.travelTo(LLx,1);
-				if (LLx != 7) {
-					navigator.turnTo(135);
-					navigator.driveBack(5);
-					lightLocalizer.lightLocalize(LLx, 1);
-				}
-				navigator.travelTo(LLx,LLy);
-				navigator.turnTo(45);
-				navigator.driveBack(5);
-				lightLocalizer.lightLocalize(LLx, LLy);
+
 				break;
 			case 2: 
 				//current position is (7,7)
 				odo.setXYT(7.0 * TILE_SIZE, 7.0 * TILE_SIZE, 180.0);
-				//go to LLx
-				//go to LLy
-				navigator.travelTo(LLx - 1,7);
-				navigator.turnTo(135);
-				navigator.driveBack(5);
-				lightLocalizer.lightLocalize(LLx - 1, 7);
-				
-				navigator.travelTo(LLx - 1,LLy);
-				navigator.turnTo(-135);
-				navigator.driveBack(5);
-				lightLocalizer.lightLocalize(LLx - 1, LLy);
-				
-				navigator.travelTo(LLx,LLy);
-				navigator.turnTo(-45);
-				navigator.driveBack(5);
-				lightLocalizer.lightLocalize(LLx, LLy);
+
 				break;
 			case 3:	
 				//current position is (1,7)
 				odo.setXYT(1.0 * TILE_SIZE, 7.0 * TILE_SIZE, 90.0);
-				//go to LLx
-				//go to LLy
-				navigator.travelTo(LLx - 1,7);
-				navigator.turnTo(-45);
-				navigator.driveBack(5);
-				lightLocalizer.lightLocalize(LLx - 1, 7);
-				
-				navigator.travelTo(LLx - 1,LLy);
-				navigator.turnTo(-135);
-				navigator.driveBack(5);
-				lightLocalizer.lightLocalize(LLx - 1, LLy);
-				
-				navigator.travelTo(LLx,LLy);
-				navigator.turnTo(-45);
-				navigator.driveBack(5);
-				lightLocalizer.lightLocalize(LLx, LLy);
+
 				break;
 		    default:
 		    	System.out.println("Error - invalid button"); // None of the above - abort

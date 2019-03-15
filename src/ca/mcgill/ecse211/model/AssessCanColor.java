@@ -15,11 +15,9 @@ public class AssessCanColor {
 	
 	private EV3LargeRegulatedMotor csMotor;
 	private ColorClassification csFront;
-	private double radius = Robot.WHEEL_RAD;
-	public static final double ROTATE_DIS = 0.5;
+	public static final int ROTATE_AMOUNT = 20;
 	public static final int ROTATE_COUNT = 20;
 	public final static int ROTATION_SPEED = 50;
-	public final static double TURN_ERROR = 0.1;
 	
 	/**
 	 * This is the default constructor of this class
@@ -42,13 +40,13 @@ public class AssessCanColor {
 		ArrayList<Integer> frequency = new ArrayList<Integer>();
 		int count = 0;
 		while (count < ROTATE_COUNT) {
-			csMotor.rotate(-Navigation.convertDistance(radius, ROTATE_DIS));
+			csMotor.rotate(-ROTATE_AMOUNT);
 			canColor.add(csFront.run());
 			count++;
 		}
 		csMotor.stop();
 		csMotor.setAcceleration(1000);
-		csMotor.rotate(Navigation.convertDistance(radius, ROTATE_DIS + TURN_ERROR) * ROTATE_COUNT);
+		csMotor.rotate(ROTATE_AMOUNT * ROTATE_COUNT);
 		frequency.add(Collections.frequency(canColor, "blue     "));
 		frequency.add(Collections.frequency(canColor, "green    "));
 		frequency.add(Collections.frequency(canColor, "yellow   "));

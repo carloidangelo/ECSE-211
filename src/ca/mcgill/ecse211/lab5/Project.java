@@ -10,6 +10,12 @@ import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.sensor.SensorModes;
 import lejos.robotics.SampleProvider;
+
+import java.io.IOException;
+
+import org.json.simple.parser.ParseException;
+
+import ca.mcgill.ecse211.WiFiClient.WifiConnection;
 import ca.mcgill.ecse211.model.AssessCanColor;
 import ca.mcgill.ecse211.model.CanLocator;
 import ca.mcgill.ecse211.model.ColorClassification;
@@ -35,6 +41,11 @@ public class Project {
 	public static final int LLx = 0, LLy = 0, URx = 1, URy = 1; // SearchZone description
 	private static final int SC = 0; //Starting corner
 	private static final int TR = 4; //target color
+	
+	public static final int TEAM_NUMBER = 10;
+	private static final String SERVER_IP = "192.168.2.3";
+	// Enable/disable printing of debug info from the WiFi class
+	private static final boolean ENABLE_DEBUG_WIFI_PRINT = true;
 
 	public static void main(String[] args) throws OdometerExceptions {
 
@@ -64,8 +75,9 @@ public class Project {
         float[] colorData = new float[colorId.sampleSize()];
         colorId.fetchSample(colorData, 0);
 		
-        ColorClassification ClrClassify= new ColorClassification (colorData, colorId);
-        AssessCanColor canDetect = new AssessCanColor(SENSOR_MOTOR, ClrClassify);
+        WifiConnection wifi = new WifiConnection(SERVER_IP, TEAM_NUMBER, ENABLE_DEBUG_WIFI_PRINT);
+        ColorClassification ClrClassify= new ColorClassification(colorData, colorId);
+        AssessCanColor assessCanColor = new AssessCanColor(SENSOR_MOTOR, ClrClassify);
         
 		do {
 			
@@ -83,6 +95,13 @@ public class Project {
 
 			if (buttonChoice == Button.ID_LEFT) { // do Field Test
 				
+				Robot robot = null;
+				try {
+					robot = new Robot(wifi);
+				} catch (IOException | ParseException e) {
+					e.printStackTrace();
+				}
+				
 				Thread odoThread = new Thread(odometer);
 				odoThread.start();
 
@@ -99,13 +118,13 @@ public class Project {
 				lightLocalizer.lightLocalize(0,0);
 				
 				// Search Zone Locator
-				SearchZoneLocator searchZonelocator = new SearchZoneLocator(SC, LLx, LLy, lightLocalizer, navigator);
+				SearchZoneLocator searchZonelocator = new SearchZoneLocator(robot, lightLocalizer, navigator);
 				searchZonelocator.goToSearchZone();
 				
 				Sound.beep(); // Must BEEP after navigation to search zone is finished
 				
-				CanLocator canLocator = new CanLocator(canDetect, usDistance, usData, 
-			navigator,lightLocalizer, TR, LLx, LLy, URx, URy);
+				CanLocator canLocator = new CanLocator(robot, assessCanColor, usDistance, usData, 
+											navigator,lightLocalizer, TR);
 				canLocator.RunLocator();
 				
 				
@@ -118,10 +137,10 @@ public class Project {
 				Thread odoDisplayThread = new Thread(odometryDisplay);
 				odoDisplayThread.start();
 				LightLocalizer lightLocalizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData, navigator);
-				CanLocator canLocator = new CanLocator(canDetect, usDistance, usData, 
+				CanLocator canLocator = new CanLocator(assessCanColor, usDistance, usData, 
 						navigator,lightLocalizer, TR, LLx, LLy, URx, URy);
 				canLocator.RunLocator();*/
-				canDetect.run();
+				assessCanColor.run();
 				while(true) {
 					
 					if (ClrClassify.run() !="no object") {	//if there is a can detected

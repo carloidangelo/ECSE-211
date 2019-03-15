@@ -14,7 +14,7 @@ public class Navigation {
   public final static int ROTATION_SPEED = 100;
   private final static int FORWARD_SPEED = 200; 
   
-  private static final double TILE_SIZE = 30.48;
+  public static final double TILE_SIZE = 30.48;
   
   private final double RADIUS = Robot.WHEEL_RAD;
   private final double TRACK = Robot.TRACK;
