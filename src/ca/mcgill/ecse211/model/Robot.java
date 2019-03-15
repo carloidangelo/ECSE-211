@@ -61,6 +61,7 @@ public class Robot {
 		}
 		return homeZoneLLY;
 	}
+	
 	public int getHomeZoneURX() {
 		int homeZoneURX = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -90,14 +91,17 @@ public class Robot {
 		int islandLLY = ((Long) data.get("Island_LL_y")).intValue();
 		return islandLLY;
 	}
+	
 	public int getIslandURX() {
 		int islandURX = ((Long) data.get("Island_UR_x")).intValue();
 		return islandURX;
 	}
+	
 	public int getIslandURY() {
 		int islandURY = ((Long) data.get("Island_UR_y")).intValue();
 		return islandURY;
 	}
+	
 	public int getTunnelLLX() {
 		int tunnelLLX = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -107,6 +111,7 @@ public class Robot {
 		}
 		return tunnelLLX;
 	}
+	
 	public int getTunnelLLY() {
 		int tunnelLLY = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -116,6 +121,7 @@ public class Robot {
 		}
 		return tunnelLLY;
 	}
+	
 	public int getTunnelURX() {
 		int tunnelURX = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -125,6 +131,7 @@ public class Robot {
 		}
 		return tunnelURX;
 	}
+	
 	public int getTunnelURY() {
 		int tunnelURY = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -134,6 +141,7 @@ public class Robot {
 		}
 		return tunnelURY;
 	}
+	
 	public int getSearchZoneLLX() {
 		int searchZoneLLX = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -143,6 +151,7 @@ public class Robot {
 		}
 		return searchZoneLLX;
 	}
+	
 	public int getSearchZoneLLY() {
 		int searchZoneLLY = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -152,6 +161,7 @@ public class Robot {
 		}
 		return searchZoneLLY;
 	}
+	
 	public int getSearchZoneURX() {
 		int searchZoneURX = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -161,6 +171,7 @@ public class Robot {
 		}
 		return searchZoneURX;
 	}
+	
 	public int getSearchZoneURY() {
 		int searchZoneURY = 0;
 		if (getRedTeam() == TEAM_NUMBER) {

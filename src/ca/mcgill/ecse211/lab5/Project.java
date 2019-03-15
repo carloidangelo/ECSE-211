@@ -41,7 +41,7 @@ public class Project {
 	public static final int TEAM_NUMBER = 10;
 	private static final String SERVER_IP = "192.168.2.3";
 	// Enable/disable printing of debug info from the WiFi class
-	private static final boolean ENABLE_DEBUG_WIFI_PRINT = true;
+	private static final boolean ENABLE_DEBUG_WIFI_PRINT = false;
 
 	public static void main(String[] args) throws OdometerExceptions {
 
