@@ -64,6 +64,8 @@ public class CanLocator {
 	 */
 	
 	public void RunLocator(){
+		lightLocalizer.moveClose();
+		lightLocalizer.lightLocalize(LLx, LLy);
 		
 		while (true && !loopStop) {	
 			
