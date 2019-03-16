@@ -54,26 +54,20 @@ public class SearchZoneLocator {
 	 * The path the robot takes will depend on the starting corner (startingCorner) parameter
 	 */
 	public void goToSearchZone(){
-		
+		// set new position and new angle after localization
+		// current position and current angle will depend on starting corner
 		switch(startingCorner){
 			case 0: 
-				//set new current position after localization
 				odo.setXYT((homeZoneLLX + 1) * TILE_SIZE, (homeZoneLLY + 1)* TILE_SIZE, 0.0);
 				break;
 			case 1: 
-				//set new current position after localization
 				odo.setXYT((homeZoneURX - 1) * TILE_SIZE, (homeZoneLLY + 1) * TILE_SIZE, 270.0);
-
 				break;
 			case 2: 
-				//set new current position after localization
 				odo.setXYT((homeZoneURX - 1) * TILE_SIZE, (homeZoneURY - 1) * TILE_SIZE, 180.0);
-
 				break;
 			case 3:	
-				//set new current position after localization
-				odo.setXYT((homeZoneLLX + 1) * TILE_SIZE, (homeZoneURX + 1) * TILE_SIZE, 90.0);
-
+				odo.setXYT((homeZoneLLX + 1) * TILE_SIZE, (homeZoneURY - 1) * TILE_SIZE, 90.0);
 				break;
 		    default:
 		    	System.out.println("Error - invalid button"); // None of the above - abort
