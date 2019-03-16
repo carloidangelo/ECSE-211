@@ -132,10 +132,13 @@ public class Project {
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				}
-				// Localization (Ultrasonic and Light)
+				Thread odoThread = new Thread(odometer);
+				odoThread.start();
+				Thread odoDisplayThread = new Thread(odometryDisplay);
+				odoDisplayThread.start();
 				UltrasonicLocalizer ultrasonicLocalizer = new UltrasonicLocalizer(LEFT_MOTOR, RIGHT_MOTOR, usDistance, usData);
+				// Localization (Ultrasonic and Light)
 				LightLocalizer lightLocalizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData, navigator);
-
 				ultrasonicLocalizer.fallingEdge();
 				CanLocator canLocator = new CanLocator(robot, assessCanColor, usDistance, usData, 
 						navigator,lightLocalizer);

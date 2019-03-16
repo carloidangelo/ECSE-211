@@ -114,9 +114,9 @@ public class LightLocalizer {
    * for the actual light localization
    */
   public void moveClose() {
-	
+	leftMotor.setSpeed(ROTATION_SPEED);
+	rightMotor.setSpeed(ROTATION_SPEED);
     navigator.turnTo(45);
-
 	leftMotor.setSpeed(FORWARD_SPEED);
 	rightMotor.setSpeed(FORWARD_SPEED);
 	
