@@ -13,6 +13,8 @@ public class SearchZoneLocator {
 	private final double TILE_SIZE = Navigation.TILE_SIZE;
 	private int startingCorner, homeZoneLLX, homeZoneLLY, homeZoneURX, homeZoneURY,
 					tunnelLLX, tunnelLLY, tunnelURX, tunnelURY;
+	private int islandLLX, islandLLY, islandURX, islandURY,
+					searchZoneLLX, searchZoneLLY, searchZoneURX, searchZoneURY;
 	private LightLocalizer lightLocalizer;
 	private Navigation navigator;
 	
@@ -35,6 +37,14 @@ public class SearchZoneLocator {
 		tunnelLLY = robot.getTunnelLLY();
 		tunnelURX = robot.getTunnelURX();
 		tunnelURY = robot.getTunnelURY();
+		islandLLX = robot.getIslandLLX();
+		islandLLY = robot.getIslandLLY();
+		islandURX = robot.getIslandURX();
+		islandURY = robot.getIslandURY();
+		searchZoneLLX = robot.getSearchZoneLLX();
+		searchZoneLLY = robot.getSearchZoneLLY();
+		searchZoneURX = robot.getSearchZoneURX();
+		searchZoneURY = robot.getSearchZoneURY();
 		this.lightLocalizer = lightLocalizer;
 		this.navigator= navigator;
 	}
@@ -47,23 +57,22 @@ public class SearchZoneLocator {
 		
 		switch(startingCorner){
 			case 0: 
-				//current position is (1,1)
-				odo.setXYT(1.0 * TILE_SIZE, 1.0 * TILE_SIZE, 0.0);
-
+				//set new current position after localization
+				odo.setXYT((homeZoneLLX + 1) * TILE_SIZE, (homeZoneLLY + 1)* TILE_SIZE, 0.0);
 				break;
 			case 1: 
-				//current position is (7,1)
-				odo.setXYT(7.0 * TILE_SIZE, 1.0 * TILE_SIZE, 270.0);
+				//set new current position after localization
+				odo.setXYT((homeZoneURX - 1) * TILE_SIZE, (homeZoneLLY + 1) * TILE_SIZE, 270.0);
 
 				break;
 			case 2: 
-				//current position is (7,7)
-				odo.setXYT(7.0 * TILE_SIZE, 7.0 * TILE_SIZE, 180.0);
+				//set new current position after localization
+				odo.setXYT((homeZoneURX - 1) * TILE_SIZE, (homeZoneURY - 1) * TILE_SIZE, 180.0);
 
 				break;
 			case 3:	
-				//current position is (1,7)
-				odo.setXYT(1.0 * TILE_SIZE, 7.0 * TILE_SIZE, 90.0);
+				//set new current position after localization
+				odo.setXYT((homeZoneLLX + 1) * TILE_SIZE, (homeZoneURX + 1) * TILE_SIZE, 90.0);
 
 				break;
 		    default:
