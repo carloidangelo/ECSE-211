@@ -10,6 +10,7 @@ import ca.mcgill.ecse211.WiFiClient.WifiConnection;
 import ca.mcgill.ecse211.main.Project;
 
 public class Robot {
+	
 	//Robot related parameters
 	public static final double WHEEL_RAD = 2.2;
 	public static final double TRACK = 13.2;
