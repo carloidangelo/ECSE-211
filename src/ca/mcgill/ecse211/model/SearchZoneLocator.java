@@ -60,10 +60,18 @@ public class SearchZoneLocator {
 			case 0: 
 				odo.setXYT((homeZoneLLX + 1) * TILE_SIZE, (homeZoneLLY + 1) * TILE_SIZE, 0.0);
 				if (homeZoneURX < islandLLX) {
-					navigator.travelTo(tunnelLLX - 1, tunnelLLY);
-					lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelLLY);
-					navigator.driveForward(0.5 * TILE_SIZE);
-					navigator.turnTo(90);
+					if(homeZoneLLY == tunnelLLY) {
+						navigator.travelTo(tunnelLLX - 1, tunnelURY);
+						lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelLLY);
+						navigator.turnTo(-180);
+						navigator.driveForward(0.5 * TILE_SIZE);
+						navigator.turnTo(-90);
+					} else {
+						navigator.travelTo(tunnelLLX - 1, tunnelLLY);
+						lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelLLY);
+						navigator.driveForward(0.5 * TILE_SIZE);
+						navigator.turnTo(90);
+					}
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
 					if (tunnelURY == islandURY) {
 						navigator.turnTo(90);
@@ -78,11 +86,19 @@ public class SearchZoneLocator {
 					}
 					
 				} else if (homeZoneURY < islandLLY) {
-					navigator.travelTo(tunnelLLX, tunnelLLY - 1);
-					lightLocalizer.lightLocalize(tunnelLLX, tunnelLLY - 1);
-					navigator.turnTo(90);
-					navigator.driveForward(0.5 * TILE_SIZE);
-					navigator.turnTo(-90);
+					if(homeZoneLLX == tunnelLLY) {
+						navigator.travelTo(tunnelURX, tunnelLLY - 1);
+						lightLocalizer.lightLocalize(tunnelURX,  tunnelLLY - 1);
+						navigator.turnTo(-90);
+						navigator.driveForward(0.5 * TILE_SIZE);
+						navigator.turnTo(90);
+					} else {
+						navigator.travelTo(tunnelLLX, tunnelLLY - 1);
+						lightLocalizer.lightLocalize(tunnelLLX, tunnelLLY - 1);
+						navigator.turnTo(90);
+						navigator.driveForward(0.5 * TILE_SIZE);
+						navigator.turnTo(-90);
+					}
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
 					if (tunnelURX == islandURX) {
 						navigator.turnTo(-90);
@@ -114,9 +130,5 @@ public class SearchZoneLocator {
 		}
 		
 	} 
-	
-	private void transitTunnel() {
-		
-	}
   
 }
