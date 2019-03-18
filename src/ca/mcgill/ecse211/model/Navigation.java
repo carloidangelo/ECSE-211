@@ -15,6 +15,7 @@ public class Navigation {
   private final static int FORWARD_SPEED = 200; 
   
   public static final double TILE_SIZE = 30.48;
+  private static final int SLOW_SPEED = 75;
   
   private final double RADIUS = Robot.WHEEL_RAD;
   private final double TRACK = Robot.TRACK;
@@ -108,17 +109,19 @@ public class Navigation {
   }
   
   /**
-   * Method that allows the robot to approach a can
-   * @param distance distance that you want the robot to travel forward
+   * This method is only used when scanning for a can in the search zone. It is
+   * similar to turnTo(), but the motors rotate at a slower speed, and return
+   * instantly rather than wait for the robot to rotate.
+   * @param theta angle amount (in degrees) that you want the robot to rotate in place
    */
-  public void moveToCan(double distance) {
-	  leftMotor.setSpeed(FORWARD_SPEED);
-	  rightMotor.setSpeed(FORWARD_SPEED);
-
-	  leftMotor.rotate(convertDistance(RADIUS, distance), true);
-	  rightMotor.rotate(convertDistance(RADIUS, distance), false);
-  }
+  public void turnToScan(double theta) {
+        leftMotor.setSpeed(SLOW_SPEED);
+        rightMotor.setSpeed(SLOW_SPEED);
+        leftMotor.rotate(convertAngle(RADIUS, TRACK, theta), true);
+        rightMotor.rotate(-convertAngle(RADIUS, TRACK, theta), true);
+      }
   
+
 	/**
 	 * This method converts a distance into the total rotation (in degrees) of 
 	 * each wheel needed to cover that distance 

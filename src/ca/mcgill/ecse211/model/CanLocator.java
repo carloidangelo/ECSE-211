@@ -1,5 +1,6 @@
 package ca.mcgill.ecse211.model;
 
+import ca.mcgill.ecse211.main.Project;
 import lejos.hardware.Sound;
 import lejos.robotics.SampleProvider;
 
@@ -22,6 +23,8 @@ public class CanLocator {
 	private static final double CAN_DISTANCE_FROM_OUT = 11.75;
 	private static final double ANGLE_ERROR = 10.0;
 	private static final double DISTANCE_ERROR = 4.0;
+	private static final int TEST_VALUE = 0;
+	private double canAngle = 0;
 	private int ENDX = 0, ENDY = 0;
 	private double Cx = 0,Cy = 0;
 	private int count = 0;
@@ -64,48 +67,34 @@ public class CanLocator {
 	 */
 	
 	public void RunLocator(){
-		lightLocalizer.lightLocalize(LLx,LLy);
+		
+// 		lightLocalizer.lightLocalize(LLx,LLy);
+		
 		while (true && !loopStop) {	
 			
 			//when EV3 goes full circle with the algorithm
 			//and ends where it started, break the loop.
 			if(Cx == ENDX && Cy == ENDY) {
 				
+				navigator.turnTo(45);
 				lightLocalizer.lightLocalize(Cx,Cy);
 				
-				//If no can was found once algorithm is finished, go to Upper Right
+				//If no can was found once search algorithm is finished, go to Upper Right
 				navigator.travelTo(Cx,LLy-OFFSET);
 				navigator.travelTo(URx+OFFSET,LLy-OFFSET);
 				navigator.travelTo(URx+OFFSET,URy);
 				navigator.travelTo(URx,URy);
+				navigator.turnTo(135);
+				lightLocalizer.lightLocalize(URx,URy);
 				break;
 			}			
 			
-			else if(!checkCan()){
-
-				//if the EV3 is at one of the 4 corners of the search zone
-				if((Cx*TILE_SIZE > (LLx*TILE_SIZE-DISTANCE_ERROR) && Cx*TILE_SIZE < (LLx*TILE_SIZE+DISTANCE_ERROR) && Cy*TILE_SIZE > (LLy*TILE_SIZE-DISTANCE_ERROR) && Cy*TILE_SIZE < (LLy*TILE_SIZE+DISTANCE_ERROR))
-						|| (Cx*TILE_SIZE > (LLx*TILE_SIZE-DISTANCE_ERROR) && Cx*TILE_SIZE < (LLx*TILE_SIZE+DISTANCE_ERROR) && Cy*TILE_SIZE > (URy*TILE_SIZE-DISTANCE_ERROR) && Cy*TILE_SIZE < (URy*TILE_SIZE+DISTANCE_ERROR))
-						|| (Cx*TILE_SIZE > (URx*TILE_SIZE-DISTANCE_ERROR) && Cx*TILE_SIZE < (URx*TILE_SIZE+DISTANCE_ERROR) && Cy*TILE_SIZE > (URy*TILE_SIZE-DISTANCE_ERROR) && Cy*TILE_SIZE < (URy*TILE_SIZE+DISTANCE_ERROR))
-						 || (Cx*TILE_SIZE > (URx*TILE_SIZE-DISTANCE_ERROR) && Cx*TILE_SIZE < (URx*TILE_SIZE+DISTANCE_ERROR) && Cy*TILE_SIZE > (LLy*TILE_SIZE-DISTANCE_ERROR) && Cy*TILE_SIZE < (LLy*TILE_SIZE+DISTANCE_ERROR))){
+			//checkCan takes 90 degrees as initial input(i.e this is assuming the tile
+			//has not been scanned yet, so a full 90 degree turn is required)
+			else if(!checkCan(90)){
 					
 					goToNext();
-					
-				}
 				
-				else {
-					
-					if(!fromInsideDodge) navigator.turnTo(-90);
-					fromInsideDodge = false;
-					if(checkCan()){
-						
-						searchProcess();
-						
-					}
-					
-					else goToNext();
-					
-				}
 			}
 			
 			//checks a can in front of it
@@ -116,8 +105,29 @@ public class CanLocator {
 			}
 			
 		}
+//		
+
 		
-	}	
+		
+		//TEST checkCan() & checkColor()
+		checkCan(90);
+		checkColor(readUSDistance()-7.7);
+		
+		
+//			//TEST FOR 
+//			Project.LEFT_MOTOR.rotate(Navigation.convertAngle(Robot.WHEEL_RAD, Robot.TRACK, 90), true);
+//			Project.RIGHT_MOTOR.rotate(Navigation.convertAngle(Robot.WHEEL_RAD, Robot.TRACK, -90),true);
+//			while(Project.LEFT_MOTOR.isMoving() && Project.RIGHT_MOTOR.isMoving()){
+//				if(readUSDistance() <= TILE_SIZE*Math.sqrt(2.0)+DISTANCE_ERROR){
+//					System.out.println(readUSDistance());
+//					Project.LEFT_MOTOR.stop();
+//					Project.RIGHT_MOTOR.stop();
+//					Sound.beep();
+//				}
+//			}
+		
+	}
+	
 	
 	/**
 	 * searchProcess() runs when the EV3 deteodo.getXYT()[2]s a can. When deteodo.getXYT()[2]ed, it drives to it and checks its color.
@@ -130,103 +140,168 @@ public class CanLocator {
 	
 	private void searchProcess(){
 		
-		double distanceToCan = 0.0;
-		boolean inside = false;
+// 		double distanceToCan = 0.0;
+// 		boolean inside = false;
 		
-		Sound.beep();
-		//outside the border
-		if(Cx*TILE_SIZE < LLx*TILE_SIZE-DISTANCE_ERROR || Cy*TILE_SIZE > URy*TILE_SIZE+DISTANCE_ERROR 
-				|| Cx*TILE_SIZE > URx*TILE_SIZE+DISTANCE_ERROR || Cy*TILE_SIZE < LLy*TILE_SIZE-DISTANCE_ERROR){
+// 		Sound.beep();
+// 		//outside the border
+// 		if(Cx*TILE_SIZE < LLx*TILE_SIZE-DISTANCE_ERROR || Cy*TILE_SIZE > URy*TILE_SIZE+DISTANCE_ERROR 
+// 				|| Cx*TILE_SIZE > URx*TILE_SIZE+DISTANCE_ERROR || Cy*TILE_SIZE < LLy*TILE_SIZE-DISTANCE_ERROR){
 
-			distanceToCan = CAN_DISTANCE_FROM_OUT;
-			inside = false;
-		}
+// 			distanceToCan = CAN_DISTANCE_FROM_OUT;
+// 			inside = false;
+// 		}                           
 		
-		//on the border
-		else{
-			distanceToCan = CAN_DISTANCE_ON_BORDER;
+// 		//on the border
+// 		else{
+// 			distanceToCan = CAN_DISTANCE_ON_BORDER;
 			
-			if(Cx == LLx && (odo.getXYT()[2] > (90-ANGLE_ERROR) && odo.getXYT()[2] < (90+ANGLE_ERROR))){
+// 			if(Cx == LLx && (odo.getXYT()[2] > (90-ANGLE_ERROR) && odo.getXYT()[2] < (90+ANGLE_ERROR))){
 				
-				Cx = (Cx*TILE_SIZE+CAN_DISTANCE_ON_BORDER)/TILE_SIZE;
+// 				Cx = (Cx*TILE_SIZE+CAN_DISTANCE_ON_BORDER)/TILE_SIZE;
 				
-			}
-			else if (Cy == URy && (odo.getXYT()[2] > (180-ANGLE_ERROR) && odo.getXYT()[2] < (180+ANGLE_ERROR))) {
+// 			}
+// 			else if (Cy == URy && (odo.getXYT()[2] > (180-ANGLE_ERROR) && odo.getXYT()[2] < (180+ANGLE_ERROR))) {
 				
-				Cy = (Cy*TILE_SIZE-CAN_DISTANCE_ON_BORDER)/TILE_SIZE;
+// 				Cy = (Cy*TILE_SIZE-CAN_DISTANCE_ON_BORDER)/TILE_SIZE;
 				
-			}
-			else if ( Cx == URx && odo.getXYT()[2] > (270-ANGLE_ERROR) && odo.getXYT()[2] < (270+ANGLE_ERROR)){
+// 			}
+// 			else if ( Cx == URx && odo.getXYT()[2] > (270-ANGLE_ERROR) && odo.getXYT()[2] < (270+ANGLE_ERROR)){
 				
-				Cx = (Cx*TILE_SIZE-CAN_DISTANCE_ON_BORDER)/TILE_SIZE;
+// 				Cx = (Cx*TILE_SIZE-CAN_DISTANCE_ON_BORDER)/TILE_SIZE;
 				
-			}
-			else if( Cy == LLy && odo.getXYT()[2] > (360-ANGLE_ERROR) || odo.getXYT()[2] < (0+ANGLE_ERROR)){
+// 			}
+// 			else if( Cy == LLy && odo.getXYT()[2] > (360-ANGLE_ERROR) || odo.getXYT()[2] < (0+ANGLE_ERROR)){
 				
-				Cx = (Cx*TILE_SIZE+CAN_DISTANCE_ON_BORDER)/TILE_SIZE;
+// 				Cx = (Cx*TILE_SIZE+CAN_DISTANCE_ON_BORDER)/TILE_SIZE;
 				
-			}
+// 			}
 			
-			inside = true;
-		}
+// 			inside = true;
+// 		}                      
 	
-		if(checkColor(distanceToCan)){
+// 		if(checkColor(readUSDistance()){
 			
-			if(inside){
+// 			if(inside){
 
-				if((Cx*TILE_SIZE > (LLx*TILE_SIZE+10) && (odo.getXYT()[2] > (90-ANGLE_ERROR) && odo.getXYT()[2] < (90+ANGLE_ERROR)))
-						|| (Cy*TILE_SIZE < (URy*TILE_SIZE-10) && (odo.getXYT()[2] > (180-ANGLE_ERROR) && odo.getXYT()[2] < (180+ANGLE_ERROR)))
-						|| (Cx*TILE_SIZE < (URx*TILE_SIZE-10) && (odo.getXYT()[2] > (270-ANGLE_ERROR) && odo.getXYT()[2] < (270+ANGLE_ERROR)))
-						 || Cy*TILE_SIZE > (LLy*TILE_SIZE+10) && (odo.getXYT()[2] > (360-ANGLE_ERROR) || odo.getXYT()[2] < (0+ANGLE_ERROR))){
+// 				if((Cx*TILE_SIZE > (LLx*TILE_SIZE+10) && (odo.getXYT()[2] > (90-ANGLE_ERROR) && odo.getXYT()[2] < (90+ANGLE_ERROR)))
+// 						|| (Cy*TILE_SIZE < (URy*TILE_SIZE-10) && (odo.getXYT()[2] > (180-ANGLE_ERROR) && odo.getXYT()[2] < (180+ANGLE_ERROR)))
+// 						|| (Cx*TILE_SIZE < (URx*TILE_SIZE-10) && (odo.getXYT()[2] > (270-ANGLE_ERROR) && odo.getXYT()[2] < (270+ANGLE_ERROR)))
+// 						 || Cy*TILE_SIZE > (LLy*TILE_SIZE+10) && (odo.getXYT()[2] > (360-ANGLE_ERROR) || odo.getXYT()[2] < (0+ANGLE_ERROR))){
 					
-					travelToURInside();
-				}
+// 					travelToURInside();
+// 				}
 				
-				else{ 
+// 				else{ 
 					
-					travelToURBorder();
-				}
-			}
+// 					travelToURBorder();
+// 				}
+// 			}
 		
-			else{
-				travelToUROutside();
-			}
+// 			else{
+// 				travelToUROutside();
+// 			}
 			
+// 		}
+		
+// 		else{
+// 			if(inside){
+				
+// 				if((Cx*TILE_SIZE > (LLx*TILE_SIZE-DISTANCE_ERROR) && Cx*TILE_SIZE < (LLx*TILE_SIZE+DISTANCE_ERROR) && (odo.getXYT()[2] > (360-ANGLE_ERROR) || odo.getXYT()[2] < (0+ANGLE_ERROR)))
+// 						|| (Cy*TILE_SIZE < (URy*TILE_SIZE+DISTANCE_ERROR) && Cy*TILE_SIZE > (URy*TILE_SIZE-DISTANCE_ERROR) && (odo.getXYT()[2] > (90-ANGLE_ERROR) && odo.getXYT()[2] < (90+ANGLE_ERROR)))
+// 						|| (Cx*TILE_SIZE < (URx*TILE_SIZE+DISTANCE_ERROR) && Cx*TILE_SIZE > (URx*TILE_SIZE-DISTANCE_ERROR) && (odo.getXYT()[2] > (180-ANGLE_ERROR) && odo.getXYT()[2] < (180+ANGLE_ERROR)))
+// 						 || Cy*TILE_SIZE > (LLy*TILE_SIZE-DISTANCE_ERROR) && Cy*TILE_SIZE < (LLy*TILE_SIZE+DISTANCE_ERROR) && (odo.getXYT()[2] > (270-ANGLE_ERROR) && odo.getXYT()[2] < (270+ANGLE_ERROR))){
+// 					borderDodge();
+// 				}
+				
+// 				else{
+// 					insideDodge();
+// 				}
+// 			}
+			
+// 			else{
+// 				outsideDodge();
+// 			}
+// 		}
+		
+		
+		if(checkColor(readUSDistance()-(TEST_VALUE))){
+		
+		    navigator.driveBack(readUSDistance()-(TEST_VALUE));
+		    travelToURBorder();
+		    
 		}
 		
 		else{
-			if(inside){
-				
-				if((Cx*TILE_SIZE > (LLx*TILE_SIZE-DISTANCE_ERROR) && Cx*TILE_SIZE < (LLx*TILE_SIZE+DISTANCE_ERROR) && (odo.getXYT()[2] > (360-ANGLE_ERROR) || odo.getXYT()[2] < (0+ANGLE_ERROR)))
-						|| (Cy*TILE_SIZE < (URy*TILE_SIZE+DISTANCE_ERROR) && Cy*TILE_SIZE > (URy*TILE_SIZE-DISTANCE_ERROR) && (odo.getXYT()[2] > (90-ANGLE_ERROR) && odo.getXYT()[2] < (90+ANGLE_ERROR)))
-						|| (Cx*TILE_SIZE < (URx*TILE_SIZE+DISTANCE_ERROR) && Cx*TILE_SIZE > (URx*TILE_SIZE-DISTANCE_ERROR) && (odo.getXYT()[2] > (180-ANGLE_ERROR) && odo.getXYT()[2] < (180+ANGLE_ERROR)))
-						 || Cy*TILE_SIZE > (LLy*TILE_SIZE-DISTANCE_ERROR) && Cy*TILE_SIZE < (LLy*TILE_SIZE+DISTANCE_ERROR) && (odo.getXYT()[2] > (270-ANGLE_ERROR) && odo.getXYT()[2] < (270+ANGLE_ERROR))){//////
-					borderDodge();
-				}
-				
-				else{
-					insideDodge();
-				}
-			}
 			
-			else{
-				outsideDodge();
-			}
+			navigator.driveBack(readUSDistance()-(TEST_VALUE));
+			navigator.turnTo(-canAngle);
+			goToNext();
+// 			navigator.turnTo(ANGLE_ERROR/2);
+// 			checkColor(90-ANGLE_ERROR/2-canAngle);
+			
+			
+// 			if(inside){
+				
+// 				if((Cx*TILE_SIZE > (LLx*TILE_SIZE-DISTANCE_ERROR) && Cx*TILE_SIZE < (LLx*TILE_SIZE+DISTANCE_ERROR) && (odo.getXYT()[2] > (360-ANGLE_ERROR) || odo.getXYT()[2] < (0+ANGLE_ERROR)))
+// 						|| (Cy*TILE_SIZE < (URy*TILE_SIZE+DISTANCE_ERROR) && Cy*TILE_SIZE > (URy*TILE_SIZE-DISTANCE_ERROR) && (odo.getXYT()[2] > (90-ANGLE_ERROR) && odo.getXYT()[2] < (90+ANGLE_ERROR)))
+// 						|| (Cx*TILE_SIZE < (URx*TILE_SIZE+DISTANCE_ERROR) && Cx*TILE_SIZE > (URx*TILE_SIZE-DISTANCE_ERROR) && (odo.getXYT()[2] > (180-ANGLE_ERROR) && odo.getXYT()[2] < (180+ANGLE_ERROR)))
+// 						 || Cy*TILE_SIZE > (LLy*TILE_SIZE-DISTANCE_ERROR) && Cy*TILE_SIZE < (LLy*TILE_SIZE+DISTANCE_ERROR) && (odo.getXYT()[2] > (270-ANGLE_ERROR) && odo.getXYT()[2] < (270+ANGLE_ERROR))){
+// 					borderDodge();
+// 				}
+				
+// 				else{
+// 					insideDodge();
+// 				}
+// 			}
+			
+// 			else{
+// 				outsideDodge();
+// 			}
 		}
 		
 	}
 	
 	/**
-	*checkCan() returns true if a can was spotten by the ultrasonic sensor within the
+	*checkCan() returns true if a can was spotted by the ultrasonic sensor within the
 	*range of a tile. Otherwise, it returns false.
 	*/
 	
 	//robot is facing the can
-	private boolean checkCan(){
+	private boolean checkCan(double angle){
 	
-		//read sensor and see if a can is deteodo.getXYT()[2]ed in range
-		if(readUSDistance() <= TILE_SIZE+DISTANCE_ERROR) return true;
-		else return false;
+	    canAngle = 0;
+	    double currentAngle = odo.getXYT()[2];
+	    
+		//begin rotating to scan for cans 
+		navigator.turnToScan(angle);
+        
+        while (readUSDistance() > TILE_SIZE*Math.sqrt(2.0)) {
+            
+            //keep turning until the distance of the US is less than a tile (i.e a can is detected)
+            
+            //if the motors finish the 90 degree turn, and no can is found, the method returns false
+            if(!(Project.LEFT_MOTOR.isMoving()) || !(Project.RIGHT_MOTOR.isMoving())) {
+                
+                navigator.turnTo(-90);
+                return false;
+            }
+            
+        }
+        
+        //if can is found, stop motors and record the angle the can was detected at
+        Project.LEFT_MOTOR.stop(true);
+        Project.RIGHT_MOTOR.stop();
+        navigator.turnTo(8);
+        canAngle = odo.getXYT()[2] - currentAngle;
+        
+       if(canAngle < -120){
+            
+            canAngle = 360-odo.getXYT()[2] - currentAngle;
+            
+        }
+        
+        return true;
 		
 	}
 	
@@ -239,18 +314,31 @@ public class CanLocator {
 	
 	private boolean checkColor(double distance){
 
-		navigator.moveToCan(distance);
+		navigator.driveForward(distance); // **REDUNDANT WITH driveForward
 		
 		//if the can color is the target color, beep once
 		if (TR == assessCanColor.run()) {
-			Sound.beep();
+			
+			for(int i = 0; i<10; i++){
+				
+				Sound.beep();
+				
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
 			return true;
 		}
 		
 		//otherwise, beep twice
 		else {
-			Sound.beep(); 
-			Sound.beep();
+//			Sound.beep(); 
+//			Sound.beep();
 			return false;
 		}
 	} 
@@ -261,9 +349,7 @@ public class CanLocator {
 
 	private void goToNext() { 
 
-		
-		navigator.moveToCan(TILE_SIZE);
-		navigator.turnTo(90);
+		navigator.driveForward(TILE_SIZE);
 
 		//keeps coordinate values in check to update odo if needed
 		if(Cy < URy && Cx==LLx) {
@@ -285,25 +371,34 @@ public class CanLocator {
 			odo.setX(Cx*TILE_SIZE);
 		}
 		
+		//if the EV3 is at one of the 3 corners of the search zone, turn right to stay on the zone border
+		if( (Cx*TILE_SIZE > (LLx*TILE_SIZE-DISTANCE_ERROR) && Cx*TILE_SIZE < (LLx*TILE_SIZE+DISTANCE_ERROR) && Cy*TILE_SIZE > (URy*TILE_SIZE-DISTANCE_ERROR) && Cy*TILE_SIZE < (URy        *TILE_SIZE+DISTANCE_ERROR))
+			  || (Cx*TILE_SIZE > (URx*TILE_SIZE-DISTANCE_ERROR) && Cx*TILE_SIZE < (URx*TILE_SIZE+DISTANCE_ERROR) && Cy*TILE_SIZE > (URy*TILE_SIZE-DISTANCE_ERROR) && Cy*TILE_SIZE < (URy*TILE_SIZE+DISTANCE_ERROR))
+			  || (Cx*TILE_SIZE > (URx*TILE_SIZE-DISTANCE_ERROR) && Cx*TILE_SIZE < (URx*TILE_SIZE+DISTANCE_ERROR) && Cy*TILE_SIZE > (LLy*TILE_SIZE-DISTANCE_ERROR) && Cy*TILE_SIZE < (LLy*TILE_SIZE+DISTANCE_ERROR))){
+					
+					navigator.turnTo(90);
+					
+				}
 		
-		/*if(Cy < URy && Cx==LLx) {
-			odo.getXYT()[2] = 90.0;
-			odo.setTheta(odo.getXYT()[2]);
-		}
-		else if(Cx < URx && Cy==URy) { 
-			odo.getXYT()[2] = 180.0;
-			odo.setTheta(odo.getXYT()[2]);
-		}
-		else if(Cy > LLy && Cx==URx) {
-			odo.getXYT()[2] = 270.0;
-			odo.setTheta(odo.getXYT()[2]);
-		}
 		
-		//ENDX is the x coordinate of the final position of the EV3
-		else if(Cx >= ENDX && Cy==LLy) {
-			odo.getXYT()[2] = 0.0;
-			odo.setTheta(odo.getXYT()[2]);
-		}*/
+// 		if(Cy < URy && Cx==LLx) {
+// 			odo.getXYT()[2] = 90.0;
+// 			odo.setTheta(odo.getXYT()[2]);
+// 		}
+// 		else if(Cx < URx && Cy==URy) { 
+// 			odo.getXYT()[2] = 180.0;
+// 			odo.setTheta(odo.getXYT()[2]);
+// 		}
+// 		else if(Cy > LLy && Cx==URx) {
+// 			odo.getXYT()[2] = 270.0;
+// 			odo.setTheta(odo.getXYT()[2]);
+// 		}
+		
+// 		//ENDX is the x coordinate of the final position of the EV3
+// 		else if(Cx >= ENDX && Cy==LLy) {
+// 			odo.getXYT()[2] = 0.0;
+// 			odo.setTheta(odo.getXYT()[2]);
+// 		}
 		
 	}
 	
@@ -314,13 +409,15 @@ public class CanLocator {
 	
 	private void travelToURBorder() {
 		
-		navigator.driveBack(CAN_DISTANCE_ON_BORDER);
+		navigator.turnTo(-canAngle);
 		
 		if ( (odo.getXYT()[2] >= 360-ANGLE_ERROR) || 
 		    	(odo.getXYT()[2] <= 0+ANGLE_ERROR)){
 			
+			navigator.turnTo(45);
+			lightLocalizer.lightLocalize(Cx,Cy);
 			navigator.travelTo(LLx-OFFSET, Cy);
-			navigator.travelTo(Cx,URy+OFFSET);
+			navigator.travelTo(LLx-OFFSET,URy+OFFSET);
 			navigator.travelTo(URx,Cy);
 			navigator.travelTo(URx,URy);		
 		}
@@ -328,8 +425,9 @@ public class CanLocator {
 		else if ( (odo.getXYT()[2] >= 90-ANGLE_ERROR) || 
 		    	(odo.getXYT()[2] <= 90+ANGLE_ERROR) ){
 
+			navigator.turnTo(-45);
+			lightLocalizer.lightLocalize(Cx,Cy);
 			navigator.travelTo(Cx,URy+OFFSET);
-			navigator.travelTo(Cy,URy+OFFSET);
 			navigator.travelTo(URx,URy+OFFSET);
 			navigator.travelTo(URx,URy);
 		}
@@ -337,6 +435,8 @@ public class CanLocator {
 		else if ( (odo.getXYT()[2] >= 180-ANGLE_ERROR) || 
 		    	(odo.getXYT()[2] <= 180+ANGLE_ERROR) ){
 		
+			navigator.turnTo(-135);
+			lightLocalizer.lightLocalize(Cx,Cy);
 			navigator.travelTo(URx+OFFSET,Cy);
 			navigator.travelTo(URx+OFFSET,URy);
 			navigator.travelTo(URx,URy);
@@ -345,6 +445,8 @@ public class CanLocator {
 		else if ( (odo.getXYT()[2] >= 270-ANGLE_ERROR) || 
 		    	(odo.getXYT()[2] <= 270+ANGLE_ERROR) ){
 		
+			navigator.turnTo(135);
+			lightLocalizer.lightLocalize(Cx,Cy);
 			navigator.travelTo(Cx,LLy-OFFSET);
 			navigator.travelTo(URx+OFFSET,LLy-OFFSET);
 			navigator.travelTo(URx+OFFSET,URy);
@@ -617,5 +719,7 @@ public class CanLocator {
 		return (int) (usData[0] * 100);
 		
 	}
+
   
-}
+}	
+

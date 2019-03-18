@@ -30,8 +30,8 @@ import ca.mcgill.ecse211.model.UltrasonicLocalizer;
 public class Project {
 
 	// Motor and Sensor Ports
-	private static final EV3LargeRegulatedMotor LEFT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
-	private static final EV3LargeRegulatedMotor RIGHT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
+	public static final EV3LargeRegulatedMotor LEFT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
+	public static final EV3LargeRegulatedMotor RIGHT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
 	private static final EV3LargeRegulatedMotor SENSOR_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
 	private static final TextLCD LCD = LocalEV3.get().getTextLCD();
 	private static final Port US_PORT = LocalEV3.get().getPort("S1");
@@ -134,7 +134,7 @@ public class Project {
 					e.printStackTrace();
 				}
 				*/
-				assessCanColor.run();
+				//assessCanColor.run();
 				/*
 				Thread odoThread = new Thread(odometer);
 				odoThread.start();
@@ -148,8 +148,22 @@ public class Project {
 						navigator,lightLocalizer);
 				canLocator.RunLocator();
 				*/
-				Sound.beep();
-				
+				while(true) {
+					
+					if (ClrClassify.run() !="no object") {	//if there is a can detected
+				    LCD.drawString("Object Detected", 1,1);
+				    LCD.drawString(ClrClassify.run(), 1, 2);
+				    
+				    } else {
+				    	LCD.clear();
+				    }
+
+				    colorId.fetchSample(colorData, 0);
+				    LCD.drawString("R: " + colorData[0], 1, 3);
+			        LCD.drawString("G: " + colorData[1], 1, 4);
+			        LCD.drawString("B: " + colorData[2], 1, 5);
+				  
+				 }				
 				
 			}
 
