@@ -126,16 +126,13 @@ public class Project {
 				
 			} else {
 				LCD.clear();
-				/*
+				
 				Robot robot = null;
 				try {
 					robot = new Robot(wifi);
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				}
-				*/
-				//assessCanColor.run();
-				/*
 				Thread odoThread = new Thread(odometer);
 				odoThread.start();
 				Thread odoDisplayThread = new Thread(odometryDisplay);
@@ -144,10 +141,12 @@ public class Project {
 				// Localization (Ultrasonic and Light)
 				LightLocalizer lightLocalizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData, navigator);
 				ultrasonicLocalizer.fallingEdge();
+				lightLocalizer.moveClose();
+				lightLocalizer.lightLocalize(3, 3);
 				CanLocator canLocator = new CanLocator(robot, assessCanColor, usDistance, usData, 
 						navigator,lightLocalizer);
 				canLocator.RunLocator();
-				*/
+				/*
 				while(true) {
 					
 					if (ClrClassify.run() !="no object") {	//if there is a can detected
@@ -163,7 +162,8 @@ public class Project {
 			        LCD.drawString("G: " + colorData[1], 1, 4);
 			        LCD.drawString("B: " + colorData[2], 1, 5);
 				  
-				 }				
+				 }	
+				 */			
 				
 			}
 
