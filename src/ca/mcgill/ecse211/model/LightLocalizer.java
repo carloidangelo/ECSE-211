@@ -12,8 +12,9 @@ import lejos.robotics.SampleProvider;
  *
  */
 public class LightLocalizer {
-
-  public final static int ROTATION_SPEED = 100;
+	
+  public final static int ROTATION_SPEED_SLOW = 100;
+  public final static int ROTATION_SPEED = 200;
   private final static int FORWARD_SPEED = 150; 
   private static final double TILE_SIZE = 30.48;
   
@@ -68,7 +69,10 @@ public class LightLocalizer {
 	  float firstReading = readLineDarkness();
 	  float sample;
 	  while (count < 4) {
-
+		if (count == 3) {
+			leftMotor.setSpeed(ROTATION_SPEED_SLOW);
+			rightMotor.setSpeed(ROTATION_SPEED_SLOW);
+		}
 		leftMotor.forward();
 		rightMotor.backward();
 

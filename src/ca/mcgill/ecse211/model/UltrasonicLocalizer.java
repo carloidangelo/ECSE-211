@@ -11,10 +11,10 @@ import lejos.robotics.SampleProvider;
  */
 public class UltrasonicLocalizer {
 
-	public static final int ROTATION_SPEED = 110;
+	public static final int ROTATION_SPEED = 150;
 	
 	public static final double CRITICAL_DISTANCE = 30.00;
-	public static final double NOISE_MARGIN = 2.00;
+	public static final double NOISE_MARGIN = 5.00;
 
 	private static final double TURN_ERROR = 15;
   
