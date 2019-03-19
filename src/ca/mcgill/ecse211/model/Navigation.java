@@ -126,25 +126,25 @@ public class Navigation {
 	 * This method converts a distance into the total rotation (in degrees) of 
 	 * each wheel needed to cover that distance 
 	 * 
-	 * @param RADIUS RADIUS of wheel
+	 * @param RADIUS radius of wheel
 	 * @param distance distance that you want the robot to move
 	 * @return total rotation (in degrees) of each wheel needed to cover a distance
 	 */
-	public static int convertDistance(double RADIUS, double distance) {
-	  return (int) ((180.0 * distance) / (Math.PI * RADIUS));
+	public static int convertDistance(double radius, double distance) {
+	  return (int) ((180.0 * distance) / (Math.PI * radius));
 	}
 	
 	/**
 	 * This method converts a rotation in place into the total 
 	 * rotation (in degrees) of each wheel needed to cause that rotation
 	 * 
-	 * @param RADIUS RADIUS of wheel
+	 * @param radius radius of wheel
 	 * @param width distance between centers of wheels
 	 * @param angle angle (in place) that you want the robot to rotate
 	 * @return total rotation (in degrees) of each wheel needed to cause a rotation in place
 	 */
-	public static int convertAngle(double RADIUS, double width, double angle) {
-	  return convertDistance(RADIUS, Math.PI * width * angle / 360.0);
+	public static int convertAngle(double radius, double width, double angle) {
+	  return convertDistance(radius, Math.PI * width * angle / 360.0);
 	}  
   
 }
