@@ -62,7 +62,7 @@ public class SearchZoneLocator {
 				if (homeZoneURX < islandLLX) {
 					if(homeZoneLLY == tunnelLLY) {
 						navigator.travelTo(tunnelLLX - 1, tunnelURY);
-						lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelLLY);
+						lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelURY);
 						navigator.turnTo(-180);
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(-90);
@@ -84,9 +84,20 @@ public class SearchZoneLocator {
 						navigator.turnTo(45);
 						lightLocalizer.lightLocalize(tunnelURX + 1, tunnelURY);
 					}
+					double yComponent = odo.getXYT()[1];
+					navigator.travelTo(searchZoneLLX, searchZoneLLY);
+					if (yComponent == searchZoneLLY) {
+						navigator.turnTo(-45);
+						lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
+					} else if (yComponent < searchZoneLLY) {
+						lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
+					} else if (yComponent > searchZoneLLY) {
+						navigator.turnTo(-90);
+						lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
+					}
 					
 				} else if (homeZoneURY < islandLLY) {
-					if(homeZoneLLX == tunnelLLY) {
+					if(homeZoneLLX == tunnelLLX) {
 						navigator.travelTo(tunnelURX, tunnelLLY - 1);
 						lightLocalizer.lightLocalize(tunnelURX,  tunnelLLY - 1);
 						navigator.turnTo(-90);
@@ -111,8 +122,18 @@ public class SearchZoneLocator {
 						navigator.turnTo(-45);
 						lightLocalizer.lightLocalize(tunnelURX, tunnelURY + 1);
 					}
+					double xComponent = odo.getXYT()[0];
+					navigator.travelTo(searchZoneLLX, searchZoneLLY);
+					if (xComponent == searchZoneLLX) {
+						navigator.turnTo(45);
+						lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
+					} else if (xComponent < searchZoneLLX) {
+						lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
+					} else if (xComponent > searchZoneLLX) {
+						navigator.turnTo(90);
+						lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
+					}
 				}
-				navigator.travelTo(searchZoneLLX, searchZoneLLY);
 				break;
 			case 1: 
 				odo.setXYT((homeZoneURX - 1) * TILE_SIZE, (homeZoneLLY + 1) * TILE_SIZE, 270.0);
