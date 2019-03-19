@@ -13,7 +13,7 @@ import lejos.robotics.SampleProvider;
  */
 public class LightLocalizer {
 	
-  public final static int ROTATION_SPEED_SLOW = 100;
+  public final static int ROTATION_SPEED_SLOW = 85;
   public final static int ROTATION_SPEED = 200;
   private final static int FORWARD_SPEED = 150; 
   private static final double TILE_SIZE = 30.48;
@@ -21,7 +21,7 @@ public class LightLocalizer {
   private final static int COLOUR_DIFF = 20;  
   private final static double LIGHT_LOC_DISTANCE = 14.5;
   private final static int EXTRA_DISTANCE = 5;
-  private static final double TURN_ERROR = 16;
+  private static final double TURN_ERROR = 10;
   
   private final double RADIUS = Robot.WHEEL_RAD;
   private final double TRACK = Robot.TRACK;
@@ -105,6 +105,8 @@ public class LightLocalizer {
 	  navigator.travelTo(pointX, pointY);
 
 	  navigator.turnTo(-Navigation.minAng);
+	  
+	  odo.setXYT(pointX * TILE_SIZE, pointY * TILE_SIZE, 0.0);
 	  
 	  leftMotor.stop(true);
 	  rightMotor.stop();

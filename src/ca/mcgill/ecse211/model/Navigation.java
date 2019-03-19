@@ -16,7 +16,6 @@ public class Navigation {
   
   public static final double TILE_SIZE = 30.48;
   private static final int SLOW_SPEED = 75;
-  private static final double ANGLE_ERROR = 4;
   
   private final double RADIUS = Robot.WHEEL_RAD;
   private final double TRACK = Robot.TRACK;
@@ -80,14 +79,8 @@ public class Navigation {
   public void turnTo(double theta) {
 	leftMotor.setSpeed(ROTATION_SPEED);
 	rightMotor.setSpeed(ROTATION_SPEED);
-    if (theta < 0) {
-    	leftMotor.rotate(convertAngle(RADIUS, TRACK, theta - ANGLE_ERROR), true);
-        rightMotor.rotate(-convertAngle(RADIUS, TRACK, theta - ANGLE_ERROR), false);
-    } else {
-    	leftMotor.rotate(convertAngle(RADIUS, TRACK, theta + ANGLE_ERROR), true);
-    	rightMotor.rotate(-convertAngle(RADIUS, TRACK, theta + ANGLE_ERROR), false);
-    }
-
+	leftMotor.rotate(convertAngle(RADIUS, TRACK, theta), true);
+    rightMotor.rotate(-convertAngle(RADIUS, TRACK, theta), false);
   }
   
   /**
@@ -123,13 +116,9 @@ public class Navigation {
   public void turnToScan(double theta) {
         leftMotor.setSpeed(SLOW_SPEED);
         rightMotor.setSpeed(SLOW_SPEED);
-        if (theta < 0) {
-        	leftMotor.rotate(convertAngle(RADIUS, TRACK, theta - ANGLE_ERROR), true);
-            rightMotor.rotate(-convertAngle(RADIUS, TRACK, theta - ANGLE_ERROR), true);
-        } else {
-            leftMotor.rotate(convertAngle(RADIUS, TRACK, theta + ANGLE_ERROR), true);
-            rightMotor.rotate(-convertAngle(RADIUS, TRACK, theta + ANGLE_ERROR), true);
-        }
+        leftMotor.rotate(convertAngle(RADIUS, TRACK, theta), true);
+        rightMotor.rotate(-convertAngle(RADIUS, TRACK, theta), true);
+
 
       }
   

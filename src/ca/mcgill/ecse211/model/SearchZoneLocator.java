@@ -68,23 +68,26 @@ public class SearchZoneLocator {
 						navigator.turnTo(-90);
 					} else {
 						navigator.travelTo(tunnelLLX - 1, tunnelLLY);
+						if ((homeZoneLLY + 1) == tunnelLLY) {
+							navigator.turnTo(-45);
+						}
 						lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelLLY);
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(90);
 					}
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
+					double yComponent;
 					if (tunnelURY == islandURY) {
 						navigator.turnTo(90);
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(-135);
-						lightLocalizer.lightLocalize(tunnelURX + 1, tunnelLLY);
+						lightLocalizer.lightLocalize(tunnelURX + 1, yComponent = tunnelLLY);
 					} else {
 						navigator.turnTo(-90);
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(45);
-						lightLocalizer.lightLocalize(tunnelURX + 1, tunnelURY);
+						lightLocalizer.lightLocalize(tunnelURX + 1, yComponent = tunnelURY);
 					}
-					double yComponent = odo.getXYT()[1];
 					navigator.travelTo(searchZoneLLX, searchZoneLLY);
 					if (yComponent == searchZoneLLY) {
 						navigator.turnTo(-45);
@@ -105,24 +108,27 @@ public class SearchZoneLocator {
 						navigator.turnTo(90);
 					} else {
 						navigator.travelTo(tunnelLLX, tunnelLLY - 1);
+						if ((homeZoneLLX + 1) == tunnelLLX) {
+							navigator.turnTo(45);
+						}
 						lightLocalizer.lightLocalize(tunnelLLX, tunnelLLY - 1);
 						navigator.turnTo(90);
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(-90);
 					}
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
+					double xComponent;
 					if (tunnelURX == islandURX) {
 						navigator.turnTo(-90);
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(135);
-						lightLocalizer.lightLocalize(tunnelLLX, tunnelURY + 1);
+						lightLocalizer.lightLocalize(xComponent = tunnelLLX, tunnelURY + 1);
 					} else {
 						navigator.turnTo(90);
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(-45);
-						lightLocalizer.lightLocalize(tunnelURX, tunnelURY + 1);
+						lightLocalizer.lightLocalize(xComponent = tunnelURX, tunnelURY + 1);
 					}
-					double xComponent = odo.getXYT()[0];
 					navigator.travelTo(searchZoneLLX, searchZoneLLY);
 					if (xComponent == searchZoneLLX) {
 						navigator.turnTo(45);
