@@ -98,15 +98,13 @@ public class LightLocalizer {
 	  
 	  deltaA = 90 - (angleY / 2.0) - TURN_ERROR;
 	  
-	  leftMotor.rotate(Navigation.convertAngle(RADIUS, TRACK, deltaA), true);
-	  rightMotor.rotate(-Navigation.convertAngle(RADIUS, TRACK, deltaA));
+	  navigator.turnTo(deltaA);
 
 	  odo.setXYT(pointX * TILE_SIZE + deltaX, pointY * TILE_SIZE + deltaY, 0.0);
 	  
 	  navigator.travelTo(pointX, pointY);
 
-	  leftMotor.rotate(-Navigation.convertAngle(RADIUS, TRACK, Navigation.minAng), true);
-	  rightMotor.rotate(Navigation.convertAngle(RADIUS, TRACK, Navigation.minAng));
+	  navigator.turnTo(-Navigation.minAng);
 	  
 	  leftMotor.stop(true);
 	  rightMotor.stop();

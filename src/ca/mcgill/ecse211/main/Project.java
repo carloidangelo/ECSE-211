@@ -135,8 +135,6 @@ public class Project {
 				
 			} else {
 				LCD.clear();
-				navigator.turnTo(360);
-				/*
 				Robot robot = null;
 				try {
 					robot = new Robot(wifi);
@@ -157,7 +155,6 @@ public class Project {
 				CanLocator canLocator = new CanLocator(robot, assessCanColor, usDistance, usData, 
 						navigator,lightLocalizer);
 				canLocator.RunLocator();
-				*/
 				/*
 				assessCanColor.run();
 				while(true) {

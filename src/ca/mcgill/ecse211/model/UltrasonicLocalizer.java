@@ -27,7 +27,7 @@ public class UltrasonicLocalizer {
 	private EV3LargeRegulatedMotor leftMotor, rightMotor;
 	
 	/**
-	 * This is the default constructor of this class
+	 * This is the default constructor of this class.
 	 * @param leftMotor left motor of robot
 	 * @param rightMotor right motor of robot
 	 * @param usDistance sample provider from which to fetch ultrasonic sensor data
@@ -95,7 +95,7 @@ public class UltrasonicLocalizer {
 
 	}
 	/**
-	 * Method that fetches data from the ultrasonic sensor
+	 * Method that fetches data from the ultrasonic sensor.
 	 * @return distance (cm) from the wall
 	 */
 	private int readUSDistance() {

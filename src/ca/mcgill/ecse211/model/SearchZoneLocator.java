@@ -50,8 +50,8 @@ public class SearchZoneLocator {
 	}
 	
 	/** 
-	 * Method that allows the robot to make its way to the search zone
-	 * The path the robot takes will depend on the starting corner (startingCorner) parameter
+	 * Method that allows the robot to make its way to the search zone.
+	 * The path the robot takes will depend on the starting corner (startingCorner) parameter.
 	 */
 	public void goToSearchZone(){
 		// set new position and new angle after localization
