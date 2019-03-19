@@ -117,15 +117,26 @@ public class Project {
 				SearchZoneLocator searchZonelocator = new SearchZoneLocator(robot, lightLocalizer, navigator);
 				searchZonelocator.goToSearchZone();
 				
-				Sound.beep(); // Must BEEP after navigation to search zone is finished
-				/*
+				Sound.beep();
+				Sound.beep();
+				Sound.beep();
+				Sound.beep();
+				Sound.beep();
+	
 				CanLocator canLocator = new CanLocator(robot, assessCanColor, usDistance, usData, 
 											navigator,lightLocalizer);
 				canLocator.RunLocator();
-				*/
+				
+				Sound.beep();
+				Sound.beep();
+				Sound.beep();
+				Sound.beep();
+				Sound.beep();
 				
 			} else {
 				LCD.clear();
+				navigator.turnTo(360);
+				/*
 				Robot robot = null;
 				try {
 					robot = new Robot(wifi);
@@ -146,6 +157,7 @@ public class Project {
 				CanLocator canLocator = new CanLocator(robot, assessCanColor, usDistance, usData, 
 						navigator,lightLocalizer);
 				canLocator.RunLocator();
+				*/
 				/*
 				assessCanColor.run();
 				while(true) {
@@ -163,7 +175,8 @@ public class Project {
 			        LCD.drawString("G: " + colorData[1], 1, 4);
 			        LCD.drawString("B: " + colorData[2], 1, 5);
 				  
-				 }	*/
+				 }
+				 */
 						
 				
 			}

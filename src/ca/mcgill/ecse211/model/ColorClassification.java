@@ -12,7 +12,7 @@ public class ColorClassification {
 
   private final float[][] MEAN_RGB = {// the mean RGB values for cans
       {0.0423924454f, 0.0107023890f, 0.0065211908f}, // red can
-      {0.0245519090f, 0.0177073221f, 0.0068014234f}, // yellow can
+      {0.0255519090f, 0.0177073221f, 0.0068014234f}, // yellow can
       {0.0055042342f, 0.0206447724f, 0.0235459889f}, // blue can
       {0.0057257231f, 0.0232034322f, 0.0075382312f} // green can
   };

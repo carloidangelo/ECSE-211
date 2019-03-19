@@ -23,9 +23,10 @@ public class CanLocator {
 	private static final double CAN_DISTANCE_FROM_OUT = 11.75;
 	private static final double ANGLE_ERROR = 10.0;
 	private static final double DISTANCE_ERROR = 4.0;
-	private static final double TEST_VALUE = 4.0;
-	private static final double TEST_ANGLE = 15;
+	private static final double TEST_VALUE = 5.0;
+	private static final double TEST_ANGLE = 15.0;
 	private double canAngle = 0;
+	private double canDistance = 0;
 	private int ENDX = 0, ENDY = 0;
 	private double Cx = 0,Cy = 0;
 	private int count = 0;
@@ -69,51 +70,50 @@ public class CanLocator {
 	
 	public void RunLocator(){
 		
-//		while (true && !loopStop) {	
-//			
-//			//when EV3 goes full circle with the algorithm
-//			//and ends where it started, break the loop.
-//			if(Cx == ENDX && Cy == ENDY) {
-//				
-//				navigator.turnTo(135);
-//				lightLocalizer.lightLocalize(Cx,Cy);
-//				
-//				//If no can was found once search algorithm is finished, go to Upper Right
-//				navigator.travelTo(Cx,LLy-OFFSET);
-//				navigator.travelTo(URx+OFFSET,LLy-OFFSET);
-//				navigator.travelTo(URx+OFFSET,URy);
-//				navigator.travelTo(URx,URy);
-//				navigator.turnTo(135);
-//				lightLocalizer.lightLocalize(URx,URy);
-//				break;
-//			}			
-//			
-//			//checkCan takes 90 degrees as initial input(i.e this is assuming the tile
-//			//has not been scanned yet, so a full 90 degree turn is required)
-//			else if(!checkCan(90)){
-//					
-//					goToNext();
-//				
-//			}
-//			
-//			//checks a can in front of it
-//			else{
-//				
-//				searchProcess();
-//				
-//			}
-//			
-//		}
+		/*while (true && !loopStop) {	
+			
+			//when EV3 goes full circle with the algorithm
+			//and ends where it started, break the loop.
+			if(Cx == ENDX && Cy == ENDY) {
+				
+				navigator.turnTo(135);
+				lightLocalizer.lightLocalize(Cx,Cy);
+				
+				//If no can was found once search algorithm is finished, go to Upper Right
+				navigator.travelTo(Cx,LLy-OFFSET);
+				navigator.travelTo(URx+OFFSET,LLy-OFFSET);
+				navigator.travelTo(URx+OFFSET,URy);
+				navigator.travelTo(URx,URy);
+				navigator.turnTo(135);
+				lightLocalizer.lightLocalize(URx,URy);
+				break;
+			}			
+			
+			//checkCan takes 90 degrees as initial input(i.e this is assuming the tile
+			//has not been scanned yet, so a full 90 degree turn is required)
+			else if(!checkCan(90)){
+					
+					goToNext();
+				
+			}
+			
+			//checks a can in front of it
+			else{
+				
+				searchProcess();
+				
+			}
+			
+		}*/
 		
 
 		
 		
 //		//TEST checkCan() & checkColor()
 		checkCan(90);
-		double value;
-		if(checkColor(value = readUSDistance() - TEST_VALUE)){
-			System.out.print("test");
-			navigator.driveBack(value);
+		double x = readUSDistance() - TEST_VALUE;
+		if(checkColor(x)){
+			navigator.driveBack(x);
 	        travelToURBorder();
 		}
 		
@@ -180,15 +180,15 @@ public class CanLocator {
 			inside = true;
 		}                      
 		
-		if(checkColor(readUSDistance()-(TEST_VALUE))){
+		if(checkColor(canDistance = (readUSDistance()-(TEST_VALUE))) ){
 			
 			if(inside){
-				navigator.driveBack(readUSDistance()-(TEST_VALUE));
+				navigator.driveBack(canDistance);
 		        travelToURBorder();
 			}
 		
 			else{
-			    navigator.driveBack(readUSDistance()-(TEST_VALUE));
+			    navigator.driveBack(canDistance);
 				travelToUROutside(); //NEED CHECK
 			}
 			
@@ -198,13 +198,13 @@ public class CanLocator {
 		    
 			if(inside){
 			    
-				navigator.driveBack(readUSDistance()-(TEST_VALUE));
+				navigator.driveBack(canDistance);
 				
 				if(canAngle < ANGLE_ERROR) borderDodge();
 		        
 				else {
 				    
-				    navigator.driveBack(readUSDistance()-(TEST_VALUE));
+				    navigator.driveBack(canDistance);
 		        	navigator.turnTo(-canAngle);
 		        	goToNext(); 
 				    
@@ -225,8 +225,10 @@ public class CanLocator {
 	//robot is facing the can
 	private boolean checkCan(double angle){
 	
-	    canAngle = 0;
+		canAngle = 0;
 	    double currentAngle = odo.getXYT()[2];
+	    
+	    System.out.println("currentAng:"+currentAngle);
 	    
 		//begin rotating to scan for cans 
 		navigator.turnToScan(angle);
@@ -248,11 +250,14 @@ public class CanLocator {
         Project.LEFT_MOTOR.stop(true);
         Project.RIGHT_MOTOR.stop();
         navigator.turnTo(TEST_ANGLE);
-        canAngle = Math.abs(odo.getXYT()[2] - currentAngle);
+        System.out.println("firstAng:"+odo.getXYT()[2]);
+        canAngle = odo.getXYT()[2] - currentAngle;
         
-       if(canAngle < -120){
+        System.out.println("canAngle:"+canAngle);
+        
+       if(canAngle < -110){
             
-            canAngle = 360-odo.getXYT()[2] - currentAngle;
+            canAngle = 360+canAngle-(ANGLE_ERROR/2);
             
         }
         
@@ -271,7 +276,7 @@ public class CanLocator {
 
 		navigator.driveForward(distance);
 		
-		//if the can color is the target color, beep once
+		//if the can color is the target color, beep 10 times
 //		if (TR == assessCanColor.run()) {
 //			
 //			for(int i = 0; i<10; i++){
@@ -321,20 +326,24 @@ public class CanLocator {
 
 		//keeps coordinate values in check to update odo if needed
 		if(Cy < URy && Cx==LLx) {
+			
 			Cy = Cy+1;
 			odo.setY(Cy*TILE_SIZE);
 		}
 		else if(Cx < URx && Cy==URy) { 
+			
 			Cx = Cx+1;
 			odo.setX(Cx*TILE_SIZE);
 		}
 		else if(Cy > LLy && Cx==URx) {
+			
 			Cy=Cy-1;
 			odo.setY(Cy*TILE_SIZE);
 		}
 		
 		//ENDX is the x coordinate of the final position of the EV3
 		else if(Cx > ENDX && Cy==LLy) {
+			
 			Cx=Cx-1;
 			odo.setX(Cx*TILE_SIZE);
 		}
@@ -368,6 +377,7 @@ public class CanLocator {
 			goToNext();
 					
 		}
+		canDistance = 0;
 	}
 	
 	/**
@@ -378,8 +388,6 @@ public class CanLocator {
 	private void travelToURBorder() {
 		
 		navigator.turnTo(-canAngle);
-		System.out.println("canangle"+ canAngle);
-		System.out.println("theta" + odo.getXYT()[2]);
 		
 		if ( (odo.getXYT()[2] >= 360-ANGLE_ERROR) || 
 		    	(odo.getXYT()[2] <= 0+ANGLE_ERROR)){
@@ -388,7 +396,7 @@ public class CanLocator {
 			lightLocalizer.lightLocalize(Cx,Cy);
 			navigator.travelTo(LLx-OFFSET, Cy);
 			navigator.travelTo(LLx-OFFSET,URy+OFFSET);
-			navigator.travelTo(URx,Cy);
+			navigator.travelTo(URx,URy+OFFSET);
 			navigator.travelTo(URx,URy);		
 		}
 		
