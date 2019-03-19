@@ -19,10 +19,10 @@ public class SearchZoneLocator {
 	private Navigation navigator;
 	
 	/**
-	 * 
-	 * @param robot
-	 * @param lightLocalizer
-	 * @param navigator
+	 * This is the default constructor of this class
+	 * @param robot instance of Robot class
+	 * @param lightLocalizer instance of LightLocalizer class
+	 * @param navigator instance of Navigation class
 	 * @throws OdometerExceptions
 	 */
 	public SearchZoneLocator(Robot robot, LightLocalizer lightLocalizer, 

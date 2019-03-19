@@ -39,7 +39,7 @@ public class Project {
 	private static final Port CS_FRONT_PORT = LocalEV3.get().getPort("S2");
 	
 	public static final int TEAM_NUMBER = 10;
-	private static final String SERVER_IP = "192.168.2.34";
+	private static final String SERVER_IP = "192.168.2.36";
 	// Enable/disable printing of debug info from the WiFi class
 	private static final boolean ENABLE_DEBUG_WIFI_PRINT = false;
 
@@ -100,7 +100,7 @@ public class Project {
 				
 				Thread odoThread = new Thread(odometer);
 				odoThread.start();
-
+				
 				Thread odoDisplayThread = new Thread(odometryDisplay);
 				odoDisplayThread.start();
 				
@@ -126,17 +126,17 @@ public class Project {
 				
 			} else {
 				LCD.clear();
-				
 				Robot robot = null;
 				try {
 					robot = new Robot(wifi);
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				}
+				
 				Thread odoThread = new Thread(odometer);
 				odoThread.start();
-				Thread odoDisplayThread = new Thread(odometryDisplay);
-				odoDisplayThread.start();
+				//Thread odoDisplayThread = new Thread(odometryDisplay);
+				//odoDisplayThread.start();
 				UltrasonicLocalizer ultrasonicLocalizer = new UltrasonicLocalizer(LEFT_MOTOR, RIGHT_MOTOR, usDistance, usData);
 				// Localization (Ultrasonic and Light)
 				LightLocalizer lightLocalizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData, navigator);
@@ -147,6 +147,7 @@ public class Project {
 						navigator,lightLocalizer);
 				canLocator.RunLocator();
 				/*
+				assessCanColor.run();
 				while(true) {
 					
 					if (ClrClassify.run() !="no object") {	//if there is a can detected
@@ -162,8 +163,8 @@ public class Project {
 			        LCD.drawString("G: " + colorData[1], 1, 4);
 			        LCD.drawString("B: " + colorData[2], 1, 5);
 				  
-				 }	
-				 */			
+				 }	*/
+						
 				
 			}
 
