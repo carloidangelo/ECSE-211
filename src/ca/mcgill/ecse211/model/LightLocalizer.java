@@ -21,7 +21,7 @@ public class LightLocalizer {
   private final static int COLOUR_DIFF = 20;  
   private final static double LIGHT_LOC_DISTANCE = 14.5;
   private final static int EXTRA_DISTANCE = 5;
-  private static final double TURN_ERROR = 9.5;
+  private static final double TURN_ERROR = 16;
   
   private final double RADIUS = Robot.WHEEL_RAD;
   private final double TRACK = Robot.TRACK;
