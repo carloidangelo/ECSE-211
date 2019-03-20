@@ -113,6 +113,8 @@ public class Project {
 				lightLocalizer.moveClose();
 				lightLocalizer.lightLocalize(0,0);
 				
+				Sound.beep();
+				
 				// Search Zone Locator
 				SearchZoneLocator searchZonelocator = new SearchZoneLocator(robot, lightLocalizer, navigator);
 				searchZonelocator.goToSearchZone();
