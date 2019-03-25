@@ -44,7 +44,7 @@ public class CanLocator {
 		this.usData = usData;
 		this.assessCanColor = assessCanColor;
 		this.navigator = navigator;
-		TR = robot.getGreenTeam();
+		TR = 1;
 		LLx = robot.getSearchZoneLLX();
 		LLy = robot.getSearchZoneLLY();
 		URx = robot.getSearchZoneURX();
@@ -233,7 +233,7 @@ public class CanLocator {
 		//begin rotating to scan for cans 
 		navigator.turnToScan(angle);
         
-        while (readUSDistance() > TILE_SIZE*Math.sqrt(2.0)) {
+        while (readUSDistance() > TILE_SIZE) {
             
             //keep turning until the distance of the US is less than a tile (i.e a can is detected)
             
