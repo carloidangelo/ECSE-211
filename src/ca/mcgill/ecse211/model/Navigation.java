@@ -12,11 +12,13 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 public class Navigation {
 
   public final static int ROTATION_SPEED = 100;
-  private final static int FORWARD_SPEED = 200; 
-  
-  public static final double TILE_SIZE = 30.48;
   private static final int SLOW_SPEED = 75;
   
+  private final static int FORWARD_SPEED = 200;
+  private final static int FORWARD_SPEED_WEIGHT = 200;
+  
+  public static final double TILE_SIZE = 30.48;
+ 
   private final double RADIUS = Robot.WHEEL_RAD;
   private final double TRACK = Robot.TRACK;
   
@@ -26,7 +28,7 @@ public class Navigation {
   public static double minAng;
 
   /**
-   * This is the default constructor of this class
+   * This is the default constructor of this class.
    * @param leftMotor left motor of robot
    * @param rightMotor right motor of robot
    * @throws OdometerExceptions
@@ -38,7 +40,7 @@ public class Navigation {
 	}
   
   /**
-   * Method that allows robot to travel from its current position to any other point
+   * Method that allows robot to travel from its current position to any other point.
    * @param x x coordinate of desired destination
    * @param y y coordinate of desired destination
    */
@@ -73,7 +75,7 @@ public class Navigation {
   }
 
   /**
-   * Method that allows the robot to rotate in place 
+   * Method that allows the robot to rotate in place.
    * @param theta angle amount (in degrees) that you want the robot to rotate in place
    */
   public void turnTo(double theta) {
@@ -84,7 +86,7 @@ public class Navigation {
   }
   
   /**
-   * Method that allows the robot to move backward
+   * Method that allows the robot to move backward.
    * @param distance distance that you want the robot to travel backward
    */
   public void driveBack(double distance) {
@@ -96,7 +98,7 @@ public class Navigation {
   }
   
   /**
-   * Method that allows the robot to move forward
+   * Method that allows the robot to move forward.
    * @param distance distance that you want the robot to travel forward
    */
   public void driveForward(double distance) {
@@ -105,6 +107,19 @@ public class Navigation {
 
 	  leftMotor.rotate(convertDistance(RADIUS, distance), true);
 	  rightMotor.rotate(convertDistance(RADIUS, distance), false);
+  }
+  
+  /**
+   * Method that allows the robot to move forward and allows other code to
+   * run
+   * @param distance distance that you want the robot to travel forward
+   */
+  public void driveForwardWeight(double distance) {
+	  leftMotor.setSpeed(FORWARD_SPEED_WEIGHT);
+	  rightMotor.setSpeed(FORWARD_SPEED_WEIGHT);
+
+	  leftMotor.rotate(convertDistance(RADIUS, distance), true);
+	  rightMotor.rotate(convertDistance(RADIUS, distance), true);
   }
   
   /**
