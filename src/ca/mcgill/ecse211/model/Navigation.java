@@ -11,11 +11,11 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
  */
 public class Navigation {
 
-  public final static int ROTATION_SPEED = 100;
+  private static final int ROTATION_SPEED = 100;
   private static final int SLOW_SPEED = 75;
   
-  private final static int FORWARD_SPEED = 200;
-  private final static int FORWARD_SPEED_WEIGHT = 200;
+  private static final int FORWARD_SPEED = 200;
+  private static final int FORWARD_SPEED_WEIGHT = 200;
   
   public static final double TILE_SIZE = 30.48;
  
