@@ -14,7 +14,7 @@ public class AssessCanWeight {
 	}
 	
 	public int run() {
-		return 0;
+		return (int) sampleData();
 	}
 	
 	private float sampleData(){

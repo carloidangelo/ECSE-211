@@ -50,10 +50,6 @@ public class CanLocator {
 		LLy = robot.getSearchZoneLLY();
 		URx = robot.getSearchZoneURX();
 		URy = robot.getSearchZoneURY();
-		islandLLX = robot.getIslandLLX();
-		islandLLY = robot.getIslandLLY();
-		islandURX = robot.getIslandURX();
-		islandURY = robot.getIslandURY();
 		this.Cy = LLy;
 		this.Cx = LLx;
 		this.ENDX = LLx+1;

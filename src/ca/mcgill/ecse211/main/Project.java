@@ -70,6 +70,8 @@ public class Project {
         SampleProvider colorId =  clrSensor.getMode("RGB");
         float[] colorData = new float[colorId.sampleSize()];
         colorId.fetchSample(colorData, 0);
+        
+        // Touch Sensor (Assess Can Weight)
 		
         WifiConnection wifi = new WifiConnection(SERVER_IP, TEAM_NUMBER, ENABLE_DEBUG_WIFI_PRINT);
         ColorClassification ClrClassify= new ColorClassification(colorData, colorId);
