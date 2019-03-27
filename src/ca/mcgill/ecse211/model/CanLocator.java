@@ -39,13 +39,16 @@ public class CanLocator {
 	 * @author Mohamed Samee
 	 */
 	
-	public CanLocator(Robot robot, AssessCanColor assessCanColor, SampleProvider usDistance, float[] usData, 
-			Navigation navigator, LightLocalizer lightLocalizer) throws OdometerExceptions {
+	public CanLocator(Robot robot, AssessCanColor assessCanColor, AssessCanWeight assessCanWeight, Clamp clamp, 
+			SampleProvider usDistance, float[] usData, Navigation navigator, LightLocalizer lightLocalizer) throws OdometerExceptions {
 		odo = Odometer.getOdometer();
+		this.assessCanColor = assessCanColor;
+		this.assessCanWeight = assessCanWeight;
+		this.navigator = navigator;
+		this.lightLocalizer = lightLocalizer; 
+		this.clamp = clamp;
 		this.usDistance = usDistance;
 		this.usData = usData;
-		this.assessCanColor = assessCanColor;
-		this.navigator = navigator;
 		LLx = robot.getSearchZoneLLX();
 		LLy = robot.getSearchZoneLLY();
 		URx = robot.getSearchZoneURX();
@@ -54,7 +57,6 @@ public class CanLocator {
 		this.Cx = LLx;
 		this.ENDX = LLx+1;
 		this.ENDY = LLy;
-		this.lightLocalizer = lightLocalizer; 
 	}
 	
 	/**
@@ -152,7 +154,7 @@ public class CanLocator {
 			
 			inside = true;
 		}                      
-		
+		/*
 		if(assessCan(canDistance = (readUSDistance()-(TEST_VALUE))) ){
 			
 			if(inside){
@@ -187,7 +189,7 @@ public class CanLocator {
 			else{
 				outsideDodge(); //NEED CHECK
 			}
-		}
+		}*/
 	}
 	
 	/**

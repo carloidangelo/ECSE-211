@@ -13,7 +13,7 @@ public class Robot {
 	
 	//Robot related parameters
 	public static final double WHEEL_RAD = 2.2;
-	public static final double TRACK = 13.7;
+	public static final double TRACK = 12.5;
 	
 	private final int TEAM_NUMBER = Project.TEAM_NUMBER;
 	// Holds the Wifi data

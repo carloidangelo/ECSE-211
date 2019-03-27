@@ -4,13 +4,12 @@ import lejos.robotics.SampleProvider;
 
 public class AssessCanWeight {
 
-	
 	private float[] tsData;
-	private SampleProvider tsTouch;
+	private SampleProvider myTouchStatus;
 	
-	public AssessCanWeight(float[] tsData, SampleProvider tsTouch) {
+	public AssessCanWeight(float[] tsData, SampleProvider myTouchStatus) {
 		this.tsData = tsData;
-		this.tsTouch = tsTouch;
+		this.myTouchStatus = myTouchStatus;
 	}
 	
 	public int run() {
@@ -18,7 +17,7 @@ public class AssessCanWeight {
 	}
 	
 	private float sampleData(){
-		tsTouch.fetchSample(tsData, 0);
+		myTouchStatus.fetchSample(tsData, 0);
 		return tsData[0];
 	}
 }

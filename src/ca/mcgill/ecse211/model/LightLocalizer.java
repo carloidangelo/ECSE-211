@@ -19,7 +19,7 @@ public class LightLocalizer {
   private final double TILE_SIZE = Navigation.TILE_SIZE;
   
   private static final int COLOUR_DIFF = 20;  
-  private static final double LIGHT_LOC_DISTANCE = 14.5;
+  private static final double LIGHT_LOC_DISTANCE = 13.0;
   private static final int EXTRA_DISTANCE = 5;
   private static final double TURN_ERROR = 16;
   

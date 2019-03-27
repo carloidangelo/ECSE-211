@@ -1,20 +1,26 @@
 package ca.mcgill.ecse211.model;
 
-import lejos.robotics.SampleProvider;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 public class Clamp {
 	private static final int ROTATE_AMOUNT = 90;
-	private static final int ROTATION_SPEED = 50;
+	private static final int ROTATION_SPEED = 75;
 	private static final int TURN_ERROR = 10;
-	private Navigation navigation;
+	private EV3LargeRegulatedMotor clampMotor;
 	
-	public Clamp(Navigation navigation) {
-		this.navigation = navigation;
+	public Clamp(EV3LargeRegulatedMotor clampMotor) {
+		this.clampMotor = clampMotor;
 	}
 	
 	public void grabCan() {
+		clampMotor.setAcceleration(1000);
+		clampMotor.setSpeed(ROTATION_SPEED);
+		clampMotor.rotate(ROTATE_AMOUNT);
 	}
 	
 	public void offloadCan() {
+		clampMotor.setAcceleration(1000);
+		clampMotor.setSpeed(ROTATION_SPEED);
+		clampMotor.rotate(-ROTATE_AMOUNT);
 	}
 }

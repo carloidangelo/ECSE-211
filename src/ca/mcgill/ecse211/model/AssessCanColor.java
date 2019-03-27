@@ -15,7 +15,7 @@ public class AssessCanColor {
 	
 	private EV3LargeRegulatedMotor csMotor;
 	private ColorClassification csFront;
-	private static final int ROTATE_AMOUNT = 20;
+	private static final int ROTATE_AMOUNT = 18;
 	private static final int ROTATE_COUNT = 10;
 	private static final int ROTATION_SPEED = 75;
 	private static final int TURN_ERROR = 20;

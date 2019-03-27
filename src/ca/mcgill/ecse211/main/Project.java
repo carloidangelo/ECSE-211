@@ -7,6 +7,7 @@ import lejos.hardware.lcd.TextLCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.hardware.sensor.EV3UltrasonicSensor;
 import lejos.hardware.sensor.SensorModes;
 import lejos.robotics.SampleProvider;
@@ -17,7 +18,9 @@ import org.json.simple.parser.ParseException;
 
 import ca.mcgill.ecse211.WiFiClient.WifiConnection;
 import ca.mcgill.ecse211.model.AssessCanColor;
+import ca.mcgill.ecse211.model.AssessCanWeight;
 import ca.mcgill.ecse211.model.CanLocator;
+import ca.mcgill.ecse211.model.Clamp;
 import ca.mcgill.ecse211.model.ColorClassification;
 import ca.mcgill.ecse211.model.LightLocalizer;
 import ca.mcgill.ecse211.model.Navigation;
@@ -30,13 +33,15 @@ import ca.mcgill.ecse211.model.UltrasonicLocalizer;
 public class Project {
 
 	// Motor and Sensor Ports
-	public static final EV3LargeRegulatedMotor LEFT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
-	public static final EV3LargeRegulatedMotor RIGHT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
+	public static final EV3LargeRegulatedMotor LEFT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
+	public static final EV3LargeRegulatedMotor RIGHT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
 	private static final EV3LargeRegulatedMotor SENSOR_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
+	private static final EV3LargeRegulatedMotor CLAMP_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("C"));
 	private static final TextLCD LCD = LocalEV3.get().getTextLCD();
-	private static final Port US_PORT = LocalEV3.get().getPort("S1");
-	private static final Port CS_PORT = LocalEV3.get().getPort("S4");
-	private static final Port CS_FRONT_PORT = LocalEV3.get().getPort("S2");
+	private static final Port US_PORT = LocalEV3.get().getPort("S3");
+	private static final Port CS_PORT = LocalEV3.get().getPort("S1");
+	private static final Port CS_FRONT_PORT = LocalEV3.get().getPort("S4");
+	private static final Port TS_PORT = LocalEV3.get().getPort("S2");
 	
 	public static final int TEAM_NUMBER = 10;
 	private static final String SERVER_IP = "192.168.2.8";
@@ -69,15 +74,20 @@ public class Project {
         SensorModes clrSensor = new EV3ColorSensor(CS_FRONT_PORT);
         SampleProvider colorId =  clrSensor.getMode("RGB");
         float[] colorData = new float[colorId.sampleSize()];
-        colorId.fetchSample(colorData, 0);
         
         // Touch Sensor (Assess Can Weight)
+        @SuppressWarnings("resource") // Because we don't bother to close this resource
+        SensorModes myTouch = new EV3TouchSensor(TS_PORT);
+        SampleProvider myTouchStatus =  myTouch.getMode(0);
+        float[] tsData = new float[colorId.sampleSize()];
 		
         WifiConnection wifi = new WifiConnection(SERVER_IP, TEAM_NUMBER, ENABLE_DEBUG_WIFI_PRINT);
         ColorClassification ClrClassify= new ColorClassification(colorData, colorId);
         AssessCanColor assessCanColor = new AssessCanColor(SENSOR_MOTOR, ClrClassify);
-        
-		do {
+        AssessCanWeight assessCanWeight = new AssessCanWeight(tsData, myTouchStatus);
+        Clamp clamp = new Clamp(CLAMP_MOTOR);
+		
+        do {
 			
 			LCD.clear();
 
@@ -127,8 +137,8 @@ public class Project {
 				Sound.beep();
 				Sound.beep();
 	
-				CanLocator canLocator = new CanLocator(robot, assessCanColor, usDistance, usData, 
-											navigator,lightLocalizer);
+				CanLocator canLocator = new CanLocator(robot, assessCanColor,assessCanWeight, clamp, 
+														usDistance, usData, navigator,lightLocalizer);
 				canLocator.RunLocator();
 				
 				Sound.beep();
@@ -139,8 +149,15 @@ public class Project {
 				
 			} else {
 				LCD.clear();
+				
+				// Track Test
+				/*
 				navigator.turnTo(90);
 				navigator.turnTo(-90);
+				*/
+				
+				
+				// WiFi Connection Test
 				/*
 				Robot robot = null;
 				try {
@@ -148,6 +165,11 @@ public class Project {
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				}
+				*/
+				
+				
+				// Localization Test
+				/*
 				Thread odoThread = new Thread(odometer);
 				odoThread.start();
 				//Thread odoDisplayThread = new Thread(odometryDisplay);
@@ -158,12 +180,25 @@ public class Project {
 				ultrasonicLocalizer.fallingEdge();
 				lightLocalizer.moveClose();
 				lightLocalizer.lightLocalize(3, 3);
+				*/
+				
+				
+				// Search Algorithm Test
+				/*
 				CanLocator canLocator = new CanLocator(robot, assessCanColor, usDistance, usData, 
 						navigator,lightLocalizer);
 				canLocator.RunLocator();
 				*/
+				
+				
+				// Can Color test
 				/*
 				assessCanColor.run();
+				*/
+				
+				
+				// Color Classification Test
+				/*
 				while(true) {
 					
 					if (ClrClassify.run() !="no object") {	//if there is a can detected
@@ -179,9 +214,14 @@ public class Project {
 			        LCD.drawString("G: " + colorData[1], 1, 4);
 			        LCD.drawString("B: " + colorData[2], 1, 5);
 				  
-				 }
-				 */
-						
+				}*/
+				
+				
+				// Clamp Test
+				/*
+				clamp.grabCan();
+				clamp.offloadCan();
+				*/	
 				
 			}
 
