@@ -9,10 +9,11 @@ public class ColorClassification {
   // use an array to collect color data
   private float[] colorData;
   private SampleProvider colorID;
+  private static final double THRESHOLD = 0.4;
 
   private final float[][] MEAN_RGB = {// the mean RGB values for cans
-	      {0.0481924454f, 0.0107023890f, 0.0065211908f}, // red can
-	      {0.0275519090f, 0.0167073221f, 0.0058014234f}, // yellow can
+	      {0.0351924454f, 0.0049923890f, 0.0039901908f}, // red can
+	      {0.0315519090f, 0.0257073221f, 0.0068014234f}, // yellow can
 	      {0.0055042342f, 0.0206447724f, 0.0235459889f}, // blue can
 	      {0.0057257231f, 0.0232034322f, 0.0075382312f} // green can
 	  };
@@ -54,10 +55,8 @@ public class ColorClassification {
       float deltaR = Math.abs(nR - (MEAN_RGB[i][0]/eucDistance));
       float deltaG = Math.abs(nG - (MEAN_RGB[i][1]/eucDistance));
       float deltaB = Math.abs(nB - (MEAN_RGB[i][2]/eucDistance));
-      
-     // System.out.println(deltaB);
  
-      if (deltaR < 0.5 && deltaG < 0.5 && deltaB < 0.5) {
+      if (deltaR < THRESHOLD && deltaG < THRESHOLD && deltaB < THRESHOLD) {
         
         return i;
       }

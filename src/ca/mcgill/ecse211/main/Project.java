@@ -191,12 +191,6 @@ public class Project {
 				*/
 				
 				
-				// Can Color test
-				/*
-				assessCanColor.run();
-				*/
-				
-				
 				// Color Classification Test
 				/*
 				while(true) {
@@ -214,14 +208,18 @@ public class Project {
 			        LCD.drawString("G: " + colorData[1], 1, 4);
 			        LCD.drawString("B: " + colorData[2], 1, 5);
 				  
-				}*/
-				
+				}
+				*/
 				
 				// Clamp Test
-				/*
+				
 				clamp.grabCan();
-				clamp.offloadCan();
-				*/
+				//clamp.offloadCan();
+				
+				
+				// Can Color test
+				
+				assessCanColor.run();
 				
 			}
 
