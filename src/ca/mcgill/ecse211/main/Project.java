@@ -221,7 +221,7 @@ public class Project {
 				/*
 				clamp.grabCan();
 				clamp.offloadCan();
-				*/	
+				*/
 				
 			}
 

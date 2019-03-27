@@ -3,7 +3,7 @@ package ca.mcgill.ecse211.model;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 public class Clamp {
-	private static final int ROTATE_AMOUNT = 90;
+	private static final int ROTATE_AMOUNT = 200;
 	private static final int ROTATION_SPEED = 75;
 	private static final int TURN_ERROR = 10;
 	private EV3LargeRegulatedMotor clampMotor;
