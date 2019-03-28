@@ -156,7 +156,6 @@ public class Project {
 				navigator.turnTo(-90);
 				*/
 				
-				
 				// WiFi Connection Test
 				/*
 				Robot robot = null;
@@ -212,14 +211,13 @@ public class Project {
 				*/
 				
 				// Clamp Test
-				
-				clamp.grabCan();
+				//clamp.grabCan();
 				//clamp.offloadCan();
 				
 				
 				// Can Color test
 				
-				assessCanColor.run();
+				//assessCanColor.run();
 				
 			}
 
