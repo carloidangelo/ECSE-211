@@ -26,6 +26,7 @@ import ca.mcgill.ecse211.model.LightLocalizer;
 import ca.mcgill.ecse211.model.Navigation;
 import ca.mcgill.ecse211.model.Odometer;
 import ca.mcgill.ecse211.model.OdometerExceptions;
+import ca.mcgill.ecse211.model.ReturnHome;
 import ca.mcgill.ecse211.model.Robot;
 import ca.mcgill.ecse211.model.SearchZoneLocator;
 import ca.mcgill.ecse211.model.UltrasonicLocalizer;
@@ -81,11 +82,28 @@ public class Project {
         SampleProvider myTouchStatus =  myTouch.getMode(0);
         float[] tsData = new float[colorId.sampleSize()];
 		
+        // Odometer
+		Thread odoThread = new Thread(odometer);
+		
+		// Wifi
         WifiConnection wifi = new WifiConnection(SERVER_IP, TEAM_NUMBER, ENABLE_DEBUG_WIFI_PRINT);
+        
+        // Color Classification
         ColorClassification ClrClassify= new ColorClassification(colorData, colorId);
+        
+        // Assess Can Color
         AssessCanColor assessCanColor = new AssessCanColor(SENSOR_MOTOR, ClrClassify);
+        
+        // Assess Can Weight
         AssessCanWeight assessCanWeight = new AssessCanWeight(tsData, myTouchStatus);
+        
+        // Clamp
         Clamp clamp = new Clamp(CLAMP_MOTOR);
+        
+		// Localization (Ultrasonic and Light)
+		UltrasonicLocalizer ultrasonicLocalizer = new UltrasonicLocalizer(LEFT_MOTOR, RIGHT_MOTOR, usDistance, usData);
+		LightLocalizer lightLocalizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData, navigator);
+		
 		
         do {
 			
@@ -110,15 +128,7 @@ public class Project {
 					e.printStackTrace();
 				}
 				
-				Thread odoThread = new Thread(odometer);
 				odoThread.start();
-				
-				Thread odoDisplayThread = new Thread(odometryDisplay);
-				odoDisplayThread.start();
-				
-				// Localization (Ultrasonic and Light)
-				UltrasonicLocalizer ultrasonicLocalizer = new UltrasonicLocalizer(LEFT_MOTOR, RIGHT_MOTOR, usDistance, usData);
-				LightLocalizer lightLocalizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData, navigator);
 
 				ultrasonicLocalizer.fallingEdge();
 
@@ -126,25 +136,37 @@ public class Project {
 				lightLocalizer.lightLocalize(0,0);
 				
 				Sound.beep();
+				Sound.pause(100);
+				Sound.beep();
+				Sound.pause(100);
+				Sound.beep();
 				
 				// Search Zone Locator
 				SearchZoneLocator searchZonelocator = new SearchZoneLocator(robot, lightLocalizer, clamp, navigator);
 				searchZonelocator.goToSearchZone();
 				
 				Sound.beep();
+				Sound.pause(100);
 				Sound.beep();
-				Sound.beep();
-				Sound.beep();
+				Sound.pause(100);
 				Sound.beep();
 	
 				CanLocator canLocator = new CanLocator(robot, assessCanColor,assessCanWeight, clamp, 
 														usDistance, usData, navigator,lightLocalizer);
+				
 				canLocator.RunLocator();
 				
+				ReturnHome returnHome = new ReturnHome(robot, lightLocalizer, clamp, navigator);
+				returnHome.goHome();
+				
 				Sound.beep();
+				Sound.pause(100);
 				Sound.beep();
+				Sound.pause(100);
 				Sound.beep();
+				Sound.pause(100);
 				Sound.beep();
+				Sound.pause(100);
 				Sound.beep();
 				
 			} else {
@@ -164,17 +186,10 @@ public class Project {
 					e.printStackTrace();
 				}
 				
-				
-				
 				// Localization Test
-				
-				Thread odoThread = new Thread(odometer);
 				odoThread.start();
 				//Thread odoDisplayThread = new Thread(odometryDisplay);
 				//odoDisplayThread.start();
-				UltrasonicLocalizer ultrasonicLocalizer = new UltrasonicLocalizer(LEFT_MOTOR, RIGHT_MOTOR, usDistance, usData);
-				// Localization (Ultrasonic and Light)
-				LightLocalizer lightLocalizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData, navigator);
 				ultrasonicLocalizer.fallingEdge();
 				lightLocalizer.moveClose();
 				lightLocalizer.lightLocalize(3, 3);
