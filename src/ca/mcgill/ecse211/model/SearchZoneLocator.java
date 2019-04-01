@@ -17,6 +17,7 @@ public class SearchZoneLocator {
 					searchZoneLLX, searchZoneLLY, searchZoneURX, searchZoneURY;
 	private LightLocalizer lightLocalizer;
 	private Navigation navigator;
+	private Clamp clamp;
 	
 	/**
 	 * This is the default constructor of this class
@@ -26,7 +27,7 @@ public class SearchZoneLocator {
 	 * @throws OdometerExceptions
 	 */
 	public SearchZoneLocator(Robot robot, LightLocalizer lightLocalizer, 
-								Navigation navigator) throws OdometerExceptions {
+								Clamp clamp, Navigation navigator) throws OdometerExceptions {
 		odo = Odometer.getOdometer();
 		startingCorner = robot.getStartingCorner();	
 		homeZoneLLX = robot.getHomeZoneLLX();
@@ -47,6 +48,7 @@ public class SearchZoneLocator {
 		searchZoneURY = robot.getSearchZoneURY();
 		this.lightLocalizer = lightLocalizer;
 		this.navigator= navigator;
+		this.clamp = clamp;
 	}
 	
 	/** 
@@ -58,8 +60,9 @@ public class SearchZoneLocator {
 		// current position and current angle will depend on starting corner
 		switch(startingCorner){
 			case 0: 
+				// corner 0
 				odo.setXYT((homeZoneLLX + 1) * TILE_SIZE, (homeZoneLLY + 1) * TILE_SIZE, 0.0);
-				if (homeZoneURX < islandLLX) {
+				if (homeZoneURX < islandLLX) { // horizontal tunnel
 					if(homeZoneLLY == tunnelLLY) {
 						navigator.travelTo(tunnelLLX - 1, tunnelURY);
 						navigator.turnTo(-45);
@@ -76,7 +79,9 @@ public class SearchZoneLocator {
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(90);
 					}
+					clamp.grabCan();
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
+					clamp.offloadCan();
 					double yComponent;
 					if (tunnelURY == islandURY) {
 						navigator.turnTo(90);
@@ -100,7 +105,7 @@ public class SearchZoneLocator {
 						lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 					}
 					
-				} else if (homeZoneURY < islandLLY) {
+				} else if (homeZoneURY < islandLLY) { // vertical tunnel
 					if(homeZoneLLX == tunnelLLX) {
 						navigator.travelTo(tunnelURX, tunnelLLY - 1);
 						navigator.turnTo(45);
@@ -118,7 +123,9 @@ public class SearchZoneLocator {
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(-90);
 					}
+					clamp.grabCan();
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
+					clamp.offloadCan();
 					double xComponent;
 					if (tunnelURX == islandURX) {
 						navigator.turnTo(-90);
@@ -144,8 +151,9 @@ public class SearchZoneLocator {
 				}
 				break;
 			case 1: 
+				// corner 1
 				odo.setXYT((homeZoneURX - 1) * TILE_SIZE, (homeZoneLLY + 1) * TILE_SIZE, 270.0);
-				if (homeZoneLLX > islandURX) {
+				if (homeZoneLLX > islandURX) { // horizontal tunnel
 					if(homeZoneLLY == tunnelLLY) {
 						navigator.travelTo(tunnelURX + 1, tunnelURY);
 						navigator.turnTo(135);
@@ -164,7 +172,9 @@ public class SearchZoneLocator {
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(-90);
 					}
+					clamp.grabCan();
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
+					clamp.offloadCan();
 					double yComponent;
 					if (tunnelURY == islandURY) {
 						navigator.turnTo(-90);
@@ -189,7 +199,7 @@ public class SearchZoneLocator {
 						lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 					}
 					
-				} else if (homeZoneURY < islandLLY) {
+				} else if (homeZoneURY < islandLLY) { // vertical tunnel
 					if(homeZoneURX == tunnelURX) {
 						navigator.travelTo(tunnelLLX, tunnelLLY - 1);
 						navigator.turnTo(45);
@@ -201,13 +211,17 @@ public class SearchZoneLocator {
 						navigator.travelTo(tunnelURX, tunnelLLY - 1);
 						if ((homeZoneURX - 1) == tunnelURX) {
 							navigator.turnTo(45);
+						}else {
+							navigator.turnTo(90);
 						}
 						lightLocalizer.lightLocalize(tunnelURX, tunnelLLY - 1);
 						navigator.turnTo(-90);
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(90);
 					}
+					clamp.grabCan();
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
+					clamp.offloadCan();
 					double xComponent;
 					if (tunnelURX == islandURX) {
 						navigator.turnTo(-90);
@@ -233,8 +247,9 @@ public class SearchZoneLocator {
 				}
 				break;
 			case 2: 
+				// corner 2
 				odo.setXYT((homeZoneURX - 1) * TILE_SIZE, (homeZoneURY - 1) * TILE_SIZE, 180.0);
-				if (homeZoneLLX > islandURX) {
+				if (homeZoneLLX > islandURX) { // horizontal tunnel
 					if(homeZoneLLY == tunnelLLY) {
 						navigator.travelTo(tunnelURX + 1, tunnelURY);
 						navigator.turnTo(-180);
@@ -253,7 +268,9 @@ public class SearchZoneLocator {
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(-90);
 					}
+					clamp.grabCan();
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
+					clamp.offloadCan();
 					double yComponent;
 					if (tunnelURY == islandURY) {
 						navigator.turnTo(-90);
@@ -278,8 +295,8 @@ public class SearchZoneLocator {
 						lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 					}
 					
-				} else if (homeZoneLLY > islandURY) {
-					if(homeZoneLLX == tunnelLLX) {
+				} else if (homeZoneLLY > islandURY) { // vertical tunnel
+					if(homeZoneLLX == tunnelLLX) { 
 						navigator.travelTo(tunnelURX, tunnelURY + 1);
 						navigator.turnTo(-180);
 						lightLocalizer.lightLocalize(tunnelURX,  tunnelURY + 1);
@@ -298,7 +315,9 @@ public class SearchZoneLocator {
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(90);
 					}
+					clamp.grabCan();
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
+					clamp.offloadCan();
 					double xComponent;
 					if (tunnelURX == islandURX) {
 						navigator.turnTo(90);
@@ -325,8 +344,9 @@ public class SearchZoneLocator {
 				}
 				break;
 			case 3:	
+				// corner 3
 				odo.setXYT((homeZoneLLX + 1) * TILE_SIZE, (homeZoneURY - 1) * TILE_SIZE, 90.0);
-				if (homeZoneURX < islandLLX) {
+				if (homeZoneURX < islandLLX) { // horizontal tunnel
 					if(homeZoneLLY == tunnelLLY) {
 						navigator.travelTo(tunnelLLX - 1, tunnelURY);
 						navigator.turnTo(-90);
@@ -345,7 +365,9 @@ public class SearchZoneLocator {
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(90);
 					}
+					clamp.grabCan();
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
+					clamp.offloadCan();
 					double yComponent;
 					if (tunnelURY == islandURY) {
 						navigator.turnTo(90);
@@ -369,8 +391,8 @@ public class SearchZoneLocator {
 						lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 					}
 					
-				} else if (homeZoneLLY > islandURY) {
-					if(homeZoneLLX == tunnelLLX) {
+				} else if (homeZoneLLY > islandURY) { // vertical tunnel
+					if(homeZoneLLX == tunnelLLX) { 
 						navigator.travelTo(tunnelURX, tunnelURY + 1);
 						navigator.turnTo(-135);
 						lightLocalizer.lightLocalize(tunnelURX,  tunnelURY + 1);
@@ -389,7 +411,9 @@ public class SearchZoneLocator {
 						navigator.driveForward(0.5 * TILE_SIZE);
 						navigator.turnTo(90);
 					}
+					clamp.grabCan();
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
+					clamp.offloadCan();
 					double xComponent;
 					if (tunnelURX == islandURX) {
 						navigator.turnTo(90);

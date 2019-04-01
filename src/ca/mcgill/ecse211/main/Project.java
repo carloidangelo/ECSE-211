@@ -128,7 +128,7 @@ public class Project {
 				Sound.beep();
 				
 				// Search Zone Locator
-				SearchZoneLocator searchZonelocator = new SearchZoneLocator(robot, lightLocalizer, navigator);
+				SearchZoneLocator searchZonelocator = new SearchZoneLocator(robot, lightLocalizer, clamp, navigator);
 				searchZonelocator.goToSearchZone();
 				
 				Sound.beep();
