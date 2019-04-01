@@ -121,12 +121,24 @@ public class Project {
 
 			if (buttonChoice == Button.ID_LEFT) { // do Field Test
 				LCD.clear();
+				
+				// Robot
 				Robot robot = null;
 				try {
 					robot = new Robot(wifi);
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				}
+				
+				// Search Zone Locator
+				SearchZoneLocator searchZonelocator = new SearchZoneLocator(robot, lightLocalizer, clamp, navigator);
+				
+				// Can Locator
+				CanLocator canLocator = new CanLocator(robot, assessCanColor,assessCanWeight, clamp, 
+						usDistance, usData, navigator,lightLocalizer);
+				
+				// Return Home
+				ReturnHome returnHome = new ReturnHome(robot, lightLocalizer, clamp, navigator);
 				
 				odoThread.start();
 
@@ -135,40 +147,26 @@ public class Project {
 				lightLocalizer.moveClose();
 				lightLocalizer.lightLocalize(0,0);
 				
-				Sound.beep();
-				Sound.pause(100);
-				Sound.beep();
-				Sound.pause(100);
-				Sound.beep();
+				while (true) {
+					Sound.beep();
+					Sound.pause(100);
+					Sound.beep();
+					Sound.pause(100);
+					Sound.beep();
+					
+					searchZonelocator.goToSearchZone();
+					
+					Sound.beep();
+					Sound.pause(100);
+					Sound.beep();
+					Sound.pause(100);
+					Sound.beep();
+		
+					canLocator.RunLocator();
 				
-				// Search Zone Locator
-				SearchZoneLocator searchZonelocator = new SearchZoneLocator(robot, lightLocalizer, clamp, navigator);
-				searchZonelocator.goToSearchZone();
-				
-				Sound.beep();
-				Sound.pause(100);
-				Sound.beep();
-				Sound.pause(100);
-				Sound.beep();
-	
-				CanLocator canLocator = new CanLocator(robot, assessCanColor,assessCanWeight, clamp, 
-														usDistance, usData, navigator,lightLocalizer);
-				
-				canLocator.RunLocator();
-				
-				ReturnHome returnHome = new ReturnHome(robot, lightLocalizer, clamp, navigator);
-				returnHome.goHome();
-				
-				Sound.beep();
-				Sound.pause(100);
-				Sound.beep();
-				Sound.pause(100);
-				Sound.beep();
-				Sound.pause(100);
-				Sound.beep();
-				Sound.pause(100);
-				Sound.beep();
-				
+					returnHome.goHome();
+				}
+
 			} else {
 				LCD.clear();
 				
