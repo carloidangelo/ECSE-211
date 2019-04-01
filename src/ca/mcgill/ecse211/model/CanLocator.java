@@ -24,7 +24,7 @@ public class CanLocator {
 	private static final double ANGLE_ERROR = 10.0;
 	private static final double DISTANCE_ERROR = 4.0;
 	private static final double TEST_VALUE = 6;
-	private static final double TEST_ANGLE = 15.0;
+	private static final double TEST_ANGLE = 35.0;
 	private double canAngle = 0;
 	private double canDistance = 0;
 	private int ENDX = 0, ENDY = 0;
@@ -118,7 +118,7 @@ public class CanLocator {
 				}
 				
 				else {
-						
+
 					navigator.travelTo(LLx,LLy);
 					navigator.turnTo(135);
 					lightLocalizer.lightLocalize(LLx,LLy);
@@ -410,7 +410,7 @@ public class CanLocator {
 	private void travelToStartCorner() {
 		
 		navigator.turnTo(-canAngle);
-		
+		System.out.print(odo.getXYT()[2]);
 		//If the SC was UR, then go to UR
 		if (SCx == URx && SCy == URy){
 			
@@ -444,9 +444,10 @@ public class CanLocator {
 			
 			if ( (odo.getXYT()[2] >= 360-ANGLE_ERROR) || 
 			    	(odo.getXYT()[2] <= 0+ANGLE_ERROR)){
-				
+		
 				navigator.turnTo(45);
 				lightLocalizer.lightLocalize(Cx,Cy);
+				Sound.beep();
 				navigator.travelTo(LLx, LLy);
 				navigator.turnTo(-135);
 				lightLocalizer.lightLocalize(LLx,LLy);

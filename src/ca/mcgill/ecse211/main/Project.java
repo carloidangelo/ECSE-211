@@ -33,8 +33,8 @@ import ca.mcgill.ecse211.model.UltrasonicLocalizer;
 public class Project {
 
 	// Motor and Sensor Ports
-	public static final EV3LargeRegulatedMotor LEFT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
-	public static final EV3LargeRegulatedMotor RIGHT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
+	public static final EV3LargeRegulatedMotor LEFT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("A"));
+	public static final EV3LargeRegulatedMotor RIGHT_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("B"));
 	private static final EV3LargeRegulatedMotor SENSOR_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("D"));
 	private static final EV3LargeRegulatedMotor CLAMP_MOTOR = new EV3LargeRegulatedMotor(LocalEV3.get().getPort("C"));
 	private static final TextLCD LCD = LocalEV3.get().getTextLCD();
@@ -44,7 +44,7 @@ public class Project {
 	private static final Port TS_PORT = LocalEV3.get().getPort("S2");
 	
 	public static final int TEAM_NUMBER = 10;
-	private static final String SERVER_IP = "192.168.2.8";
+	private static final String SERVER_IP = "192.168.2.22";
 	// Enable/disable printing of debug info from the WiFi class
 	private static final boolean ENABLE_DEBUG_WIFI_PRINT = false;
 
@@ -157,18 +157,17 @@ public class Project {
 				*/
 				
 				// WiFi Connection Test
-				/*
 				Robot robot = null;
 				try {
 					robot = new Robot(wifi);
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				}
-				*/
+				
 				
 				
 				// Localization Test
-				/*
+				
 				Thread odoThread = new Thread(odometer);
 				odoThread.start();
 				//Thread odoDisplayThread = new Thread(odometryDisplay);
@@ -179,16 +178,14 @@ public class Project {
 				ultrasonicLocalizer.fallingEdge();
 				lightLocalizer.moveClose();
 				lightLocalizer.lightLocalize(3, 3);
-				*/
+				
 				
 				
 				// Search Algorithm Test
-				/*
-				CanLocator canLocator = new CanLocator(robot, assessCanColor, usDistance, usData, 
-						navigator,lightLocalizer);
-				canLocator.RunLocator();
-				*/
 				
+				CanLocator canLocator = new CanLocator(robot, assessCanColor,assessCanWeight, clamp, 
+														usDistance, usData, navigator,lightLocalizer);
+				canLocator.RunLocator();
 				
 				// Color Classification Test
 				/*
@@ -216,7 +213,6 @@ public class Project {
 				
 				
 				// Can Color test
-				
 				//assessCanColor.run();
 				
 			}

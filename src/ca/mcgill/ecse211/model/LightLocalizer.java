@@ -78,6 +78,7 @@ public class LightLocalizer {
 		sample = readLineDarkness();
 
 		if (100*Math.abs(sample - firstReading)/firstReading > COLOUR_DIFF) {
+		  Sound.pause(250);
           linePosition[count] = odo.getXYT()[2];
 		  count++;
 		}
