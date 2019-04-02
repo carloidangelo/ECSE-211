@@ -88,6 +88,10 @@ public class LightLocalizer {
 
 	  double deltaX, deltaY, angleX, angleY, deltaA;
 
+	  if (linePosition[3] > 0 && linePosition[3] < 45) {
+		  linePosition[3] += 360; 
+	  }
+	  
 	  angleY = linePosition[3] - linePosition[1];
 	  angleX = linePosition[2] - linePosition[0];
 
