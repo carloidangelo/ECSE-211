@@ -12,8 +12,8 @@ import ca.mcgill.ecse211.main.Project;
 public class Robot {
 	
 	//Robot related parameters
-	public static final double WHEEL_RAD = 2.2;
-	public static final double TRACK = 11.35;
+	public static final double WHEEL_RAD = 2.069;
+	public static final double TRACK = 11.305;
 	
 	private final int TEAM_NUMBER = Project.TEAM_NUMBER;
 	// Holds the Wifi data
