@@ -82,7 +82,7 @@ public class Project {
         SampleProvider myTouchStatus =  myTouch.getMode(0);
         float[] tsData = new float[colorId.sampleSize()];
 		
-        // Odometer
+        // Odometer Thread
 		Thread odoThread = new Thread(odometer);
 		
 		// Wifi
@@ -167,7 +167,7 @@ public class Project {
 					returnHome.goHome();
 				}
 
-			} else {
+			} else { // TESTING
 				LCD.clear();
 				
 				// Track Test
@@ -184,33 +184,50 @@ public class Project {
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				}
+				*/
 				
+				/*
 				// Localization Test
 				odoThread.start();
-				//Thread odoDisplayThread = new Thread(odometryDisplay);
-				//odoDisplayThread.start();
+				Thread odoDisplayThread = new Thread(odometryDisplay);
+				odoDisplayThread.start();
 				ultrasonicLocalizer.fallingEdge();
 				lightLocalizer.moveClose();
 				lightLocalizer.lightLocalize(3, 3);
-				
-				// Search Algorithm Test
-				
-				CanLocator canLocator = new CanLocator(robot, assessCanColor,assessCanWeight, clamp, 
-														usDistance, usData, navigator,lightLocalizer);
-				canLocator.RunLocator();
-				
-				
 				*/
 				
+				/*
+				// Search Algorithm Test
+				CanLocator canLocator = new CanLocator(robot, assessCanColor,assessCanWeight, clamp, 
+												usDistance, usData, navigator,lightLocalizer);
+				canLocator.RunLocator();
+				*/
+				
+				/*
+				// Go to Search Zone Test
+				SearchZoneLocator searchZonelocator = new SearchZoneLocator(robot, lightLocalizer, clamp, navigator);
+				searchZonelocator.goToSearchZone();
+				*/
+				
+				/*
+				// Return Home Test
+				ReturnHome returnHome = new ReturnHome(robot, lightLocalizer, clamp, navigator);
+				returnHome.goHome();
+				*/
+				
+				
+				/*
 				// Clamp Test
 				clamp.grabCan();
-				//clamp.offloadCan();
+				clamp.offloadCan();
+				*/
 				
-				
+				/*
 				// Can Color test
 				assessCanColor.run();
+				*/
 				
-				
+				/*
 				// Color Classification Test
 				double counter = 0;
 				while(true) {
@@ -231,8 +248,9 @@ public class Project {
 			        if (counter == 1000000000) {
 			        	break;
 			        }
+			        
 				}
-				
+				*/
 				
 			}
 
