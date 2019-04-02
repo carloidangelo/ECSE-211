@@ -9,23 +9,19 @@ public class ColorClassification {
   // use an array to collect color data
   private float[] colorData;
   private SampleProvider colorID;
-  private static final double THRESHOLD = 0.4;
+  private static final double THRESHOLD = 0.35;
 
   private final float[][] MEAN_RGB = {// the mean RGB values for cans
-	      {0.0351924454f, 0.0049923890f, 0.0039901908f}, // red can
-	      {0.0315519090f, 0.0257073221f, 0.0068014234f}, // yellow can
-	      {0.0055042342f, 0.0206447724f, 0.0235459889f}, // blue can
-	      {0.0057257231f, 0.0232034322f, 0.0075382312f} // green can
+	      {0.0551924454f, 0.0069923890f, 0.0339901908f}, // red can
+	      {0.0520519090f, 0.0347073221f, 0.0072014234f}, // yellow can
+	      {0.0107042342f, 0.0406447724f, 0.0345459889f}, // blue can
+	      {0.0235257231f, 0.0502034322f, 0.0178382312f}	 // green can
 	  };
 
   // constructor
   public ColorClassification(float[] colorData, SampleProvider colorId) {
     this.colorData = colorData;
     this.colorID = colorId;
- 
-    
-
-
 
   }
 

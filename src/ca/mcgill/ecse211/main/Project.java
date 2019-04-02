@@ -176,6 +176,7 @@ public class Project {
 				navigator.turnTo(-90);
 				*/
 				
+				/*
 				// WiFi Connection Test
 				Robot robot = null;
 				try {
@@ -192,16 +193,26 @@ public class Project {
 				lightLocalizer.moveClose();
 				lightLocalizer.lightLocalize(3, 3);
 				
-				
-				
 				// Search Algorithm Test
 				
 				CanLocator canLocator = new CanLocator(robot, assessCanColor,assessCanWeight, clamp, 
 														usDistance, usData, navigator,lightLocalizer);
 				canLocator.RunLocator();
 				
+				
+				*/
+				
+				// Clamp Test
+				clamp.grabCan();
+				//clamp.offloadCan();
+				
+				
+				// Can Color test
+				assessCanColor.run();
+				
+				
 				// Color Classification Test
-				/*
+				double counter = 0;
 				while(true) {
 					
 					if (ClrClassify.run() !="no object") {	//if there is a can detected
@@ -216,17 +227,12 @@ public class Project {
 				    LCD.drawString("R: " + colorData[0], 1, 3);
 			        LCD.drawString("G: " + colorData[1], 1, 4);
 			        LCD.drawString("B: " + colorData[2], 1, 5);
-				  
+			        
+			        if (counter == 1000000000) {
+			        	break;
+			        }
 				}
-				*/
 				
-				// Clamp Test
-				//clamp.grabCan();
-				//clamp.offloadCan();
-				
-				
-				// Can Color test
-				//assessCanColor.run();
 				
 			}
 

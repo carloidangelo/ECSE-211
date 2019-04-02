@@ -9,7 +9,7 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
  */
 
 public class Clamp {
-	private static final int ROTATE_AMOUNT = 198;
+	private static final int ROTATE_AMOUNT = 197;
 	private static final int ROTATION_SPEED = 75;
 	private static final int TURN_ERROR = 10;
 	private EV3LargeRegulatedMotor clampMotor;
