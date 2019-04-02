@@ -18,7 +18,7 @@ public class LightLocalizer {
   private static final int FORWARD_SPEED = 150; 
   private final double TILE_SIZE = Navigation.TILE_SIZE;
   private static final int COLOUR_DIFF = 20;  
-  private static final double LIGHT_LOC_DISTANCE = 13.0;
+  private static final double LIGHT_LOC_DISTANCE = 14.0;
   private static final int EXTRA_DISTANCE = 5;
   private static final double TURN_ERROR = 16;
   
@@ -77,8 +77,8 @@ public class LightLocalizer {
 		sample = readLineDarkness();
 
 		if (100*Math.abs(sample - firstReading)/firstReading > COLOUR_DIFF) {
-		  Sound.pause(250);
           linePosition[count] = odo.getXYT()[2];
+          Sound.pause(250);
 		  count++;
 		}
 	  }
