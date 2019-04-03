@@ -4,7 +4,7 @@ import lejos.hardware.Sound;
 
 public class ReturnHome {
 	private final double TILE_SIZE = Navigation.TILE_SIZE;
-	private static final int CANDROP_DISTANCE = 6;
+	private static final int CANDROP_DISTANCE = 15;
 	private int startingCorner, homeZoneLLX, homeZoneLLY, homeZoneURX, homeZoneURY,
 					tunnelLLX, tunnelLLY, tunnelURX, tunnelURY;
 	private int islandLLX, islandLLY, islandURX, islandURY,
