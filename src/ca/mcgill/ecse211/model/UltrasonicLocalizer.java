@@ -4,7 +4,7 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.robotics.SampleProvider;
 
 /**
- * This class simulates the function of ultrasonic localization
+ * This class simulates the function of ultrasonic localization.
  * 
  * @author Carlo D'Angelo
  *
@@ -31,7 +31,7 @@ public class UltrasonicLocalizer {
 	 * @param leftMotor left motor of robot
 	 * @param rightMotor right motor of robot
 	 * @param usDistance sample provider from which to fetch ultrasonic sensor data
-	 * @param usData array in which to receive the ultrasonic sensor data
+	 * @param usData array in which to store the ultrasonic sensor data
 	 * @throws OdometerExceptions
 	 */
 	public UltrasonicLocalizer(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
@@ -47,7 +47,7 @@ public class UltrasonicLocalizer {
 	}
 	
 	/**
-	 * Method that allows the robot to perform falling edge localization 
+	 * Method that allows the robot to perform falling edge localization.
 	 */
 	public void fallingEdge() {
 

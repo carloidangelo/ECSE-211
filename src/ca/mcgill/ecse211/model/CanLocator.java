@@ -4,6 +4,13 @@ import ca.mcgill.ecse211.main.Project;
 import lejos.hardware.Sound;
 import lejos.robotics.SampleProvider;
 
+
+/**
+ *This class allows the EV3 to search for cans and identify their colors and weights.
+ *NOTE: Please refer to Software Document - Section 3.3 for detailed explanations of methods.
+ * @author Mohamed Samee
+ *
+ */
 public class CanLocator {
 
 	private Odometer odo;
@@ -17,19 +24,15 @@ public class CanLocator {
 	private SampleProvider usDistance;
 	private float[] usData;
 	
-	private static int FORWARD_SPEED = 100;
-	private static double OFFSET = 0.5;
 	private final double TILE_SIZE = Navigation.TILE_SIZE;
-	private static final double CAN_DISTANCE_ON_BORDER = 18.5;
 	private static final double ANGLE_ERROR = 10.0;
 	private static final double DISTANCE_ERROR = 4.0;
 	private static final double TEST_VALUE = 6;
-	private static final double TEST_ANGLE = 35.0;
+	private static final double TEST_ANGLE = 15.0;
 	private double canAngle = 0;
 	private double canDistance = 0;
 	private int ENDX = 0, ENDY = 0;
 	private double Cx = 0,Cy = 0; //C variables save the current position of the EV3.
-	private int count = 0;
 	private static boolean loopStop = false;
 	
 	/**
@@ -37,12 +40,19 @@ public class CanLocator {
 	 * begins its search algorithm. SC can either be LL or UR.
 	 */
 	private int LLx, LLy, URx, URy, SCx, SCy;
-	
+
 	/**
-	 * This class allows the EV3 to search for cans and identify their colors and weights.
-	 * @author Mohamed Samee
+	 * This is the default constructor of this class
+	 * @param robot instance of the Robot class
+	 * @param assessCanColor instance of the AssessCanColor class
+	 * @param assessCanWeight instance of the AssessCanWeight class
+	 * @param clamp instance of the Clamp class
+	 * @param usDistance sample provider from which to fetch ultrasonic sensor data
+	 * @param usData array in which to store the ultrasonic sensor data
+	 * @param navigator instance of the Navigator class
+	 * @param lightLocalizer instance of the LightLocalizer class
+	 * @throws OdometerExceptions
 	 */
-	
 	public CanLocator(Robot robot, AssessCanColor assessCanColor, AssessCanWeight assessCanWeight, Clamp clamp, 
 			SampleProvider usDistance, float[] usData, Navigation navigator, LightLocalizer lightLocalizer) throws OdometerExceptions {
 		odo = Odometer.getOdometer();
@@ -66,7 +76,7 @@ public class CanLocator {
 	 * It drives the EV3 forward and in a square around the search zone and looks for cans.
 	 * If a can is detected, it calls for the searchProcess(), otherwise it calls goToNext().
 	 * Once it has traveled around the whole zone without finding the correct can it then travels
-	 * to the upper right corner.
+	 * back to its starting corner.
 	 */
 	
 	public void RunLocator(){
@@ -96,7 +106,7 @@ public class CanLocator {
 			
 		}
 		
-		while (true && !loopStop) {	
+		while (!loopStop) {	//&& true if doesnt
 			
 			//when EV3 goes full circle with the algorithm
 			//and ends where it started, break the loop.
@@ -118,7 +128,7 @@ public class CanLocator {
 				}
 				
 				else {
-
+						
 					navigator.travelTo(LLx,LLy);
 					navigator.turnTo(135);
 					lightLocalizer.lightLocalize(LLx,LLy);
@@ -149,12 +159,8 @@ public class CanLocator {
 	
 	
 	/**
-	 * searchProcess() runs when the EV3 detects a can. When detected, it drives to it and checks its color.
-	 * If the color is correct, it beeps once and travels to the upper right corner. Otherwise it
-	 * reverses and calls one of the dodge methods depending on where the can was spotted.
-	 * For instance, If an incorrect colored can is placed on the border
-	 * the EV3 dodges outwards, and then sets the distanceToCan to CAN_DISTANCE_FROM_OUT so that
-	 * the EV3 knows how far to move towards a can if it spots one.
+	 * searchProcess() runs when the EV3 detects a can. It calls assessCan() to 
+	 *identify color and weight. Once done, calls travelToStartCorner() while having the can.
 	 */
 	
 	private void searchProcess(){               
@@ -171,12 +177,15 @@ public class CanLocator {
 	/**
 	*checkCan() returns true if a can was spotted by the ultrasonic sensor within the
 	*range of a tile. Otherwise, it returns false.
+	*@param angle
 	*/
 	
 	private boolean checkCan(double angle){
 	
 		canAngle = 0;
 	    double currentAngle = odo.getXYT()[2];
+	    
+	    System.out.println("currentAng:"+currentAngle);
 	    
 		//begin rotating to scan for cans 
 		navigator.turnToScan(angle);
@@ -215,7 +224,7 @@ public class CanLocator {
 	
 	/**
 	*assessCan() is a method that is called after checkCan(). It 
-	*makes the EV3 beep depending on the color of the can scanned.
+	*makes the EV3 beep depending on the color as well as the weight of the can scanned.
 	*@param distance
 	*/
 	
@@ -235,25 +244,29 @@ public class CanLocator {
 		//Beeps depending on the color and weight of the can
 		if(heavy == 1){
 			
-			//CLAMP
-			
 			switch (assessCanColor.run()) {
 
-				case 1: Sound.playTone(500, 1000);
+				case 1: 	Sound.playTone(500, 1000);
 						break;
 
-				case 2: Sound.playTone(500, 1000);
-						Sound.playTone(500, 1000);
-						break;
-
-				case 3: Sound.playTone(500, 1000);
-						Sound.playTone(500, 1000);
+				case 2: 	Sound.playTone(500, 1000);
+						Sound.pause(100);
 						Sound.playTone(500, 1000);
 						break;
 
-				case 4: Sound.playTone(500, 1000);
+				case 3: 	Sound.playTone(500, 1000);
+						Sound.pause(100);
 						Sound.playTone(500, 1000);
+						Sound.pause(100);
 						Sound.playTone(500, 1000);
+						break;
+
+				case 4: 	Sound.playTone(500, 1000);
+						Sound.pause(100);
+						Sound.playTone(500, 1000);
+						Sound.pause(100);
+						Sound.playTone(500, 1000);
+						Sound.pause(100);
 						Sound.playTone(500, 1000);
 						break;
 				default: Sound.buzz(); //this means incorrect identification 
@@ -262,26 +275,30 @@ public class CanLocator {
 		}
 		
 		else{
-			
-			//CLAMP
-			
+		
 			switch (assessCanColor.run()) {
 
-				case 1: Sound.playTone(500, 500);
+				case 1: 	Sound.playTone(500, 500);
 						break;
 
-				case 2: Sound.playTone(500, 500);
-						Sound.playTone(500, 500);
-						break;
-
-				case 3: Sound.playTone(500, 500);
-						Sound.playTone(500, 500);
+				case 2: 	Sound.playTone(500, 500);
+						Sound.pause(100);
 						Sound.playTone(500, 500);
 						break;
 
-				case 4: Sound.playTone(500, 500);
+				case 3: 	Sound.playTone(500, 500);
+						Sound.pause(100);
 						Sound.playTone(500, 500);
+						Sound.pause(100);
 						Sound.playTone(500, 500);
+						break;
+
+				case 4: 	Sound.playTone(500, 500);
+						Sound.pause(100);
+						Sound.playTone(500, 500);
+						Sound.pause(100);
+						Sound.playTone(500, 500);
+						Sound.pause(100);
 						Sound.playTone(500, 500);
 						break;
 				default: Sound.buzz(); //this means incorrect identification 
@@ -292,7 +309,7 @@ public class CanLocator {
 	} 
 	
 	/**
-	*goToNext() moves the EV3 forward to the next position when no cans are detected.
+	*goToNext() uses travelTo() to drive the EV3 forward to the next position when no cans are detected.
 	*/
 
 	private void goToNext() { 
@@ -345,7 +362,7 @@ public class CanLocator {
 			}
 		}
 		
-		//The use of Math.round() is so the rounded value is used rather than the floored (see Section BLANK in Software Document)
+		//The use of Math.round() is so the rounded value is used rather than the floored
 		else if ((int)(Math.round((URx-LLx)/2)) == (int)Cx) {
 				
 			if ( (odo.getXYT()[2] >= 90-ANGLE_ERROR) && 
@@ -408,6 +425,7 @@ public class CanLocator {
 	private void travelToStartCorner() {
 		
 		navigator.turnTo(-canAngle);
+		
 		//If the SC was UR, then go to UR
 		if (SCx == URx && SCy == URy){
 			
@@ -416,9 +434,11 @@ public class CanLocator {
 			
 				navigator.turnTo(-135);
 				lightLocalizer.lightLocalize(Cx,Cy);
-				navigator.travelTo(URx,URy);
-				navigator.turnTo(45);
-				lightLocalizer.lightLocalize(URx,URy);
+				if (!(Cx == URx && Cy == URy)) {
+					navigator.travelTo(URx,URy);
+					navigator.turnTo(45);
+					lightLocalizer.lightLocalize(URx,URy);
+				}
 			}
 			
 			else if ( (odo.getXYT()[2] >= 270-ANGLE_ERROR) &&
@@ -441,7 +461,7 @@ public class CanLocator {
 			
 			if ( (odo.getXYT()[2] >= 360-ANGLE_ERROR) || 
 			    	(odo.getXYT()[2] <= 0+ANGLE_ERROR)){
-		
+				
 				navigator.turnTo(45);
 				lightLocalizer.lightLocalize(Cx,Cy);
 				if (!(Cx == LLx && Cy == LLy)) {
@@ -496,7 +516,7 @@ public class CanLocator {
 	
 	/**
 	 * This method fetches the distance from the Ultrasonic sensor.
-	 * @return distance
+	 * @return distance 
 	 */
 	
 	private int readUSDistance() {

@@ -31,7 +31,7 @@ public class AssessCanColor {
 	
 	/**
 	 * Method that performs the can detection
-	 * @return number between 1-4 that represents which can was detected
+	 * @return number between 1-4 that represents the color of the can 
 	 */
 	public int run() {
 		csMotor.setAcceleration(1000);

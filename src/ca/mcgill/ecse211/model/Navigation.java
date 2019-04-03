@@ -4,7 +4,7 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 /**
  * This class contains all the methods that contribute to making
- * the robot move
+ * the robot move.
  * 
  * @author Carlo D'Angelo
  *
@@ -111,7 +111,7 @@ public class Navigation {
   
   /**
    * Method that allows the robot to move forward and allows other code to
-   * run
+   * run.
    * @param distance distance that you want the robot to travel forward
    */
   public void driveForwardWeight(double distance) {
@@ -140,7 +140,7 @@ public class Navigation {
 
 	/**
 	 * This method converts a distance into the total rotation (in degrees) of 
-	 * each wheel needed to cover that distance 
+	 * each wheel needed to cover that distance.
 	 * 
 	 * @param RADIUS radius of wheel
 	 * @param distance distance that you want the robot to move
@@ -152,7 +152,7 @@ public class Navigation {
 	
 	/**
 	 * This method converts a rotation in place into the total 
-	 * rotation (in degrees) of each wheel needed to cause that rotation
+	 * rotation (in degrees) of each wheel needed to cause that rotation.
 	 * 
 	 * @param radius radius of wheel
 	 * @param width distance between centers of wheels
