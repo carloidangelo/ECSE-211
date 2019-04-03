@@ -6,8 +6,8 @@ import lejos.robotics.SampleProvider;
 
 
 /**
- *This class allows the EV3 to search for cans and identify their colors and weights.
- *NOTE: Please refer to Software Document - Section 3.3 for detailed explanations of methods.
+ * This class allows the EV3 to search for cans and identify their colors and weights.
+ * NOTE: Please refer to Software Document - Section 3.3 for detailed explanations of methods.
  * @author Mohamed Samee
  *
  */
@@ -42,7 +42,7 @@ public class CanLocator {
 	private int LLx, LLy, URx, URy, SCx, SCy;
 
 	/**
-	 * This is the default constructor of this class
+	 * This is the default constructor of this class.
 	 * @param robot instance of the Robot class
 	 * @param assessCanColor instance of the AssessCanColor class
 	 * @param assessCanWeight instance of the AssessCanWeight class
@@ -72,14 +72,13 @@ public class CanLocator {
 	}
 	
 	/**
-	 * RunLocator() is the method that runs the algorithm for searching for the correct can.
+	 * This method runs the algorithm for the can searching.
 	 * It drives the EV3 forward and in a square around the search zone and looks for cans.
 	 * If a can is detected, it calls for the searchProcess(), otherwise it calls goToNext().
 	 * Once it has traveled around the whole zone without finding the correct can it then travels
 	 * back to its starting corner.
 	 */
-	
-	public void RunLocator(){
+	public void runLocator(){
 		
 		//Start corner of the search is lower left corner in this case
 		this.SCx = LLx;
@@ -162,30 +161,22 @@ public class CanLocator {
 	 * searchProcess() runs when the EV3 detects a can. It calls assessCan() to 
 	 *identify color and weight. Once done, calls travelToStartCorner() while having the can.
 	 */
-	
-	private void searchProcess(){               
-		
+	private void searchProcess(){            
 		assessCan(canDistance = (readUSDistance()-(TEST_VALUE)));
-		
 		navigator.driveBack(canDistance);
-		
 		travelToStartCorner();
-				    
-		
 	}
 	
 	/**
-	*checkCan() returns true if a can was spotted by the ultrasonic sensor within the
-	*range of a tile. Otherwise, it returns false.
-	*@param angle
-	*/
-	
+	 * checkCan() returns true if a can was spotted by the ultrasonic sensor within the
+	 * range of a tile. Otherwise, it returns false.
+	 * @param angle amount (in degrees) that the robot has to scan
+	 * @return boolean value representing whether a can was spotted (true) or not (false)
+	 */
 	private boolean checkCan(double angle){
 	
 		canAngle = 0;
 	    double currentAngle = odo.getXYT()[2];
-	    
-	    System.out.println("currentAng:"+currentAngle);
 	    
 		//begin rotating to scan for cans 
 		navigator.turnToScan(angle);
@@ -202,66 +193,54 @@ public class CanLocator {
             }
             
         }
-        
         //if can is found, stop motors and record the angle the can was detected at
         Project.LEFT_MOTOR.stop(true);
         Project.RIGHT_MOTOR.stop();
         navigator.turnTo(TEST_ANGLE);
-//        System.out.println("firstAng:"+odo.getXYT()[2]);
         canAngle = odo.getXYT()[2] - currentAngle;
-        
-//        System.out.println("canAngle:"+canAngle);
-        
-       if(canAngle < -110){
-            
+        if(canAngle < -110){
             canAngle = 360+canAngle-(ANGLE_ERROR/2);
-            
         }
-        
         return true;
-		
 	}
 	
+
 	/**
-	*assessCan() is a method that is called after checkCan(). It 
-	*makes the EV3 beep depending on the color as well as the weight of the can scanned.
-	*@param distance
-	*/
-	
+	 * assessCan() is a method that is called after checkCan(). It 
+	 * makes the EV3 beep depending on the color as well as the weight of the can scanned.
+	 * @param distance distance(cm) that the robot has to travel to the can
+	 */
 	private void assessCan(double distance){
 
 		int heavy = 0;
 		navigator.driveForward(distance);
 		clamp.grabCan();		
-		
 		canDistance += TILE_SIZE/2;
 		navigator.driveForwardWeight(TILE_SIZE/2);
 		while(Project.LEFT_MOTOR.isMoving() && Project.RIGHT_MOTOR.isMoving()){
 			heavy = heavy | assessCanWeight.run();
 		}
-		
-		
 		//Beeps depending on the color and weight of the can
 		if(heavy == 1){
 			
 			switch (assessCanColor.run()) {
 
-				case 1: 	Sound.playTone(500, 1000);
+				case 1: Sound.playTone(500, 1000);
 						break;
 
-				case 2: 	Sound.playTone(500, 1000);
+				case 2: Sound.playTone(500, 1000);
 						Sound.pause(100);
 						Sound.playTone(500, 1000);
 						break;
 
-				case 3: 	Sound.playTone(500, 1000);
+				case 3: Sound.playTone(500, 1000);
 						Sound.pause(100);
 						Sound.playTone(500, 1000);
 						Sound.pause(100);
 						Sound.playTone(500, 1000);
 						break;
 
-				case 4: 	Sound.playTone(500, 1000);
+				case 4: Sound.playTone(500, 1000);
 						Sound.pause(100);
 						Sound.playTone(500, 1000);
 						Sound.pause(100);
@@ -278,22 +257,22 @@ public class CanLocator {
 		
 			switch (assessCanColor.run()) {
 
-				case 1: 	Sound.playTone(500, 500);
+				case 1: Sound.playTone(500, 500);
 						break;
 
-				case 2: 	Sound.playTone(500, 500);
+				case 2: Sound.playTone(500, 500);
 						Sound.pause(100);
 						Sound.playTone(500, 500);
 						break;
 
-				case 3: 	Sound.playTone(500, 500);
+				case 3: Sound.playTone(500, 500);
 						Sound.pause(100);
 						Sound.playTone(500, 500);
 						Sound.pause(100);
 						Sound.playTone(500, 500);
 						break;
 
-				case 4: 	Sound.playTone(500, 500);
+				case 4: Sound.playTone(500, 500);
 						Sound.pause(100);
 						Sound.playTone(500, 500);
 						Sound.pause(100);
@@ -309,9 +288,8 @@ public class CanLocator {
 	} 
 	
 	/**
-	*goToNext() uses travelTo() to drive the EV3 forward to the next position when no cans are detected.
+	* goToNext() uses travelTo() to drive the EV3 forward to the next position when no cans are detected.
 	*/
-
 	private void goToNext() { 
 
 		//keeps coordinate values in check to localize the EV3 whenever required
@@ -418,10 +396,9 @@ public class CanLocator {
 	}
 	
 	/**
-	*travelToStartCorner() is called when a can is found and its weight and color have been identified. This
-	*method will use travelTo() from the Navigator class to get the EV3 back to the initial start corner.
+	* travelToStartCorner() is called when a can is found and its weight and color have been identified. This
+	* method will use travelTo() from the Navigator class to get the EV3 back to the initial start corner.
 	*/
-	
 	private void travelToStartCorner() {
 		
 		navigator.turnTo(-canAngle);
@@ -515,10 +492,9 @@ public class CanLocator {
 	}
 	
 	/**
-	 * This method fetches the distance from the Ultrasonic sensor.
-	 * @return distance 
+	 * Method that fetches data from the ultrasonic sensor.
+	 * @return distance (cm) from the wall
 	 */
-	
 	private int readUSDistance() {
 		//this method returns the ultrasonic distance read.
 		usDistance.fetchSample(usData, 0);

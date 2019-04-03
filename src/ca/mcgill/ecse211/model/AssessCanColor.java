@@ -7,7 +7,7 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 /**
  * This class allows the robot to correctly identify a can's color by
- * taking the mode of many samples 
+ * taking the mode of many samples.
  * @author Carlo D'Angelo
  *
  */
@@ -20,7 +20,7 @@ public class AssessCanColor {
 	private static final int ROTATION_SPEED = 75;
 	private static final int TURN_ERROR = 20;
 	/**
-	 * This is the default constructor of this class
+	 * This is the default constructor of this class.
 	 * @param csMotor motor in charge of rotating the light sensor that scans the cans
 	 * @param csFront instance of the ColorClassification class
 	 */
@@ -30,8 +30,8 @@ public class AssessCanColor {
 	}
 	
 	/**
-	 * Method that performs the can detection
-	 * @return number between 1-4 that represents the color of the can 
+	 * Method that performs the can detection.
+	 * @return integer number between 1-4 that represents the color of the can 
 	 */
 	public int run() {
 		csMotor.setAcceleration(1000);

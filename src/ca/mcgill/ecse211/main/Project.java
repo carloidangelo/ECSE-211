@@ -103,7 +103,6 @@ public class Project {
 		UltrasonicLocalizer ultrasonicLocalizer = new UltrasonicLocalizer(LEFT_MOTOR, RIGHT_MOTOR, usDistance, usData);
 		LightLocalizer lightLocalizer = new LightLocalizer(LEFT_MOTOR, RIGHT_MOTOR, csLineDetector, csData, navigator);
 		
-		
         do {
 			
 			LCD.clear();
@@ -161,7 +160,7 @@ public class Project {
 					Sound.pause(100);
 					Sound.beep();
 		
-					canLocator.RunLocator();
+					canLocator.runLocator();
 				
 					returnHome.goHome();
 				}
