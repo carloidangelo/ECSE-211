@@ -447,10 +447,12 @@ public class CanLocator {
 		
 				navigator.turnTo(45);
 				lightLocalizer.lightLocalize(Cx,Cy);
-				Sound.beep();
-				navigator.travelTo(LLx, LLy);
-				navigator.turnTo(-135);
-				lightLocalizer.lightLocalize(LLx,LLy);
+				if (!(Cx == LLx && Cy == LLy)) {
+					navigator.travelTo(LLx, LLy);
+					navigator.turnTo(-135);
+					lightLocalizer.lightLocalize(LLx,LLy);
+				}
+
 				
 			}
 			

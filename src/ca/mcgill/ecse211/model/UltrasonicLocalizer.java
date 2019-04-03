@@ -16,7 +16,7 @@ public class UltrasonicLocalizer {
 	public static final double CRITICAL_DISTANCE = 30.00;
 	public static final double NOISE_MARGIN = 5.00;
 
-	private static final double TURN_ERROR = 14;
+	private static final double TURN_ERROR = 18; // 14
   
 	private final double RADIUS = Robot.WHEEL_RAD;
 	private final double TRACK = Robot.TRACK;

@@ -186,15 +186,15 @@ public class Project {
 				}
 				*/
 				
-				/*
+				
 				// Localization Test
 				odoThread.start();
-				Thread odoDisplayThread = new Thread(odometryDisplay);
-				odoDisplayThread.start();
+				//Thread odoDisplayThread = new Thread(odometryDisplay);
+				//odoDisplayThread.start();
 				ultrasonicLocalizer.fallingEdge();
 				lightLocalizer.moveClose();
 				lightLocalizer.lightLocalize(3, 3);
-				*/
+				
 				
 				/*
 				// Search Algorithm Test
