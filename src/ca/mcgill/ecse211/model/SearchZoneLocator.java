@@ -64,20 +64,40 @@ public class SearchZoneLocator {
 				odo.setXYT((homeZoneLLX + 1) * TILE_SIZE, (homeZoneLLY + 1) * TILE_SIZE, 0.0);
 				if (homeZoneURX < islandLLX) { // horizontal tunnel
 					if(homeZoneLLY == tunnelLLY) {
-						navigator.travelTo(tunnelLLX - 1, tunnelURY);
-						navigator.turnTo(-45);
-						lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelURY);
-						navigator.turnTo(-180);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(-90);
-					} else {
-						navigator.travelTo(tunnelLLX - 1, tunnelLLY);
-						if ((homeZoneLLY + 1) == tunnelLLY) {
+						if (tunnelLLX - 1 == homeZoneLLX + 1) {
+							navigator.turnTo(-180);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(-90);
+						}else {
+							navigator.travelTo(tunnelLLX - 1, tunnelURY);
 							navigator.turnTo(-45);
+							lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelURY);
+							navigator.turnTo(-180);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(-90);
 						}
-						lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelLLY);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(90);
+					} else {
+						if (tunnelLLX - 1 == homeZoneLLX + 1) {
+							if ((homeZoneLLY + 1) == tunnelLLY) {
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(90);
+							}else {
+								navigator.travelTo(tunnelLLX - 1, tunnelLLY);
+								navigator.turnTo(45);
+								lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelLLY);
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(90);
+							}
+						}else {
+							navigator.travelTo(tunnelLLX - 1, tunnelLLY);
+							if ((homeZoneLLY + 1) == tunnelLLY) {
+								navigator.turnTo(-45);
+							}
+							lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelLLY);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(90);
+						}
+
 					}
 					clamp.grabCan();
 					// drive through tunnel
@@ -110,21 +130,43 @@ public class SearchZoneLocator {
 
 				} else if (homeZoneURY < islandLLY) { // vertical tunnel
 					if(homeZoneLLX == tunnelLLX) {
-						navigator.travelTo(tunnelURX, tunnelLLY - 1);
-						navigator.turnTo(45);
-						lightLocalizer.lightLocalize(tunnelURX,  tunnelLLY - 1);
-						navigator.turnTo(-90);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(90);
-					} else {
-						navigator.travelTo(tunnelLLX, tunnelLLY - 1);
-						if ((homeZoneLLX + 1) == tunnelLLX) {
+						if (tunnelLLY - 1 == homeZoneLLY + 1) {
+							navigator.turnTo(-90);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(90);
+						}else {
+							navigator.travelTo(tunnelURX, tunnelLLY - 1);
 							navigator.turnTo(45);
+							lightLocalizer.lightLocalize(tunnelURX, tunnelLLY - 1);
+							navigator.turnTo(-90);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(90);
 						}
-						lightLocalizer.lightLocalize(tunnelLLX, tunnelLLY - 1);
-						navigator.turnTo(90);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(-90);
+					} else {
+						if (tunnelLLY - 1 == homeZoneLLY + 1) {
+							if ((homeZoneLLX + 1) == tunnelLLX) {
+								navigator.turnTo(90);
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(-90);
+							}else {
+								navigator.travelTo(tunnelLLX, tunnelLLY - 1);
+								navigator.turnTo(-45);
+								lightLocalizer.lightLocalize(tunnelLLX, tunnelLLY - 1);
+								navigator.turnTo(90);
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(-90);
+							}
+						}else {
+							navigator.travelTo(tunnelLLX, tunnelLLY - 1);
+							if ((homeZoneLLX + 1) == tunnelLLX) {
+								navigator.turnTo(45);
+							}
+							lightLocalizer.lightLocalize(tunnelLLX, tunnelLLY - 1);
+							navigator.turnTo(90);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(-90);
+						}
+
 					}
 					clamp.grabCan();
 					// drive through tunnel
@@ -162,22 +204,43 @@ public class SearchZoneLocator {
 				odo.setXYT((homeZoneURX - 1) * TILE_SIZE, (homeZoneLLY + 1) * TILE_SIZE, 270.0);
 				if (homeZoneLLX > islandURX) { // horizontal tunnel
 					if(homeZoneLLY == tunnelLLY) {
-						navigator.travelTo(tunnelURX + 1, tunnelURY);
-						navigator.turnTo(135);
-						lightLocalizer.lightLocalize(tunnelURX + 1, tunnelURY);
-						navigator.turnTo(180);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(90);
-					} else {
-						navigator.travelTo(tunnelURX + 1, tunnelLLY);
-						if ((homeZoneLLY + 1) == tunnelLLY) {
-							navigator.turnTo(135);
+						if (tunnelURX + 1 == homeZoneURX - 1) {
+							navigator.turnTo(-90);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(90);
 						}else {
+							navigator.travelTo(tunnelURX + 1, tunnelURY);
+							navigator.turnTo(135);
+							lightLocalizer.lightLocalize(tunnelURX + 1, tunnelURY);
+							navigator.turnTo(180);
+							navigator.driveForward(0.5 * TILE_SIZE);
 							navigator.turnTo(90);
 						}
-						lightLocalizer.lightLocalize(tunnelURX + 1, tunnelLLY);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(-90);
+					} else {
+						if (tunnelURX + 1 == homeZoneURX - 1) {
+							if ((homeZoneLLY + 1) == tunnelLLY) {
+								navigator.turnTo(90);
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(-90);
+							}else {
+								navigator.travelTo(tunnelURX + 1, tunnelLLY);
+								navigator.turnTo(45);
+								lightLocalizer.lightLocalize(tunnelURX + 1, tunnelLLY);
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(-90);
+							}
+						}else {
+							navigator.travelTo(tunnelURX + 1, tunnelLLY);
+							if ((homeZoneLLY + 1) == tunnelLLY) {
+								navigator.turnTo(135);
+							}else {
+								navigator.turnTo(90);
+							}
+							lightLocalizer.lightLocalize(tunnelURX + 1, tunnelLLY);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(-90);
+						}
+
 					}
 					clamp.grabCan();
 					// drive through tunnel
@@ -211,24 +274,45 @@ public class SearchZoneLocator {
 
 				} else if (homeZoneURY < islandLLY) { // vertical tunnel
 					if(homeZoneURX == tunnelURX) {
-						navigator.travelTo(tunnelLLX, tunnelLLY - 1);
-						navigator.turnTo(45);
-						lightLocalizer.lightLocalize(tunnelLLX,  tunnelLLY - 1);
-						navigator.turnTo(90);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(-90);
-					} else {
-						navigator.travelTo(tunnelURX, tunnelLLY - 1);
-						if ((homeZoneURX - 1) == tunnelURX) {
-							navigator.turnTo(45);
+						if (tunnelLLY - 1 == homeZoneLLY + 1) {
+							navigator.turnTo(180);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(-90);
 						}else {
+							navigator.travelTo(tunnelLLX, tunnelLLY - 1);
+							navigator.turnTo(45);
+							lightLocalizer.lightLocalize(tunnelLLX,  tunnelLLY - 1);
+							navigator.turnTo(90);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(-90);
+						}
+					} else {
+						if (tunnelLLY - 1 == homeZoneLLY + 1) {
+							if ((homeZoneURX - 1) == tunnelURX) {
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(90);
+							}else {
+								navigator.travelTo(tunnelURX, tunnelLLY - 1);
+								navigator.turnTo(135);
+								lightLocalizer.lightLocalize(tunnelURX, tunnelLLY - 1);
+								navigator.turnTo(-90);
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(90);
+							}
+						}else {
+							navigator.travelTo(tunnelURX, tunnelLLY - 1);
+							if ((homeZoneURX - 1) == tunnelURX) {
+								navigator.turnTo(45);
+							}else {
+								navigator.turnTo(90);
+							}
+							lightLocalizer.lightLocalize(tunnelURX, tunnelLLY - 1);
+							navigator.turnTo(-90);
+							navigator.driveForward(0.5 * TILE_SIZE);
 							navigator.turnTo(90);
 						}
-						lightLocalizer.lightLocalize(tunnelURX, tunnelLLY - 1);
-						navigator.turnTo(-90);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(90);
-					}
+
+					}					
 					clamp.grabCan();
 					// drive through tunnel
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
@@ -264,23 +348,44 @@ public class SearchZoneLocator {
 				// corner 2
 				odo.setXYT((homeZoneURX - 1) * TILE_SIZE, (homeZoneURY - 1) * TILE_SIZE, 180.0);
 				if (homeZoneLLX > islandURX) { // horizontal tunnel
-					if(homeZoneLLY == tunnelLLY) {
-						navigator.travelTo(tunnelURX + 1, tunnelURY);
-						navigator.turnTo(-180);
-						lightLocalizer.lightLocalize(tunnelURX + 1, tunnelURY);
-						navigator.turnTo(-180);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(90);
-					} else {
-						navigator.travelTo(tunnelURX + 1, tunnelLLY);
-						if ((homeZoneURY - 1) == tunnelLLY) {
-							navigator.turnTo(135);
+					if(homeZoneURY == tunnelURY) {
+						if (tunnelURX + 1 == homeZoneURX - 1) {
+							navigator.turnTo(180);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(-90);
 						}else {
-							navigator.turnTo(-180);
+							navigator.travelTo(tunnelURX + 1, tunnelLLY);
+							navigator.turnTo(135);
+							lightLocalizer.lightLocalize(tunnelURX + 1, tunnelLLY);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(-90);
 						}
-						lightLocalizer.lightLocalize(tunnelURX + 1, tunnelLLY);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(-90);
+					} else {
+						if (tunnelURX + 1 == homeZoneURX - 1) {
+							if ((homeZoneURY - 1) == tunnelURY) {
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(90);
+							}else {
+								navigator.travelTo(tunnelURX + 1, tunnelURY);
+								navigator.turnTo(-135);
+								lightLocalizer.lightLocalize(tunnelURX + 1, tunnelURY);
+								navigator.turnTo(180);
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(90);
+							}
+						}else {
+							navigator.travelTo(tunnelURX + 1, tunnelURY);
+							if ((homeZoneURY - 1) == tunnelURY) {
+								navigator.turnTo(135);
+							}else {
+								navigator.turnTo(180);
+							}
+							lightLocalizer.lightLocalize(tunnelURX + 1, tunnelURY);
+							navigator.turnTo(180);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(90);
+						}
+
 					}
 					clamp.grabCan();
 					// drive through tunnel
@@ -313,25 +418,46 @@ public class SearchZoneLocator {
 					}
 					
 				} else if (homeZoneLLY > islandURY) { // vertical tunnel
-					if(homeZoneLLX == tunnelLLX) { 
-						navigator.travelTo(tunnelURX, tunnelURY + 1);
-						navigator.turnTo(-180);
-						lightLocalizer.lightLocalize(tunnelURX,  tunnelURY + 1);
-						navigator.turnTo(-90);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(-90);
-					} else {
-						navigator.travelTo(tunnelLLX, tunnelURY + 1);
-						if ((homeZoneURX - 1) == tunnelLLX) {
-							navigator.turnTo(-135);
+					if(homeZoneURX == tunnelURX) {
+						if (tunnelURY + 1 == homeZoneURY - 1) {
+							navigator.turnTo(-90);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(90);
 						}else {
-							navigator.turnTo(-180);
+							navigator.travelTo(tunnelLLX, tunnelURY + 1);
+							navigator.turnTo(-135);
+							lightLocalizer.lightLocalize(tunnelLLX,  tunnelURY + 1);
+							navigator.turnTo(90);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(90);
 						}
-						lightLocalizer.lightLocalize(tunnelLLX, tunnelURY + 1);
-						navigator.turnTo(90);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(90);
-					}
+					} else {
+						if (tunnelURY + 1 == homeZoneURY - 1) {
+							if ((homeZoneURX - 1) == tunnelURX) {
+								navigator.turnTo(90);
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(-90);
+							}else {
+								navigator.travelTo(tunnelURX, tunnelURY + 1);
+								navigator.turnTo(135);
+								lightLocalizer.lightLocalize(tunnelURX, tunnelURY + 1);
+								navigator.turnTo(-90);
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(-90);
+							}
+						}else {
+							navigator.travelTo(tunnelURX, tunnelURY + 1);
+							if ((homeZoneURX - 1) == tunnelURX) {
+								navigator.turnTo(-135);
+							}else {
+								navigator.turnTo(-180);
+							}
+							lightLocalizer.lightLocalize(tunnelURX, tunnelURY + 1);
+							navigator.turnTo(-90);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(-90);
+						}
+					}	
 					clamp.grabCan();
 					// drive through tunnel
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
@@ -367,23 +493,44 @@ public class SearchZoneLocator {
 				// corner 3
 				odo.setXYT((homeZoneLLX + 1) * TILE_SIZE, (homeZoneURY - 1) * TILE_SIZE, 90.0);
 				if (homeZoneURX < islandLLX) { // horizontal tunnel
-					if(homeZoneLLY == tunnelLLY) {
-						navigator.travelTo(tunnelLLX - 1, tunnelURY);
-						navigator.turnTo(-90);
-						lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelURY);
-						navigator.turnTo(-180);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(-90);
-					} else {
-						navigator.travelTo(tunnelLLX - 1, tunnelLLY);
-						if ((homeZoneURY - 1) == tunnelLLY) {
-							navigator.turnTo(-45);
+					if(homeZoneURY == tunnelURY) {
+						if (tunnelLLX - 1 == homeZoneLLX + 1) {
+							navigator.turnTo(-90);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(90);
 						}else {
+							navigator.travelTo(tunnelLLX - 1, tunnelLLY);
+							navigator.turnTo(-45);
+							lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelLLY);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(90);
+						}
+					} else {
+						if (tunnelLLX - 1 == homeZoneLLX + 1) {
+							if ((homeZoneURY - 1) == tunnelURY) {
+								navigator.turnTo(90);
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(-90);
+							}else {
+								navigator.travelTo(tunnelLLX - 1, tunnelURY);
+								navigator.turnTo(-135);
+								lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelURY);
+								navigator.turnTo(180);
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(-90);
+							}
+						}else {
+							navigator.travelTo(tunnelLLX - 1, tunnelURY);
+							if ((homeZoneURY - 1) == tunnelURY) {
+								navigator.turnTo(-45);
+							}else {
+								navigator.turnTo(-90);
+							}
+							lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelURY);
+							navigator.turnTo(180);
+							navigator.driveForward(0.5 * TILE_SIZE);
 							navigator.turnTo(-90);
 						}
-						lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelLLY);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(90);
 					}
 					clamp.grabCan();
 					// drive through tunnel
@@ -415,25 +562,45 @@ public class SearchZoneLocator {
 					}
 					
 				} else if (homeZoneLLY > islandURY) { // vertical tunnel
-					if(homeZoneLLX == tunnelLLX) { 
-						navigator.travelTo(tunnelURX, tunnelURY + 1);
-						navigator.turnTo(-135);
-						lightLocalizer.lightLocalize(tunnelURX,  tunnelURY + 1);
-						navigator.turnTo(-90);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(-90);
-					} else {
-						navigator.travelTo(tunnelLLX, tunnelURY + 1);
-						if ((homeZoneLLX + 1) == tunnelLLX) {
-							navigator.turnTo(-135);
+					if(homeZoneLLX == tunnelLLX) {
+						if (tunnelURY + 1 == homeZoneURY - 1) {
+							navigator.turnTo(-180);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(-90);
 						}else {
+							navigator.travelTo(tunnelURX, tunnelURY + 1);
+							navigator.turnTo(-135);
+							lightLocalizer.lightLocalize(tunnelURX,  tunnelURY + 1);
+							navigator.turnTo(-90);
+							navigator.driveForward(0.5 * TILE_SIZE);
 							navigator.turnTo(-90);
 						}
-						lightLocalizer.lightLocalize(tunnelLLX, tunnelURY + 1);
-						navigator.turnTo(90);
-						navigator.driveForward(0.5 * TILE_SIZE);
-						navigator.turnTo(90);
-					}
+					} else {
+						if (tunnelURY + 1 == homeZoneURY - 1) {
+							if ((homeZoneLLX + 1) == tunnelLLX) {
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(90);
+							}else {
+								navigator.travelTo(tunnelLLX, tunnelURY + 1);
+								navigator.turnTo(-135);
+								lightLocalizer.lightLocalize(tunnelLLX, tunnelURY + 1);
+								navigator.turnTo(90);
+								navigator.driveForward(0.5 * TILE_SIZE);
+								navigator.turnTo(90);
+							}
+						}else {
+							navigator.travelTo(tunnelLLX, tunnelURY + 1);
+							if ((homeZoneLLX + 1) == tunnelLLX) {
+								navigator.turnTo(-135);
+							}else {
+								navigator.turnTo(-90);
+							}
+							lightLocalizer.lightLocalize(tunnelLLX, tunnelURY + 1);
+							navigator.turnTo(90);
+							navigator.driveForward(0.5 * TILE_SIZE);
+							navigator.turnTo(90);
+						}
+					}	
 					clamp.grabCan();
 					// drive through tunnel
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);

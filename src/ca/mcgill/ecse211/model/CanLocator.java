@@ -100,9 +100,6 @@ public class CanLocator {
 			Cy = odo.getXYT()[1]/TILE_SIZE;
 			
 			navigator.turnTo(180);
-		    searchProcess();
-			goToNext();
-			
 		}
 		
 		while (!loopStop) {	//&& true if doesnt
@@ -159,7 +156,7 @@ public class CanLocator {
 	
 	/**
 	 * searchProcess() runs when the EV3 detects a can. It calls assessCan() to 
-	 *identify color and weight. Once done, calls travelToStartCorner() while having the can.
+	 * identify color and weight. Once done, calls travelToStartCorner() while having the can.
 	 */
 	private void searchProcess(){            
 		assessCan(canDistance = (readUSDistance()-(TEST_VALUE)));
