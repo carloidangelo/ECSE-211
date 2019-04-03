@@ -582,7 +582,7 @@ public class SearchZoneLocator {
 								navigator.turnTo(90);
 							}else {
 								navigator.travelTo(tunnelLLX, tunnelURY + 1);
-								navigator.turnTo(-135);
+								navigator.turnTo(-45);
 								lightLocalizer.lightLocalize(tunnelLLX, tunnelURY + 1);
 								navigator.turnTo(90);
 								navigator.driveForward(0.5 * TILE_SIZE);
