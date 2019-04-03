@@ -80,6 +80,7 @@ public class SearchZoneLocator {
 						navigator.turnTo(90);
 					}
 					clamp.grabCan();
+					// drive through tunnel
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
 					clamp.offloadCan();
 					double yComponent;
@@ -124,6 +125,7 @@ public class SearchZoneLocator {
 						navigator.turnTo(-90);
 					}
 					clamp.grabCan();
+					// drive through tunnel
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
 					clamp.offloadCan();
 					double xComponent;
@@ -173,6 +175,7 @@ public class SearchZoneLocator {
 						navigator.turnTo(-90);
 					}
 					clamp.grabCan();
+					// drive through tunnel
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
 					clamp.offloadCan();
 					double yComponent;
@@ -220,6 +223,7 @@ public class SearchZoneLocator {
 						navigator.turnTo(90);
 					}
 					clamp.grabCan();
+					// drive through tunnel
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
 					clamp.offloadCan();
 					double xComponent;
@@ -269,6 +273,7 @@ public class SearchZoneLocator {
 						navigator.turnTo(-90);
 					}
 					clamp.grabCan();
+					// drive through tunnel
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
 					clamp.offloadCan();
 					double yComponent;
@@ -316,6 +321,7 @@ public class SearchZoneLocator {
 						navigator.turnTo(90);
 					}
 					clamp.grabCan();
+					// drive through tunnel
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
 					clamp.offloadCan();
 					double xComponent;
@@ -366,6 +372,7 @@ public class SearchZoneLocator {
 						navigator.turnTo(90);
 					}
 					clamp.grabCan();
+					// drive through tunnel
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
 					clamp.offloadCan();
 					double yComponent;
@@ -412,6 +419,7 @@ public class SearchZoneLocator {
 						navigator.turnTo(90);
 					}
 					clamp.grabCan();
+					// drive through tunnel
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
 					clamp.offloadCan();
 					double xComponent;
