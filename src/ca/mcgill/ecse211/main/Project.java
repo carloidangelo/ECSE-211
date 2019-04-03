@@ -56,7 +56,6 @@ public class Project {
 		// Odometer related objects
 		Odometer odometer = Odometer.getOdometer(LEFT_MOTOR, RIGHT_MOTOR, Robot.TRACK, Robot.WHEEL_RAD);
 		Navigation navigator = new Navigation(LEFT_MOTOR,RIGHT_MOTOR);
-		Display odometryDisplay = new Display(LCD); 
 
 		// Ultrasonic sensor
 		@SuppressWarnings("resource") // Because we don't bother to close this resource
