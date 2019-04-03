@@ -178,8 +178,6 @@ public class CanLocator {
 		canAngle = 0;
 	    double currentAngle = odo.getXYT()[2];
 	    
-	    System.out.println("currentAng:"+currentAngle);
-	    
 		//begin rotating to scan for cans 
 		navigator.turnToScan(angle);
         
@@ -410,7 +408,6 @@ public class CanLocator {
 	private void travelToStartCorner() {
 		
 		navigator.turnTo(-canAngle);
-		System.out.print(odo.getXYT()[2]);
 		//If the SC was UR, then go to UR
 		if (SCx == URx && SCy == URy){
 			

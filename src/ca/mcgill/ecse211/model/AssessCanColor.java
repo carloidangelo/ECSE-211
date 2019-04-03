@@ -53,7 +53,6 @@ public class AssessCanColor {
 		frequency.add(Collections.frequency(canColor, "red      "));
 		Integer obj = Collections.max(frequency);
 		int index = frequency.indexOf(obj);
-		System.out.println(index + 1);
 		return index + 1;	
 	}
 	
