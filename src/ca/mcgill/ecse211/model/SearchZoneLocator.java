@@ -121,9 +121,16 @@ public class SearchZoneLocator {
 							navigator.turnTo(-45);
 							lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 						} else if (yComponent < searchZoneLLY) {
+							if (tunnelURX + 1 == searchZoneLLX) {
+								navigator.turnTo(45);
+							}
 							lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 						} else if (yComponent > searchZoneLLY) {
-							navigator.turnTo(-90);
+							if (tunnelURX + 1 == searchZoneLLX) {
+								navigator.turnTo(-135);
+							}else {
+								navigator.turnTo(-90);
+							}
 							lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 						}
 					}
@@ -190,9 +197,16 @@ public class SearchZoneLocator {
 							navigator.turnTo(45);
 							lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 						} else if (xComponent < searchZoneLLX) {
+							if (tunnelURY + 1 == searchZoneLLY) {
+								navigator.turnTo(-45);
+							}
 							lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 						} else if (xComponent > searchZoneLLX) {
-							navigator.turnTo(90);
+							if (tunnelURY + 1 == searchZoneLLY) {
+								navigator.turnTo(135);
+							}else {
+								navigator.turnTo(90);
+							}
 							lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 						}
 					}
@@ -264,10 +278,18 @@ public class SearchZoneLocator {
 							navigator.turnTo(135);
 							lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 						} else if (yComponent < searchZoneURY) {
-							navigator.turnTo(90);
+							if (tunnelLLX - 1 == searchZoneURX) {
+								navigator.turnTo(45);
+							}else {
+								navigator.turnTo(90);
+							}
 							lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 						} else if (yComponent > searchZoneURY) {
-							navigator.turnTo(-180);
+							if (tunnelLLX - 1 == searchZoneURX) {
+								navigator.turnTo(-135);
+							}else {
+								navigator.turnTo(-180);
+							}
 							lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 						}
 					}
@@ -335,9 +357,16 @@ public class SearchZoneLocator {
 							navigator.turnTo(45);
 							lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 						} else if (xComponent < searchZoneLLX) {
+							if (tunnelURY + 1 == searchZoneLLY) {
+								navigator.turnTo(-45);
+							}
 							lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 						} else if (xComponent > searchZoneLLX) {
-							navigator.turnTo(90);
+							if (tunnelURY + 1 == searchZoneLLY) {
+								navigator.turnTo(135);
+							}else {
+								navigator.turnTo(90);
+							}
 							lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 						}
 					}
@@ -409,10 +438,18 @@ public class SearchZoneLocator {
 							navigator.turnTo(135);
 							lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 						} else if (yComponent < searchZoneURY) {
-							navigator.turnTo(90);
+							if (tunnelLLX - 1 == searchZoneURX) {
+								navigator.turnTo(45);
+							}else {
+								navigator.turnTo(90);
+							}
 							lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 						} else if (yComponent > searchZoneURY) {
-							navigator.turnTo(180);
+							if (tunnelLLX - 1 == searchZoneURX) {
+								navigator.turnTo(-135);
+							}else {
+								navigator.turnTo(180);
+							}
 							lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 						}
 					}
@@ -480,10 +517,18 @@ public class SearchZoneLocator {
 							navigator.turnTo(-135);
 							lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 						} else if (xComponent < searchZoneURX) {
-							navigator.turnTo(-90);
+							if (tunnelLLY - 1 == searchZoneURY) {
+								navigator.turnTo(-45);
+							}else {
+								navigator.turnTo(-90);
+							}
 							lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 						} else if (xComponent > searchZoneURX) {
-							navigator.turnTo(-180);
+							if (tunnelLLY - 1 == searchZoneURY) {
+								navigator.turnTo(135);
+							}else {
+								navigator.turnTo(-180);
+							}
 							lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 						}
 					}
@@ -554,9 +599,16 @@ public class SearchZoneLocator {
 							navigator.turnTo(-45);
 							lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 						} else if (yComponent < searchZoneLLY) {
+							if (tunnelURX + 1 == searchZoneLLX) {
+								navigator.turnTo(45);
+							}
 							lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 						} else if (yComponent > searchZoneLLY) {
-							navigator.turnTo(-90);
+							if (tunnelURX + 1 == searchZoneLLX) {
+								navigator.turnTo(-135);
+							}else {
+								navigator.turnTo(-90);
+							}
 							lightLocalizer.lightLocalize(searchZoneLLX, searchZoneLLY);
 						}
 					}
@@ -623,14 +675,21 @@ public class SearchZoneLocator {
 							navigator.turnTo(-135);
 							lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 						} else if (xComponent < searchZoneURX) {
-							navigator.turnTo(-90);
+							if (tunnelLLY - 1 == searchZoneURY) {
+								navigator.turnTo(-45);
+							}else {
+								navigator.turnTo(-90);
+							}
 							lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 						} else if (xComponent > searchZoneURX) {
-							navigator.turnTo(-180);
+							if (tunnelLLY - 1 == searchZoneURY) {
+								navigator.turnTo(135);
+							}else {
+								navigator.turnTo(-180);
+							}
 							lightLocalizer.lightLocalize(searchZoneURX, searchZoneURY);
 						}
 					}
-
 				}
 				break;
 		    default:
