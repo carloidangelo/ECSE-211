@@ -245,7 +245,7 @@ public class CanLocator {
 						Sound.pause(100);
 						Sound.playTone(500, 1000);
 						break;
-				default: Sound.buzz(); //this means incorrect identification 
+				default: Sound.playTone(1500, 1000); //this means incorrect identification 
 						 break;
 			}
 		}
@@ -277,7 +277,7 @@ public class CanLocator {
 						Sound.pause(100);
 						Sound.playTone(500, 500);
 						break;
-				default: Sound.buzz(); //this means incorrect identification 
+				default: Sound.playTone(1500, 500); //this means incorrect identification 
 						 break;
 			}
 			
