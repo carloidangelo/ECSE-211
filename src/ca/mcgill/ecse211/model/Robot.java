@@ -66,6 +66,10 @@ public class Robot {
 		return greenTeam;
 	}
 	
+	/**
+	 * This method gets the starting corner associated with the team's assigned color.
+	 * @return starting corner associated with the team's assigned color
+	 */
 	public int getStartingCorner() {
 		int SC = 0;
 		if (getRedTeam() == TEAM_NUMBER) {

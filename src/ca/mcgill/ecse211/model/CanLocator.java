@@ -29,6 +29,7 @@ public class CanLocator {
 	private static final double DISTANCE_ERROR = 4.0;
 	private static final double TEST_VALUE = 6;
 	private static final double TEST_ANGLE = 30.0;
+	private static final double ULTRASONIC_ERROR = 5.0;
 	private double canAngle = 0;
 	private double canDistance = 0;
 	private int ENDX = 0, ENDY = 0;
@@ -178,7 +179,7 @@ public class CanLocator {
 		//begin rotating to scan for cans 
 		navigator.turnToScan(angle);
         
-        while (readUSDistance() > TILE_SIZE) {
+        while (readUSDistance() > TILE_SIZE - ULTRASONIC_ERROR) {
             
             //keep turning until the distance of the US is less than a tile (i.e a can is detected)
             
