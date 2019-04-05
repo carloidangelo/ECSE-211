@@ -15,7 +15,7 @@ public class Navigation {
   private static final int SLOW_SPEED = 75;
   
   private static final int FORWARD_SPEED = 200;
-  private static final int FORWARD_SPEED_WEIGHT = 550;
+  private static final int FORWARD_SPEED_WEIGHT = 600;
   
   public static final double TILE_SIZE = 30.48;
  

@@ -28,7 +28,7 @@ public class CanLocator {
 	private static final double ANGLE_ERROR = 10.0;
 	private static final double DISTANCE_ERROR = 4.0;
 	private static final double TEST_VALUE = 6;
-	private static final double TEST_ANGLE = 15.0;
+	private static final double TEST_ANGLE = 30.0;
 	private double canAngle = 0;
 	private double canDistance = 0;
 	private int ENDX = 0, ENDY = 0;
@@ -96,8 +96,8 @@ public class CanLocator {
 			SCy = URy;
 			
 			//Saves the current position of the EV3
-			Cx = odo.getXYT()[0]/TILE_SIZE;
-			Cy = odo.getXYT()[1]/TILE_SIZE;
+			Cx = URx;
+			Cy = URy;
 			
 			navigator.turnTo(180);
 		}
@@ -160,6 +160,7 @@ public class CanLocator {
 	 */
 	private void searchProcess(){            
 		assessCan(canDistance = (readUSDistance()-(TEST_VALUE)));
+		
 		navigator.driveBack(canDistance);
 		travelToStartCorner();
 	}
@@ -220,6 +221,8 @@ public class CanLocator {
 		//Beeps depending on the color and weight of the can
 		if(heavy == 1){
 			
+			System.out.println("heavy can");
+			
 			switch (assessCanColor.run()) {
 
 				case 1: Sound.playTone(500, 1000);
@@ -252,6 +255,8 @@ public class CanLocator {
 		
 		else{
 		
+			System.out.println("light can");
+			
 			switch (assessCanColor.run()) {
 
 				case 1: Sound.playTone(500, 500);
@@ -406,9 +411,17 @@ public class CanLocator {
 			if ( (odo.getXYT()[2] >= 180-ANGLE_ERROR) && 
 			    	(odo.getXYT()[2] <= 180+ANGLE_ERROR) ){
 			
-				navigator.turnTo(-135);
-				lightLocalizer.lightLocalize(Cx,Cy);
-				if (!(Cx == URx && Cy == URy)) {
+				if (Cx == URx && Cy == URy) {
+					
+					navigator.turnTo(-135);
+					lightLocalizer.lightLocalize(Cx,Cy);
+					
+				}
+
+				else {
+				
+					navigator.turnTo(-135);
+					lightLocalizer.lightLocalize(Cx,Cy);
 					navigator.travelTo(URx,URy);
 					navigator.turnTo(45);
 					lightLocalizer.lightLocalize(URx,URy);
@@ -436,9 +449,17 @@ public class CanLocator {
 			if ( (odo.getXYT()[2] >= 360-ANGLE_ERROR) || 
 			    	(odo.getXYT()[2] <= 0+ANGLE_ERROR)){
 				
-				navigator.turnTo(45);
-				lightLocalizer.lightLocalize(Cx,Cy);
-				if (!(Cx == LLx && Cy == LLy)) {
+				if(Cx == LLx && Cy == LLy) {
+					
+					navigator.turnTo(45);
+					lightLocalizer.lightLocalize(Cx,Cy);
+					
+				}
+				
+				
+				else {
+					navigator.turnTo(45);
+					lightLocalizer.lightLocalize(Cx,Cy);
 					navigator.travelTo(LLx, LLy);
 					navigator.turnTo(-135);
 					lightLocalizer.lightLocalize(LLx,LLy);

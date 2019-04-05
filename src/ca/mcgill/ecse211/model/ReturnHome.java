@@ -4,7 +4,7 @@ import lejos.hardware.Sound;
 
 public class ReturnHome {
 	private final double TILE_SIZE = Navigation.TILE_SIZE;
-	private static final int CANDROP_DISTANCE = 15;
+	private static final int CANDROP_DISTANCE = 13;
 	private int startingCorner, homeZoneLLX, homeZoneLLY, homeZoneURX, homeZoneURY,
 					tunnelLLX, tunnelLLY, tunnelURX, tunnelURY;
 	private int islandLLX, islandLLY, islandURX, islandURY,
@@ -402,6 +402,7 @@ public class ReturnHome {
 					clamp.offloadCan();
 					navigator.driveBack(CANDROP_DISTANCE);
 					lightLocalizer.lightLocalize(homeZoneURX - 1, homeZoneURY - 1);
+					navigator.turnTo(180);
 					
 				} else if (homeZoneLLY > islandURY){ // vertical tunnel
 					double tunnelX;

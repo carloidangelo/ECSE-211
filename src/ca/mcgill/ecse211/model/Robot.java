@@ -9,25 +9,58 @@ import org.json.simple.parser.ParseException;
 import ca.mcgill.ecse211.WiFiClient.WifiConnection;
 import ca.mcgill.ecse211.main.Project;
 
+/**
+ * This class contains the methods that directly handle the game parameters retrieved
+ * from the game server. That is, depending the team's assigned color, these methods 
+ * will return the corresponding game parameter for that color. For instance, the 
+ * getStartingCorner() method will return the RedCorner if the team's color is red and 
+ * will return the GreenCorner if the team's color is green. 
+ * @author Carlo D'Angelo
+ *
+ */
 public class Robot {
 	
-	//Robot related parameters
+	/**
+	 * Robot's wheel radius.
+	 */
 	public static final double WHEEL_RAD = 2.069;
+	
+	/**
+	 * Distance between the centers of each wheel.
+	 */
 	public static final double TRACK = 11.305;
 	
 	private final int TEAM_NUMBER = Project.TEAM_NUMBER;
-	// Holds the Wifi data
+	
+	/**
+	 * Stores all of the data from the game server.
+	 */
 	private Map data;
 	
+	/**
+	 * This is the default constructor of this class.
+	 * @param wifi instance of the WifiConnection class
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public Robot(WifiConnection wifi) throws UnknownHostException, IOException, ParseException {
 		data = wifi.getData();
 	}
 	
+	/**
+	 * This method gets the team number associated with the red team.
+	 * @return team number associated with the red team.
+	 */
 	public int getRedTeam() {
 		int redTeam = ((Long) data.get("RedTeam")).intValue();
 		return redTeam;
 	}
 	
+	/**
+	 * This method gets the team number associated with the green team.
+	 * @return team number associated with the green team.
+	 */
 	public int getGreenTeam() {
 		int greenTeam = ((Long) data.get("GreenTeam")).intValue();
 		return greenTeam;
