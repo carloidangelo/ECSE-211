@@ -32,7 +32,7 @@ public class CanLocator {
 	private double canAngle = 0;
 	private double canDistance = 0;
 	private int ENDX = 0, ENDY = 0;
-	private double Cx = 0,Cy = 0; //C variables save the current position of the EV3.
+	private int Cx = 0,Cy = 0; //C variables save the current position of the EV3.
 	private static boolean loopStop = false;
 	
 	/**
