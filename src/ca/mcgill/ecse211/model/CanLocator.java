@@ -160,7 +160,6 @@ public class CanLocator {
 	 */
 	private void searchProcess(){            
 		assessCan(canDistance = (readUSDistance()-(TEST_VALUE)));
-		
 		navigator.driveBack(canDistance);
 		travelToStartCorner();
 	}

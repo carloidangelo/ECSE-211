@@ -258,6 +258,7 @@ public class ReturnHome {
 					navigator.driveBack(CANDROP_DISTANCE);
 					navigator.turnTo(-90);
 					lightLocalizer.lightLocalize(homeZoneURX - 1, homeZoneLLY + 1);
+					navigator.turnTo(-90);
 					
 				} else if (homeZoneURY < islandLLY){ // vertical tunnel
 					double tunnelX;
@@ -332,6 +333,7 @@ public class ReturnHome {
 					navigator.driveBack(CANDROP_DISTANCE);
 					navigator.turnTo(-90);
 					lightLocalizer.lightLocalize(homeZoneURX - 1, homeZoneLLY + 1);
+					navigator.turnTo(-90);
 				}
 				break;
 			case 2: 
@@ -471,6 +473,7 @@ public class ReturnHome {
 					clamp.offloadCan();
 					navigator.driveBack(CANDROP_DISTANCE);
 					lightLocalizer.lightLocalize(homeZoneURX - 1, homeZoneURY - 1);
+					navigator.turnTo(180);
 				}
 				break;
 			case 3:	
@@ -546,6 +549,7 @@ public class ReturnHome {
 					navigator.driveBack(CANDROP_DISTANCE);
 					navigator.turnTo(90);
 					lightLocalizer.lightLocalize(homeZoneLLX + 1, homeZoneURY - 1);
+					navigator.turnTo(90);
 					
 				} else if (homeZoneLLY > islandURY){ // vertical tunnel
 					double tunnelX;
@@ -618,6 +622,7 @@ public class ReturnHome {
 					navigator.driveBack(CANDROP_DISTANCE);
 					navigator.turnTo(90);
 					lightLocalizer.lightLocalize(homeZoneLLX + 1, homeZoneURY - 1);
+					navigator.turnTo(90);
 				}
 				break;
 		    default:

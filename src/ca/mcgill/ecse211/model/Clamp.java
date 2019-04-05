@@ -9,9 +9,9 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
  */
 
 public class Clamp {
-	private static final int ROTATE_AMOUNT = 197;
+	private static final int ROTATE_AMOUNT = 200;
 	private static final int ROTATE_AMOUNT_GRIP = 10;
-	private static final int ROTATION_SPEED = 75;
+	private static final int ROTATION_SPEED = 175;
 	private EV3LargeRegulatedMotor clampMotor;
 	
 	
@@ -27,7 +27,7 @@ public class Clamp {
 	 * This method rotates the motor clockwise to hold onto the can.
 	 */
 	public void grabCan() {
-		clampMotor.setAcceleration(1000);
+		clampMotor.setAcceleration(500);
 		clampMotor.setSpeed(ROTATION_SPEED);
 		clampMotor.rotate(ROTATE_AMOUNT);
 	}
@@ -36,7 +36,7 @@ public class Clamp {
 	 * This method rotates the motor counter-clockwise to let the can go.
 	 */
 	public void offloadCan() {
-		clampMotor.setAcceleration(1000);
+		clampMotor.setAcceleration(500);
 		clampMotor.setSpeed(ROTATION_SPEED);
 		clampMotor.rotate(-ROTATE_AMOUNT);
 	}
