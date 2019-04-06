@@ -38,7 +38,7 @@ public class Navigation {
  
   private final double RADIUS = Robot.WHEEL_RAD;
   private final double TRACK = Robot.TRACK;
-  
+
   private Odometer odo;
   private EV3LargeRegulatedMotor leftMotor, rightMotor;
  
@@ -85,12 +85,8 @@ public class Navigation {
 	turnTo(minAng);
 	
 	double distance = Math.hypot(deltaX, deltaY);
-
-	leftMotor.setSpeed(FORWARD_SPEED);
-	rightMotor.setSpeed(FORWARD_SPEED);
-
-	leftMotor.rotate(convertDistance(RADIUS, distance), true);
-	rightMotor.rotate(convertDistance(RADIUS, distance), false);
+	
+	driveForward(distance);
 	
   }
 
@@ -99,8 +95,10 @@ public class Navigation {
    * @param theta angle amount (in degrees) that you want the robot to rotate in place
    */
   public void turnTo(double theta) {
+	odo.sleepOdometer();
 	leftMotor.setSpeed(ROTATION_SPEED);
 	rightMotor.setSpeed(ROTATION_SPEED);
+	
 	leftMotor.rotate(convertAngle(RADIUS, TRACK, theta), true);
     rightMotor.rotate(-convertAngle(RADIUS, TRACK, theta), false);
   }
@@ -110,11 +108,12 @@ public class Navigation {
    * @param distance distance that you want the robot to travel backward
    */
   public void driveBack(double distance) {
-	  leftMotor.setSpeed(FORWARD_SPEED);
-	  rightMotor.setSpeed(FORWARD_SPEED);
+	odo.sleepOdometer();
+	leftMotor.setSpeed(FORWARD_SPEED);
+	rightMotor.setSpeed(FORWARD_SPEED);
 
-	  leftMotor.rotate(-convertDistance(RADIUS, distance), true);
-	  rightMotor.rotate(-convertDistance(RADIUS, distance), false);
+	leftMotor.rotate(-convertDistance(RADIUS, distance), true);
+	rightMotor.rotate(-convertDistance(RADIUS, distance), false);
   }
   
   /**
@@ -122,11 +121,12 @@ public class Navigation {
    * @param distance distance that you want the robot to travel forward
    */
   public void driveForward(double distance) {
-	  leftMotor.setSpeed(FORWARD_SPEED);
-	  rightMotor.setSpeed(FORWARD_SPEED);
+	odo.sleepOdometer();
+	leftMotor.setSpeed(FORWARD_SPEED);
+	rightMotor.setSpeed(FORWARD_SPEED);
 
-	  leftMotor.rotate(convertDistance(RADIUS, distance), true);
-	  rightMotor.rotate(convertDistance(RADIUS, distance), false);
+	leftMotor.rotate(convertDistance(RADIUS, distance), true);
+	rightMotor.rotate(convertDistance(RADIUS, distance), false);
   }
   
   /**
@@ -135,11 +135,12 @@ public class Navigation {
    * @param distance distance that you want the robot to travel forward
    */
   public void driveForwardWeight(double distance) {
-	  leftMotor.setSpeed(FORWARD_SPEED_WEIGHT);
-	  rightMotor.setSpeed(FORWARD_SPEED_WEIGHT);
+	odo.sleepOdometer();
+	leftMotor.setSpeed(FORWARD_SPEED_WEIGHT);
+	rightMotor.setSpeed(FORWARD_SPEED_WEIGHT);
 
-	  leftMotor.rotate(convertDistance(RADIUS, distance), true);
-	  rightMotor.rotate(convertDistance(RADIUS, distance), true);
+	leftMotor.rotate(convertDistance(RADIUS, distance), true);
+	rightMotor.rotate(convertDistance(RADIUS, distance), true);
   }
   
   /**
@@ -149,13 +150,12 @@ public class Navigation {
    * @param theta angle amount (in degrees) that you want the robot to rotate in place
    */
   public void turnToScan(double theta) {
-        leftMotor.setSpeed(SLOW_SPEED);
-        rightMotor.setSpeed(SLOW_SPEED);
-        leftMotor.rotate(convertAngle(RADIUS, TRACK, theta), true);
-        rightMotor.rotate(-convertAngle(RADIUS, TRACK, theta), true);
-
-
-      }
+	odo.sleepOdometer();
+	leftMotor.setSpeed(SLOW_SPEED);
+    rightMotor.setSpeed(SLOW_SPEED);
+    leftMotor.rotate(convertAngle(RADIUS, TRACK, theta), true);
+    rightMotor.rotate(-convertAngle(RADIUS, TRACK, theta), true);
+  }
   
 	/**
 	 * This method converts a distance into the total rotation (in degrees) of 

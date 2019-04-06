@@ -15,7 +15,6 @@ public class LightLocalizer {
 	
   private static final int ROTATION_SPEED_SLOW = 85;
   private static final int ROTATION_SPEED = 200;
-  private static final int FORWARD_SPEED = 150; 
   private final double TILE_SIZE = Navigation.TILE_SIZE;
   private static final int COLOUR_DIFF = 20;  
   
@@ -127,11 +126,7 @@ public class LightLocalizer {
 	leftMotor.setSpeed(ROTATION_SPEED);
 	rightMotor.setSpeed(ROTATION_SPEED);
     navigator.turnTo(45);
-	leftMotor.setSpeed(FORWARD_SPEED);
-	rightMotor.setSpeed(FORWARD_SPEED);
-	
-	leftMotor.rotate(Navigation.convertDistance(RADIUS, EXTRA_DISTANCE), true);
-	rightMotor.rotate(Navigation.convertDistance(RADIUS, EXTRA_DISTANCE));
+    navigator.driveForward(EXTRA_DISTANCE);
 
   }
   

@@ -66,8 +66,13 @@ public class Project {
 
 		int buttonChoice;
 
-		// Odometer related objects
+		// Odometer
 		Odometer odometer = Odometer.getOdometer(LEFT_MOTOR, RIGHT_MOTOR, Robot.TRACK, Robot.WHEEL_RAD);
+		
+        // Odometer Thread
+		Thread odoThread = new Thread(odometer);
+		
+		// Navigation
 		Navigation navigator = new Navigation(LEFT_MOTOR,RIGHT_MOTOR);
 
 		// Ultrasonic sensor
@@ -93,9 +98,6 @@ public class Project {
         SensorModes myTouch = new EV3TouchSensor(TS_PORT);
         SampleProvider myTouchStatus =  myTouch.getMode(0);
         float[] tsData = new float[colorId.sampleSize()];
-		
-        // Odometer Thread
-		Thread odoThread = new Thread(odometer);
 		
 		// Wifi
         WifiConnection wifi = new WifiConnection(SERVER_IP, TEAM_NUMBER, ENABLE_DEBUG_WIFI_PRINT);

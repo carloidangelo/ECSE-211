@@ -27,6 +27,7 @@ public class Odometer extends OdometerData implements Runnable {
   private final double WHEEL_RAD;
 
   private static final long ODOMETER_PERIOD = 25; // odometer update period in ms
+  private static final long ODOMETER_SLEEP_AMOUNT = 30; 
 
   /**
    * This is the default constructor of this class. It initiates all motors and variables once.It
@@ -124,6 +125,15 @@ public class Odometer extends OdometerData implements Runnable {
         }
       }
     }
+  }
+  
+  public void sleepOdometer() {
+	  try {
+		Thread.sleep(ODOMETER_SLEEP_AMOUNT);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
   }
 
 }
