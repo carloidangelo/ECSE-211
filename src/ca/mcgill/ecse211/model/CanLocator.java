@@ -34,7 +34,7 @@ public class CanLocator {
 	private double canDistance = 0;
 	private int ENDX = 0, ENDY = 0;
 	private int Cx = 0,Cy = 0; //C variables save the current position of the EV3.
-	private static boolean loopStop = false;
+	private boolean loopStop;
 	
 	/**
 	 * SC variables save the (x,y) coordinates for which the EV3
@@ -70,6 +70,7 @@ public class CanLocator {
 		URy = robot.getSearchZoneURY();
 		this.ENDX = LLx+1;
 		this.ENDY = LLy;
+		this.loopStop = false;
 	}
 	
 	/**
@@ -81,6 +82,7 @@ public class CanLocator {
 	 */
 	public void runLocator(){
 		
+		this.loopStop = false;
 		//Start corner of the search is lower left corner in this case
 		this.SCx = LLx;
 		this.SCy = LLy;

@@ -25,7 +25,7 @@ public class AssessCanColor {
 	/**
 	 * Amount of color classification samples that the color sensor takes.
 	 */
-	private static final int ROTATE_COUNT = 10;
+	private static final int ROTATE_COUNT = 9;
 	
 	/**
 	 * Speed (in degrees/second) that the sensor travels around the can.
@@ -68,6 +68,7 @@ public class AssessCanColor {
 		frequency.add(Collections.frequency(canColor, "red      "));
 		Integer obj = Collections.max(frequency);
 		int index = frequency.indexOf(obj);
+		System.out.println(index + 1);
 		return index + 1;	
 	}
 	

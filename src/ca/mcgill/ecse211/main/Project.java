@@ -199,7 +199,7 @@ public class Project {
 				}
 				*/
 				
-
+				/*
 				// Localization Test
 				odoThread.start();
 				//Thread odoDisplayThread = new Thread(odometryDisplay);
@@ -207,7 +207,7 @@ public class Project {
 				ultrasonicLocalizer.fallingEdge();
 				lightLocalizer.moveClose();
 				lightLocalizer.lightLocalize(3, 3);
-				
+				*/
 				
 				/*
 				// Search Algorithm Test
@@ -229,16 +229,16 @@ public class Project {
 				*/
 				
 				
-				/*
+			
 				// Clamp Test
 				clamp.grabCan();
-				clamp.offloadCan();
-				*/
+				//clamp.offloadCan();
+			
 				
-				/*
+				
 				// Can Color test
 				assessCanColor.run();
-				*/
+				
 				
 				/*
 				// Color Classification Test

@@ -21,11 +21,9 @@ public class LightLocalizer {
   /**
    * Distance (cm) between the color sensor and the axis of rotation of the robot.
    */
-  private static final double LIGHT_LOC_DISTANCE = 10;
+  private static final double LIGHT_LOC_DISTANCE = 10.2;
   private static final int EXTRA_DISTANCE = 5;
-  private static final double TURN_ERROR = 14.2; 
-  
-  private final double RADIUS = Robot.WHEEL_RAD;
+  private static final double TURN_ERROR = 16.8; 
   
   private Odometer odo;
   private EV3LargeRegulatedMotor leftMotor, rightMotor;
