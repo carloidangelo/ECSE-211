@@ -28,8 +28,10 @@ public class CanLocator {
 	private static final double ANGLE_ERROR = 10.0;
 	private static final double DISTANCE_ERROR = 4.0;
 	private static final double TEST_VALUE = 6;
-	private static final double TEST_ANGLE = 30.0;
+	private static final double TEST_ANGLE_CLOSE = 30.0;
+	private static final double TEST_ANGLE_FAR = 15.0;
 	private static final double ULTRASONIC_ERROR = 5.0;
+	private static final double ULTRASONIC_CLOSE = 5.0;
 	private double canAngle = 0;
 	private double canDistance = 0;
 	private int ENDX = 0, ENDY = 0;
@@ -180,8 +182,8 @@ public class CanLocator {
 	    
 		//begin rotating to scan for cans 
 		navigator.turnToScan(angle);
-        
-        while (readUSDistance() > TILE_SIZE - ULTRASONIC_ERROR) {
+        double testDistance;
+        while ((testDistance = readUSDistance()) > TILE_SIZE - ULTRASONIC_ERROR) {
             
             //keep turning until the distance of the US is less than a tile (i.e a can is detected)
             
@@ -196,7 +198,11 @@ public class CanLocator {
         //if can is found, stop motors and record the angle the can was detected at
         Project.LEFT_MOTOR.stop(true);
         Project.RIGHT_MOTOR.stop();
-        navigator.turnTo(TEST_ANGLE);
+        if (testDistance > ULTRASONIC_CLOSE) {
+        	 navigator.turnTo(TEST_ANGLE_FAR);
+        }else {
+        	navigator.turnTo(TEST_ANGLE_CLOSE);
+        }
         canAngle = odo.getXYT()[2] - currentAngle;
         if(canAngle < -110){
             canAngle = 360+canAngle-(ANGLE_ERROR/2);
