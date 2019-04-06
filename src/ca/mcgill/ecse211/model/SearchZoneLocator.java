@@ -20,7 +20,7 @@ public class SearchZoneLocator {
 	private Clamp clamp;
 	
 	/**
-	 * This is the default constructor of this class
+	 * This is the default constructor of this class.
 	 * @param robot instance of Robot class
 	 * @param lightLocalizer instance of LightLocalizer class
 	 * @param navigator instance of Navigation class
@@ -53,7 +53,8 @@ public class SearchZoneLocator {
 	
 	/** 
 	 * Method that allows the robot to make its way to the search zone.
-	 * The path the robot takes will depend on the starting corner (startingCorner) parameter.
+	 * The path the robot takes will depend on the starting corner (startingCorner) parameter
+	 * and where the tunnels are located.
 	 */
 	public void goToSearchZone(){
 		// set new position and new angle after localization

@@ -2,6 +2,14 @@ package ca.mcgill.ecse211.model;
 
 import lejos.hardware.Sound;
 
+/**
+ * This class handles the robot's navigation from the search zone
+ * (i.e., search zone lower left corner or search zone upper right corner) to the
+ * staring corner. It also handles the off-loading of the cans in the starting corner.
+ * 
+ * @author Carlo D'Angelo
+ *
+ */
 public class ReturnHome {
 	private final double TILE_SIZE = Navigation.TILE_SIZE;
 	private static final int CANDROP_DISTANCE = 13;
@@ -13,6 +21,14 @@ public class ReturnHome {
 	private Navigation navigator;
 	private Clamp clamp;
 	
+	/**
+	 * This is the default constructor of this class.
+	 * @param robot instance of the Robot class
+	 * @param lightLocalizer instance of the LightLocalizer class
+	 * @param clamp instance of the Clamp class
+	 * @param navigator instance of the Navigation class
+	 * @throws OdometerExceptions
+	 */
 	public ReturnHome(Robot robot, LightLocalizer lightLocalizer, 
 						Clamp clamp, Navigation navigator) throws OdometerExceptions {
 		startingCorner = robot.getStartingCorner();	
@@ -37,6 +53,11 @@ public class ReturnHome {
 		this.clamp = clamp;
 	}
 	
+	/**
+	 * Method that allows the robot to make its way to the starting corner.
+	 * The path the robot takes will depend on the starting corner (startingCorner) parameter
+	 * and where the tunnels are located.
+	 */
 	public void goHome() {
 		switch(startingCorner){
 			case 0: 
@@ -633,6 +654,9 @@ public class ReturnHome {
 		
 	}
 	
+	/**
+	 * Method that delivers the required beeps when the robot arrives at the starting corner.
+	 */
 	private void issueOffloadBeeps() {
 		Sound.beep();
 		Sound.pause(100);

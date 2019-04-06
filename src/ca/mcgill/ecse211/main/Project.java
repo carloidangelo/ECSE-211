@@ -31,6 +31,13 @@ import ca.mcgill.ecse211.model.Robot;
 import ca.mcgill.ecse211.model.SearchZoneLocator;
 import ca.mcgill.ecse211.model.UltrasonicLocalizer;
 
+/**
+ * Class that contains the main() function and actually starts the program.
+ * All the relevant objects used in the program are also initialized in this class.
+ * 
+ * @author Carlo D'Angelo
+ *
+ */
 public class Project {
 
 	// Motor and Sensor Ports
@@ -50,6 +57,11 @@ public class Project {
 	// Enable/disable printing of debug info from the WiFi class
 	private static final boolean ENABLE_DEBUG_WIFI_PRINT = false;
 
+	/**
+	 * Method that starts the program.
+	 * @param args
+	 * @throws OdometerExceptions
+	 */
 	public static void main(String[] args) throws OdometerExceptions {
 
 		int buttonChoice;
