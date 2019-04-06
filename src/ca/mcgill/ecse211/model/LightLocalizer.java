@@ -24,7 +24,7 @@ public class LightLocalizer {
    */
   private static final double LIGHT_LOC_DISTANCE = 10;
   private static final int EXTRA_DISTANCE = 5;
-  private static final double TURN_ERROR = 15.7; 
+  private static final double TURN_ERROR = 14.2; 
   
   private final double RADIUS = Robot.WHEEL_RAD;
   
@@ -82,7 +82,7 @@ public class LightLocalizer {
 
 		if (100*Math.abs(sample - firstReading)/firstReading > COLOUR_DIFF) {
           linePosition[count] = odo.getXYT()[2];
-          Sound.pause(250);
+          Sound.pause(350);
 		  count++;
 		}
 	  }

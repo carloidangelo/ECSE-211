@@ -52,7 +52,7 @@ public class Project {
 	private static final Port TS_PORT = LocalEV3.get().getPort("S2");
 	
 	public static final int TEAM_NUMBER = 10;
-	private static final String SERVER_IP = "192.168.2.27";
+	private static final String SERVER_IP = "192.168.2.8";
 	
 	// Enable/disable printing of debug info from the WiFi class
 	private static final boolean ENABLE_DEBUG_WIFI_PRINT = false;
@@ -197,7 +197,7 @@ public class Project {
 				}
 				*/
 				
-				/*
+
 				// Localization Test
 				odoThread.start();
 				//Thread odoDisplayThread = new Thread(odometryDisplay);
@@ -205,7 +205,7 @@ public class Project {
 				ultrasonicLocalizer.fallingEdge();
 				lightLocalizer.moveClose();
 				lightLocalizer.lightLocalize(3, 3);
-				*/
+				
 				
 				/*
 				// Search Algorithm Test

@@ -63,6 +63,7 @@ public class SearchZoneLocator {
 			case 0: 
 				// corner 0
 				odo.setXYT((homeZoneLLX + 1) * TILE_SIZE, (homeZoneLLY + 1) * TILE_SIZE, 0.0);
+				clamp.grabCan();
 				if (homeZoneURX < islandLLX) { // horizontal tunnel
 					if(homeZoneLLY == tunnelLLY) {
 						if (tunnelLLX - 1 == homeZoneLLX + 1) {
@@ -100,10 +101,8 @@ public class SearchZoneLocator {
 						}
 
 					}
-					clamp.grabCan();
 					// drive through tunnel
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
-					clamp.offloadCan();
 					double yComponent;
 					if (tunnelURY == islandURY) {
 						navigator.turnTo(90);
@@ -176,10 +175,8 @@ public class SearchZoneLocator {
 						}
 
 					}
-					clamp.grabCan();
 					// drive through tunnel
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
-					clamp.offloadCan();
 					double xComponent;
 					if (tunnelURX == islandURX) {
 						navigator.turnTo(-90);
@@ -217,6 +214,7 @@ public class SearchZoneLocator {
 			case 1: 
 				// corner 1
 				odo.setXYT((homeZoneURX - 1) * TILE_SIZE, (homeZoneLLY + 1) * TILE_SIZE, 270.0);
+				clamp.grabCan();
 				if (homeZoneLLX > islandURX) { // horizontal tunnel
 					if(homeZoneLLY == tunnelLLY) {
 						if (tunnelURX + 1 == homeZoneURX - 1) {
@@ -257,10 +255,8 @@ public class SearchZoneLocator {
 						}
 
 					}
-					clamp.grabCan();
 					// drive through tunnel
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
-					clamp.offloadCan();
 					double yComponent;
 					if (tunnelURY == islandURY) {
 						navigator.turnTo(-90);
@@ -336,10 +332,8 @@ public class SearchZoneLocator {
 						}
 
 					}					
-					clamp.grabCan();
 					// drive through tunnel
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
-					clamp.offloadCan();
 					double xComponent;
 					if (tunnelURX == islandURX) {
 						navigator.turnTo(-90);
@@ -377,6 +371,7 @@ public class SearchZoneLocator {
 			case 2: 
 				// corner 2
 				odo.setXYT((homeZoneURX - 1) * TILE_SIZE, (homeZoneURY - 1) * TILE_SIZE, 180.0);
+				clamp.grabCan();
 				if (homeZoneLLX > islandURX) { // horizontal tunnel
 					if(homeZoneURY == tunnelURY) {
 						if (tunnelURX + 1 == homeZoneURX - 1) {
@@ -417,10 +412,8 @@ public class SearchZoneLocator {
 						}
 
 					}
-					clamp.grabCan();
 					// drive through tunnel
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
-					clamp.offloadCan();
 					double yComponent;
 					if (tunnelURY == islandURY) {
 						navigator.turnTo(-90);
@@ -496,10 +489,8 @@ public class SearchZoneLocator {
 							navigator.turnTo(-90);
 						}
 					}	
-					clamp.grabCan();
 					// drive through tunnel
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
-					clamp.offloadCan();
 					double xComponent;
 					if (tunnelURX == islandURX) {
 						navigator.turnTo(90);
@@ -538,6 +529,7 @@ public class SearchZoneLocator {
 			case 3:	
 				// corner 3
 				odo.setXYT((homeZoneLLX + 1) * TILE_SIZE, (homeZoneURY - 1) * TILE_SIZE, 90.0);
+				clamp.grabCan();
 				if (homeZoneURX < islandLLX) { // horizontal tunnel
 					if(homeZoneURY == tunnelURY) {
 						if (tunnelLLX - 1 == homeZoneLLX + 1) {
@@ -578,10 +570,8 @@ public class SearchZoneLocator {
 							navigator.turnTo(-90);
 						}
 					}
-					clamp.grabCan();
 					// drive through tunnel
 					navigator.driveForward(((tunnelURX - tunnelLLX) + 2) * TILE_SIZE);
-					clamp.offloadCan();
 					double yComponent;
 					if (tunnelURY == islandURY) {
 						navigator.turnTo(90);
@@ -654,10 +644,8 @@ public class SearchZoneLocator {
 							navigator.turnTo(90);
 						}
 					}	
-					clamp.grabCan();
 					// drive through tunnel
 					navigator.driveForward(((tunnelURY - tunnelLLY) + 2) * TILE_SIZE);
-					clamp.offloadCan();
 					double xComponent;
 					if (tunnelURX == islandURX) {
 						navigator.turnTo(90);
@@ -698,6 +686,7 @@ public class SearchZoneLocator {
 		        System.exit(-1);
 		        break;
 		}
+		clamp.offloadCan();
 		
 	} 
   
