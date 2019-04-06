@@ -11,12 +11,29 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
  */
 public class Navigation {
 
+  /**
+   * Rotation speed of the robot for the majority of the navigation.
+   */
   private static final int ROTATION_SPEED = 100;
+  
+  /**
+   * Speed of the robot when it scans the cans in the search zone.
+   */
   private static final int SLOW_SPEED = 75;
   
+  /**
+   * Forward speed of the robot for the majority of the navigation.
+   */
   private static final int FORWARD_SPEED = 200;
-  private static final int FORWARD_SPEED_WEIGHT = 600;
   
+  /**
+   * Speed of the robot when detecting the weight of the can (Touch Sensor).
+   */
+  private static final int FORWARD_SPEED_WEIGHT = 550;
+  
+  /**
+   * Length and width of a tile.
+   */
   public static final double TILE_SIZE = 30.48;
  
   private final double RADIUS = Robot.WHEEL_RAD;
@@ -25,6 +42,9 @@ public class Navigation {
   private Odometer odo;
   private EV3LargeRegulatedMotor leftMotor, rightMotor;
  
+  /**
+   * Minimum angle that the robot turns to when calling the travelTo() method.
+   */
   public static double minAng;
 
   /**
@@ -137,7 +157,6 @@ public class Navigation {
 
       }
   
-
 	/**
 	 * This method converts a distance into the total rotation (in degrees) of 
 	 * each wheel needed to cover that distance.
