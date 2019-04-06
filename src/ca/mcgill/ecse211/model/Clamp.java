@@ -10,7 +10,6 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 public class Clamp {
 	private static final int ROTATE_AMOUNT = 200;
-	private static final int ROTATE_AMOUNT_GRIP = 10;
 	private static final int ROTATION_SPEED = 175;
 	private EV3LargeRegulatedMotor clampMotor;
 	
@@ -39,16 +38,5 @@ public class Clamp {
 		clampMotor.setAcceleration(500);
 		clampMotor.setSpeed(ROTATION_SPEED);
 		clampMotor.rotate(-ROTATE_AMOUNT);
-	}
-	
-	/**
-	 * This method rotates the motor to tighten the grip of the arm
-	 * on the can. The purpose of this method is to reduce the friction the can 
-	 * produces with the surface.
-	 */
-	public void gripCan() {
-		clampMotor.setAcceleration(500);
-		clampMotor.setSpeed(ROTATION_SPEED);
-		clampMotor.rotate(ROTATE_AMOUNT_GRIP);
 	}
 }
