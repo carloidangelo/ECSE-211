@@ -6,7 +6,7 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.robotics.SampleProvider;
 
 /**
- * This class simulates the function of light localization
+ * This class handles the light localization of the robot.
  * 
  * @author Carlo D'Angelo
  *
@@ -34,7 +34,7 @@ public class LightLocalizer {
   private float[] csData;
 
   /**
-   * This is the default constructor of this class
+   * This is the default constructor of this class.
    * @param leftMotor left motor of robot
    * @param rightMotor right motor of robot
    * @param csLineDetector sample provider from which to fetch light sensor data
@@ -54,7 +54,7 @@ public class LightLocalizer {
 	}
 
   /**
-   * Method that allows the robot to perform light localization
+   * Method that allows the robot to perform light localization.
    * @param pointX x coordinate of desired localization point
    * @param pointY y coordinate of desired localization point
    */
@@ -117,7 +117,7 @@ public class LightLocalizer {
   
   /**
    * Method that moves the robot closer to the localization point in preparation
-   * for the actual light localization
+   * for the actual light localization.
    */
   public void moveClose() {
 	leftMotor.setSpeed(ROTATION_SPEED);
@@ -132,7 +132,7 @@ public class LightLocalizer {
   }
   
   /**
-   * Method that fetches data from the light sensor
+   * Method that fetches data from the light sensor.
    * @return darkness (value between 0-1) of what the light sensor is reading multiplied by 1000 
    */
   private float readLineDarkness() {

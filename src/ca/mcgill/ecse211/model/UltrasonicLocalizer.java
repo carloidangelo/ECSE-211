@@ -4,7 +4,7 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.robotics.SampleProvider;
 
 /**
- * This class simulates the function of ultrasonic localization.
+ * This class handles the ultrasonic localization of the robot.
  * 
  * @author Carlo D'Angelo
  *

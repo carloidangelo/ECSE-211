@@ -27,7 +27,7 @@ public class ColorClassification {
   private static final double THRESHOLD = 0.35;
 
   /**
-   * This 2d array stores the mean RGB values for each colored can
+   * This 2d array stores the mean RGB values for each colored can.
    * 
    */
   private final float[][] MEAN_RGB = {// the mean RGB values for cans
@@ -38,7 +38,7 @@ public class ColorClassification {
 	  };
 
   /**
-   * Constructor to initialize variables
+   * Constructor to initialize variables.
    * 
    * @param float[] colorData
    * @param SampleProvider colorId
@@ -51,7 +51,7 @@ public class ColorClassification {
 
   /**
    * This method receives the position of the detected color and returns the name of the color as a
-   * String
+   * String.
    * 
    * @return String
    */
@@ -71,7 +71,7 @@ public class ColorClassification {
   /**
    * This method normalizes the RGB data collected by the color sensor, and then compare them with
    * the normalized mean RGB values one by one. If the minimum difference is met, the position of
-   * the detected color in the 2d array will be returned as an int
+   * the detected color in the 2d array will be returned as an int.
    * 
    * @param colorData
    * @return i : int
@@ -100,7 +100,7 @@ public class ColorClassification {
   }
   
   /**
-   * This method is used to fetch the RGB values from the color sensor and store them in an array
+   * This method is used to fetch the RGB values from the color sensor and store them in an array.
    * 
    * @return colorData : float[]
    */

@@ -15,10 +15,25 @@ public class AssessCanColor {
 	
 	private EV3LargeRegulatedMotor csMotor;
 	private ColorClassification csFront;
+	
+	/**
+	 * Amount (in degrees) that the color sensor travels around the can for every 
+	 * color classification sample.
+	 */
 	private static final int ROTATE_AMOUNT = 17;
+	
+	/**
+	 * Amount of color classification samples that the color sensor takes.
+	 */
 	private static final int ROTATE_COUNT = 10;
+	
+	/**
+	 * Speed (in degrees/second) that the sensor travels around the can.
+	 */
 	private static final int ROTATION_SPEED = 75;
+	
 	private static final int TURN_ERROR = 20;
+	
 	/**
 	 * This is the default constructor of this class.
 	 * @param csMotor motor in charge of rotating the light sensor that scans the cans

@@ -12,6 +12,10 @@ import lejos.hardware.Sound;
  */
 public class ReturnHome {
 	private final double TILE_SIZE = Navigation.TILE_SIZE;
+	
+	/**
+	 * Distance that the robot travels within the starting corner before off-loading the cans.
+	 */
 	private static final int CANDROP_DISTANCE = 13;
 	private int startingCorner, homeZoneLLX, homeZoneLLY, homeZoneURX, homeZoneURY,
 					tunnelLLX, tunnelLLY, tunnelURX, tunnelURY;

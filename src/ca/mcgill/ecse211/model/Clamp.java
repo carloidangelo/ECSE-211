@@ -9,7 +9,15 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
  */
 
 public class Clamp {
+	
+	/**
+	 * Amount (in degrees) that the arm rotates to grab the cans.
+	 */
 	private static final int ROTATE_AMOUNT = 200;
+	
+	/**
+	 * Speed (in degrees/second) of the arm when it grabs the cans.
+	 */
 	private static final int ROTATION_SPEED = 175;
 	private EV3LargeRegulatedMotor clampMotor;
 	

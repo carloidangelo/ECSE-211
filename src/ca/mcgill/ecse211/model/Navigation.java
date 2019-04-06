@@ -12,27 +12,27 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 public class Navigation {
 
   /**
-   * Rotation speed of the robot for the majority of the navigation.
+   * Rotation speed (in degrees/second) of the robot for the majority of the navigation.
    */
   private static final int ROTATION_SPEED = 100;
   
   /**
-   * Speed of the robot when it scans the cans in the search zone.
+   * Speed (in degrees/second) of the robot when it scans the cans in the search zone.
    */
   private static final int SLOW_SPEED = 75;
   
   /**
-   * Forward speed of the robot for the majority of the navigation.
+   * Forward speed (in degrees/second) of the robot for the majority of the navigation.
    */
   private static final int FORWARD_SPEED = 200;
   
   /**
-   * Speed of the robot when detecting the weight of the can (Touch Sensor).
+   * Speed (in degrees/second) of the robot when detecting the weight of the can (Touch Sensor).
    */
   private static final int FORWARD_SPEED_WEIGHT = 550;
   
   /**
-   * Length and width of a tile.
+   * Length and width of a tile (in cm).
    */
   public static final double TILE_SIZE = 30.48;
  
