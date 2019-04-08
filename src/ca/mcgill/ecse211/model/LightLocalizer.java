@@ -27,7 +27,7 @@ public class LightLocalizer {
   private Odometer odo;
   private EV3LargeRegulatedMotor leftMotor, rightMotor;
  
-  double[] linePosition;
+  private double[] linePosition;
   private Navigation navigator;
   
   private SampleProvider csLineDetector;
