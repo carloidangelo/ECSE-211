@@ -102,6 +102,10 @@ public class CanLocator {
 			SCx = URx;
 			SCy = URy;
 			
+			//END corner is right beside the start corner
+			this.ENDX = URx-1;
+			this.ENDY = URy;
+			
 			//Saves the current position of the EV3
 			Cx = URx;
 			Cy = URy;
@@ -449,6 +453,31 @@ public class CanLocator {
 				navigator.travelTo(URx,URy);
 				navigator.turnTo(45);
 				lightLocalizer.lightLocalize(URx,URy);
+			}
+			
+			else if ( (odo.getXYT()[2] >= 360-ANGLE_ERROR) || 
+			    	(odo.getXYT()[2] <= 0+ANGLE_ERROR)){
+				
+				navigator.turnTo(45);
+				lightLocalizer.lightLocalize(Cx,Cy);
+				navigator.travelTo(LLx, URy);
+				navigator.turnTo(45);
+				lightLocalizer.lightLocalize(LLx,URy);
+				navigator.travelTo(URx, URy);
+				navigator.turnTo(-45);
+				lightLocalizer.lightLocalize(URx,URy);
+				
+			}
+			
+			else if ( (odo.getXYT()[2] >= 90-ANGLE_ERROR) && 
+			    	(odo.getXYT()[2] <= 90+ANGLE_ERROR) ){
+
+				navigator.turnTo(-45);
+				lightLocalizer.lightLocalize(Cx,Cy);
+				navigator.travelTo(URx,URy);
+				navigator.turnTo(-45);
+				lightLocalizer.lightLocalize(URx,URy);
+				
 			}
 			
 		}
