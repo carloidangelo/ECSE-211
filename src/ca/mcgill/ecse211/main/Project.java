@@ -182,13 +182,13 @@ public class Project {
 			} else { // TESTING
 				LCD.clear();
 				
-				// Track Test
 				/*
+				// Track Test
 				navigator.turnTo(90);
 				navigator.turnTo(-90);
 				*/
 				
-			
+				/*
 				// WiFi Connection Test
 				Robot robot = null;
 				try {
@@ -196,9 +196,9 @@ public class Project {
 				} catch (IOException | ParseException e) {
 					e.printStackTrace();
 				}
+				*/
 				
-				
-				
+				/*
 				// Localization Test
 				odoThread.start();
 				//Thread odoDisplayThread = new Thread(odometryDisplay);
@@ -206,13 +206,14 @@ public class Project {
 				ultrasonicLocalizer.fallingEdge();
 				lightLocalizer.moveClose();
 				lightLocalizer.lightLocalize(3, 3);
-		
+				*/
 				
-				
+				/*
 				// Search Algorithm Test
 				CanLocator canLocator = new CanLocator(robot, assessCanColor,assessCanWeight, clamp, 
 												usDistance, usData, navigator,lightLocalizer);
 				canLocator.runLocator();
+				*/
 				
 				/*
 				// Go to Search Zone Test

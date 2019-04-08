@@ -119,26 +119,23 @@ public class CanLocator {
 			//and ends where it started, break the loop.
 			if(Cx == ENDX && Cy == ENDY) {
 				
-				navigator.turnTo(135);
-				lightLocalizer.lightLocalize(Cx,Cy);
-				
-				//If no can was found once search algorithm is finished, go to Upper Right
-				if(SCx == URx && SCy == URy) {
-								
-					navigator.travelTo(URx,LLy);
-					navigator.turnTo(-45);
-					lightLocalizer.lightLocalize(URx,LLy);
-					navigator.travelTo(URx,URy);
-					navigator.turnTo(45);
-					lightLocalizer.lightLocalize(URx,URy);
+				if(SCx == LLx && SCy == LLy) {
 					
-				}
-				
-				else {
-						
+					navigator.turnTo(135);
+					lightLocalizer.lightLocalize(Cx,Cy);
 					navigator.travelTo(LLx,LLy);
 					navigator.turnTo(135);
 					lightLocalizer.lightLocalize(LLx,LLy);
+						
+				}
+				
+				else if (SCx == URx && SCy == URy) {
+					
+					navigator.turnTo(-45);
+					lightLocalizer.lightLocalize(Cx,Cy);
+					navigator.travelTo(URx,URy);
+					navigator.turnTo(-45);
+					lightLocalizer.lightLocalize(URx,URy);
 					
 				}
 				
