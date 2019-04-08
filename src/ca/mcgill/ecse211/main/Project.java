@@ -36,7 +36,6 @@ import ca.mcgill.ecse211.model.UltrasonicLocalizer;
  * All the relevant objects used in the program are also initialized in this class.
  * 
  * @author Carlo D'Angelo
- *
  */
 public class Project {
 

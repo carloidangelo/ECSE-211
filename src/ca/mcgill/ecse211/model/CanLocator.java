@@ -8,8 +8,10 @@ import lejos.robotics.SampleProvider;
 /**
  * This class allows the EV3 to search for cans and identify their colors and weights.
  * NOTE: Please refer to Software Document - Section 3.3 for detailed explanations of methods.
+ * 
  * @author Mohamed Samee
- *
+ * @author Ketan Rampurkar
+ * @author Carlo D'Angelo
  */
 public class CanLocator {
 

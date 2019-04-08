@@ -5,8 +5,9 @@ import lejos.robotics.SampleProvider;
 /**
  * This class allows the robot to correctly identify a can's weight by
  * using the touch sensor. 
- * @author Carlo D'Angelo, Mohamed Samee
- *
+ * 
+ * @author Carlo D'Angelo
+ * @author Mohamed Samee
  */
 
 public class AssessCanWeight {

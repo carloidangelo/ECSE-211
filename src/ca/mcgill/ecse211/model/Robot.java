@@ -15,8 +15,8 @@ import ca.mcgill.ecse211.main.Project;
  * will return the corresponding game parameter for that color. For instance, the 
  * getStartingCorner() method will return the RedCorner if the team's color is red and 
  * will return the GreenCorner if the team's color is green. 
+ * 
  * @author Carlo D'Angelo
- *
  */
 public class Robot {
 	

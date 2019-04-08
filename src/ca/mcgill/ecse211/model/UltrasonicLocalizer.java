@@ -7,7 +7,6 @@ import lejos.robotics.SampleProvider;
  * This class handles the ultrasonic localization of the robot.
  * 
  * @author Carlo D'Angelo
- *
  */
 public class UltrasonicLocalizer {
 

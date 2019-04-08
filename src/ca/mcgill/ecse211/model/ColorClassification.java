@@ -9,15 +9,13 @@ import lejos.robotics.SampleProvider;
  * mean value of the color of each can. The color can be identified once the minimum difference in
  * the RGB values is met.
  * 
- * @author1 Ketan Rampurkar
- * @author2 Hao Shu
- * @author3 Carlo D'Angelo
- * @author4 Mohamed Samee
- * @author5 Marie-Lynn Mansour
- * @author6 Cristian Ciungu
+ * @author Hao Shu
+ * @author Carlo D'Angelo
+ * @author Ketan Rampurkar
+ * @author Mohamed Samee
+ * @author Marie-Lynn Mansour
+ * @author Cristian Ciungu
  * @version 25-02-2019
- * 
- * 
  */
 public class ColorClassification {
 

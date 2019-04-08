@@ -7,7 +7,6 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
  * the robot move.
  * 
  * @author Carlo D'Angelo
- *
  */
 public class Navigation {
 

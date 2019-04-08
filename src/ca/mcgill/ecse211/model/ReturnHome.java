@@ -8,7 +8,6 @@ import lejos.hardware.Sound;
  * staring corner. It also handles the off-loading of the cans in the starting corner.
  * 
  * @author Carlo D'Angelo
- *
  */
 public class ReturnHome {
 	private final double TILE_SIZE = Navigation.TILE_SIZE;

@@ -6,8 +6,8 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
  * This class simulates the function of an odometer. It extends the OdometerData
  * class and implements the Runnable interface
  * 
- * @author Carlo D'Angelo and Mohamed Samee
- *
+ * @author Carlo D'Angelo
+ * @author Mohamed Samee
  */
 public class Odometer extends OdometerData implements Runnable {
 

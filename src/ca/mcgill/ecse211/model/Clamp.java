@@ -4,10 +4,9 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 /**
  * This class is responsible for driving the clamp motor to load and unload the can.
- * @author Carlo D'Angelo
  * 
+ * @author Carlo D'Angelo
  */
-
 public class Clamp {
 	
 	/**

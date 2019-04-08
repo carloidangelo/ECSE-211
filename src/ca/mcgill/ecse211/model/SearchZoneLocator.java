@@ -2,10 +2,9 @@ package ca.mcgill.ecse211.model;
 
 /**
  * This class handles the robot's navigation from the starting corner
- * to the search zone after localization is complete
+ * to the search zone after localization is complete.
  * 
  * @author Carlo D'Angelo
- *
  */
 public class SearchZoneLocator {
 

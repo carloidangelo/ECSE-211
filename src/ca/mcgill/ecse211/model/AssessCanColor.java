@@ -8,8 +8,8 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 /**
  * This class allows the robot to correctly identify a can's color by
  * taking the mode of many samples.
+ * 
  * @author Carlo D'Angelo
- *
  */
 public class AssessCanColor {
 	
