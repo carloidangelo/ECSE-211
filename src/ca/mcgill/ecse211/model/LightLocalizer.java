@@ -11,16 +11,39 @@ import lejos.robotics.SampleProvider;
  * @author Carlo D'Angelo
  */
 public class LightLocalizer {
-	
+
+  /**
+   * Rotation speed (in degrees/second) of the robot during the end of
+   * the light localization. NOTE: Please refer to Software Document - Section 3.3 
+   * for detailed explanations of why we decrease the speed.
+   */
   private static final int ROTATION_SPEED_SLOW = 85;
+  
+  /**
+   * Rotation speed (in degrees/second) of the robot during most of
+   * the light localization.
+   */
   private static final int ROTATION_SPEED = 200;
   private final double TILE_SIZE = Navigation.TILE_SIZE;
+  
+  /**
+   * As the robot spins and the color sensor records the brightness of the playing
+   * field, if a percent change in brightness that is greater than this value 
+   * (i.e., 20%) is recorded, then the robot knows that a grid line has been detected.
+   * NOTE: Please refer to Software Document - Section 3.3 for detailed explanations of 
+   * how the light localization process actually works.
+   */
   private static final int COLOUR_DIFF = 20;  
   
   /**
    * Distance (cm) between the color sensor and the axis of rotation of the robot.
    */
   private static final double LIGHT_LOC_DISTANCE = 10.2;
+  
+  /**
+   * The robot moves this distance (cm) towards the localization point before
+   * starting light localization.
+   */
   private static final int EXTRA_DISTANCE = 5;
   private static final double TURN_ERROR = 16.8; 
   

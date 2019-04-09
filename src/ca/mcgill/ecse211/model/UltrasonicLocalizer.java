@@ -10,9 +10,21 @@ import lejos.robotics.SampleProvider;
  */
 public class UltrasonicLocalizer {
 
+	/**
+	 * Rotation speed (in degrees/second) of the robot during the ultrasonic localization.
+	 */
 	private static final int ROTATION_SPEED = 150;
 	
+	/**
+	 * As the robot spins, the ultrasonic sensor detects this distance (cm) twice
+	 * and, based on the odometer's recorded angles at those instances, calculations 
+	 * are made to make the robot face North (i.e., 0 degrees).
+	 */
 	private static final double CRITICAL_DISTANCE = 30.00;
+	
+	/**
+	 * Threshold (+/-: cm) for the CRITICAL_DISTANCE field.
+	 */
 	private static final double NOISE_MARGIN = 5.00;
 
 	private static final double TURN_ERROR = 18;

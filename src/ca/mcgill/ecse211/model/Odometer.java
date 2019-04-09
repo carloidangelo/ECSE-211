@@ -27,6 +27,12 @@ public class Odometer extends OdometerData implements Runnable {
   private final double WHEEL_RAD;
 
   private static final long ODOMETER_PERIOD = 25; // odometer update period in ms
+  
+  /**
+   * Before any of the navigation methods are called, the odometer thread will sleep
+   * this amount (in milliseconds). In doing so, threads issues between the motor
+   * threads and the odometer thread are prevented.
+   */
   private static final long ODOMETER_SLEEP_AMOUNT = 5; 
 
   /**
