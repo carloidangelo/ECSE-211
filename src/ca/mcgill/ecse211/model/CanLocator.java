@@ -324,7 +324,7 @@ public class CanLocator {
 		}
 		
 		//ENDX is the x coordinate of the final position of the search algorithm
-		else if(Cx > ENDX && Cy==LLy) {
+		else if(Cx > LLx && Cy==LLy) {
 			
 			Cx=Cx-1;
 			navigator.travelTo(Cx,Cy);
