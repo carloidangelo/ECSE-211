@@ -3,8 +3,8 @@ package ca.mcgill.ecse211.model;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 /**
- * This class simulates the function of an odometer. It extends the OdometerData
- * class and implements the Runnable interface
+ * This class deals with keeping track of the robot's position (i.e., the odometer) 
+ * It extends the OdometerData class and implements the Runnable interface
  * 
  * @author Carlo D'Angelo
  * @author Mohamed Samee
