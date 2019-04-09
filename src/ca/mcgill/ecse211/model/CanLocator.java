@@ -33,7 +33,7 @@ public class CanLocator {
 	private static final double TEST_ANGLE_CLOSE = 30.0;
 	private static final double TEST_ANGLE_FAR = 20.0;
 	private static final double ULTRASONIC_ERROR = 5.0;
-	private static final double ULTRASONIC_CLOSE = 5.0;
+	private static final double ULTRASONIC_CLOSE = 6.0;
 	private double canAngle = 0;
 	private double canDistance = 0;
 	private int ENDX = 0, ENDY = 0;
