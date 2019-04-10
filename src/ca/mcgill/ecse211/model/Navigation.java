@@ -23,7 +23,7 @@ public class Navigation {
   /**
    * Forward speed (in degrees/second) of the robot for the majority of the navigation.
    */
-  private static final int FORWARD_SPEED = 200;
+  private static final int FORWARD_SPEED = 250;
   
   /**
    * Speed (in degrees/second) of the robot when detecting the weight of the can (Touch Sensor).

@@ -12,7 +12,7 @@ public class Clamp {
 	/**
 	 * Amount (in degrees) that the arm rotates to grab the cans.
 	 */
-	private static final int ROTATE_AMOUNT = 200;
+	private static final int ROTATE_AMOUNT = 199;
 	
 	/**
 	 * Speed (in degrees/second) of the arm when it grabs the cans.
