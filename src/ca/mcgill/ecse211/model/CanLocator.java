@@ -29,9 +29,9 @@ public class CanLocator {
 	private final double TILE_SIZE = Navigation.TILE_SIZE;
 	private static final double ANGLE_ERROR = 10.0;
 	private static final double DISTANCE_ERROR = 4.0;
-	private static final double TEST_VALUE = 3;
+	private static final double TEST_VALUE = 2.5;
 	private static final double TEST_ANGLE_CLOSE = 30.0;
-	private static final double TEST_ANGLE_FAR = 20.0;
+	private static final double TEST_ANGLE_FAR = 27.0;
 	private static final double ULTRASONIC_ERROR = 5.0;
 	private static final double ULTRASONIC_CLOSE = 6.0;
 	private double canAngle = 0;
