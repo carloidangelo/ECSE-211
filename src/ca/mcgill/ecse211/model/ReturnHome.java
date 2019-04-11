@@ -227,8 +227,6 @@ public class ReturnHome {
 						} else if (searchZoneURY < tunnelY) {
 							if (tunnelLLX - 1 == searchZoneURX) {
 								navigator.turnTo(45);
-							}else if (tunnelLLX == searchZoneURX) {
-								navigator.turnTo(90);
 							}
 							lightLocalizer.lightLocalize(tunnelLLX - 1, tunnelY);
 						} else if (searchZoneURY > tunnelY) {

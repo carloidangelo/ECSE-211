@@ -283,8 +283,6 @@ public class SearchZoneLocator {
 						} else if (yComponent > searchZoneURY) {
 							if (tunnelLLX - 1 == searchZoneURX) {
 								navigator.turnTo(-135);
-							}else if (tunnelLLX  == searchZoneURX){
-								navigator.turnTo(-90);
 							}else {
 								navigator.turnTo(-180);
 							}
