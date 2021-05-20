@@ -4,19 +4,30 @@ import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.robotics.SampleProvider;
 
 /**
- * This class simulates the function of ultrasonic localization
+ * This class handles the ultrasonic localization of the robot.
  * 
  * @author Carlo D'Angelo
- *
  */
 public class UltrasonicLocalizer {
 
-	public static final int ROTATION_SPEED = 110;
+	/**
+	 * Rotation speed (in degrees/second) of the robot during the ultrasonic localization.
+	 */
+	private static final int ROTATION_SPEED = 150;
 	
-	public static final double CRITICAL_DISTANCE = 30.00;
-	public static final double NOISE_MARGIN = 2.00;
+	/**
+	 * As the robot spins, the ultrasonic sensor detects this distance (cm) twice
+	 * and, based on the odometer's recorded angles at those instances, calculations 
+	 * are made to make the robot face North (i.e., 0 degrees).
+	 */
+	private static final double CRITICAL_DISTANCE = 30.00;
+	
+	/**
+	 * Threshold (+/-: cm) for the CRITICAL_DISTANCE field.
+	 */
+	private static final double NOISE_MARGIN = 5.00;
 
-	private static final double TURN_ERROR = 15;
+	private static final double TURN_ERROR = 18;
   
 	private final double RADIUS = Robot.WHEEL_RAD;
 	private final double TRACK = Robot.TRACK;
@@ -27,11 +38,11 @@ public class UltrasonicLocalizer {
 	private EV3LargeRegulatedMotor leftMotor, rightMotor;
 	
 	/**
-	 * This is the default constructor of this class
+	 * This is the default constructor of this class.
 	 * @param leftMotor left motor of robot
 	 * @param rightMotor right motor of robot
 	 * @param usDistance sample provider from which to fetch ultrasonic sensor data
-	 * @param usData array in which to receive the ultrasonic sensor data
+	 * @param usData array in which to store the ultrasonic sensor data
 	 * @throws OdometerExceptions
 	 */
 	public UltrasonicLocalizer(EV3LargeRegulatedMotor leftMotor, EV3LargeRegulatedMotor rightMotor,
@@ -47,7 +58,7 @@ public class UltrasonicLocalizer {
 	}
 	
 	/**
-	 * Method that allows the robot to perform falling edge localization 
+	 * Method that allows the robot to perform falling edge localization.
 	 */
 	public void fallingEdge() {
 
@@ -95,7 +106,7 @@ public class UltrasonicLocalizer {
 
 	}
 	/**
-	 * Method that fetches data from the ultrasonic sensor
+	 * Method that fetches data from the ultrasonic sensor.
 	 * @return distance (cm) from the wall
 	 */
 	private int readUSDistance() {

@@ -3,11 +3,11 @@ package ca.mcgill.ecse211.model;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 /**
- * This class simulates the function of an odometer. It extends the OdometerData
- * class and implements the Runnable interface
+ * This class deals with keeping track of the robot's position (i.e., the odometer) 
+ * It extends the OdometerData class and implements the Runnable interface
  * 
- * @author Carlo D'Angelo and Mohamed Samee
- *
+ * @author Carlo D'Angelo
+ * @author Mohamed Samee
  */
 public class Odometer extends OdometerData implements Runnable {
 
@@ -27,6 +27,13 @@ public class Odometer extends OdometerData implements Runnable {
   private final double WHEEL_RAD;
 
   private static final long ODOMETER_PERIOD = 25; // odometer update period in ms
+  
+  /**
+   * Before any of the navigation methods are called, the odometer thread will sleep
+   * this amount (in milliseconds). In doing so, threads issues between the motor
+   * threads and the odometer thread are prevented.
+   */
+  private static final long ODOMETER_SLEEP_AMOUNT = 5; 
 
   /**
    * This is the default constructor of this class. It initiates all motors and variables once.It
@@ -124,6 +131,15 @@ public class Odometer extends OdometerData implements Runnable {
         }
       }
     }
+  }
+  
+  public void sleepOdometer() {
+	  try {
+		Thread.sleep(ODOMETER_SLEEP_AMOUNT);
+	} catch (InterruptedException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
   }
 
 }

@@ -7,31 +7,69 @@ import java.util.Map;
 import org.json.simple.parser.ParseException;
 
 import ca.mcgill.ecse211.WiFiClient.WifiConnection;
-import ca.mcgill.ecse211.lab5.Project;
+import ca.mcgill.ecse211.main.Project;
 
+/**
+ * This class contains the methods that directly handle the game parameters retrieved
+ * from the game server. That is, depending the team's assigned color, these methods 
+ * will return the corresponding game parameter for that color. For instance, the 
+ * getStartingCorner() method will return the RedCorner if the team's color is red and 
+ * will return the GreenCorner if the team's color is green. 
+ * 
+ * @author Carlo D'Angelo
+ */
 public class Robot {
-	//Robot related parameters
-	public static final double WHEEL_RAD = 2.2;
-	public static final double TRACK = 13.2;
+	
+	/**
+	 * Robot's wheel radius.
+	 */
+	public static final double WHEEL_RAD = 2.069;
+	
+	/**
+	 * Distance between the centers of each wheel.
+	 */
+	public static final double TRACK = 11.305;
 	
 	private final int TEAM_NUMBER = Project.TEAM_NUMBER;
-	// Holds the Wifi data
+	
+	/**
+	 * Stores all of the data from the game server.
+	 */
 	private Map data;
 	
+	/**
+	 * This is the default constructor of this class.
+	 * @param wifi instance of the WifiConnection class
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public Robot(WifiConnection wifi) throws UnknownHostException, IOException, ParseException {
 		data = wifi.getData();
 	}
 	
+	/**
+	 * This method gets the team number associated with the red team.
+	 * @return team number associated with the red team.
+	 */
 	public int getRedTeam() {
 		int redTeam = ((Long) data.get("RedTeam")).intValue();
 		return redTeam;
 	}
 	
+	/**
+	 * This method gets the team number associated with the green team.
+	 * @return team number associated with the green team.
+	 */
 	public int getGreenTeam() {
 		int greenTeam = ((Long) data.get("GreenTeam")).intValue();
 		return greenTeam;
 	}
 	
+	/**
+	 * This method gets the starting corner associated with the team's assigned color.
+	 * @return starting corner associated with the team's assigned color
+	 */
 	public int getStartingCorner() {
 		int SC = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -42,6 +80,11 @@ public class Robot {
 		return SC;
 	}
 	
+	/**
+	 * This method gets the x-coordinate of the starting zone's lower left corner.
+	 * The starting zone (Red or Green) depends on the team's assigned color.
+	 * @return x-coordinate of the starting zone's lower left corner
+	 */
 	public int getHomeZoneLLX() {
 		int homeZoneLLX = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -52,6 +95,11 @@ public class Robot {
 		return homeZoneLLX;
 	}
 	
+	/**
+	 * This method gets the y-coordinate of the starting zone's lower left corner.
+	 * The starting zone (Red or Green) depends on the team's assigned color.
+	 * @return y-coordinate of the starting zone's lower left corner
+	 */
 	public int getHomeZoneLLY() {
 		int homeZoneLLY = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -62,6 +110,11 @@ public class Robot {
 		return homeZoneLLY;
 	}
 	
+	/**
+	 * This method gets the x-coordinate of the starting zone's upper right corner.
+	 * The starting zone (Red or Green) depends on the team's assigned color.
+	 * @return x-coordinate of the starting zone's upper right corner
+	 */
 	public int getHomeZoneURX() {
 		int homeZoneURX = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -72,6 +125,11 @@ public class Robot {
 		return homeZoneURX;
 	}
 	
+	/**
+	 * This method gets the y-coordinate of the starting zone's upper right corner.
+	 * The starting zone (Red or Green) depends on the team's assigned color.
+	 * @return y-coordinate of the starting zone's upper right corner
+	 */
 	public int getHomeZoneURY() {
 		int homeZoneURY = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -82,26 +140,47 @@ public class Robot {
 		return homeZoneURY;
 	}
 	
+	/**
+	 * This method gets the x-coordinate of the island's lower left corner.
+	 * @return x-coordinate of the island's lower left corner
+	 */
 	public int getIslandLLX() {
 		int islandLLX = ((Long) data.get("Island_LL_x")).intValue();
 		return islandLLX;
 	}
 	
+	/**
+	 * This method gets the y-coordinate of the island's lower left corner.
+	 * @return y-coordinate of the island's lower left corner
+	 */
 	public int getIslandLLY() {
 		int islandLLY = ((Long) data.get("Island_LL_y")).intValue();
 		return islandLLY;
 	}
 	
+	/**
+	 * This method gets the x-coordinate of the island's upper right corner.
+	 * @return x-coordinate of the island's upper right corner
+	 */
 	public int getIslandURX() {
 		int islandURX = ((Long) data.get("Island_UR_x")).intValue();
 		return islandURX;
 	}
 	
+	/**
+	 * This method gets the y-coordinate of the island's upper right corner.
+	 * @return y-coordinate of the island's upper right corner
+	 */
 	public int getIslandURY() {
 		int islandURY = ((Long) data.get("Island_UR_y")).intValue();
 		return islandURY;
 	}
 	
+	/**
+	 * This method gets the x-coordinate of the tunnel's lower left corner.
+	 * The tunnel (Red or Green) depends on the team's assigned color.
+	 * @return x-coordinate of the tunnel's lower left corner
+	 */
 	public int getTunnelLLX() {
 		int tunnelLLX = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -112,6 +191,11 @@ public class Robot {
 		return tunnelLLX;
 	}
 	
+	/**
+	 * This method gets the y-coordinate of the tunnel's lower left corner.
+	 * The tunnel (Red or Green) depends on the team's assigned color.
+	 * @return y-coordinate of the tunnel's lower left corner
+	 */
 	public int getTunnelLLY() {
 		int tunnelLLY = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -122,6 +206,11 @@ public class Robot {
 		return tunnelLLY;
 	}
 	
+	/**
+	 * This method gets the x-coordinate of the tunnel's upper right corner.
+	 * The tunnel (Red or Green) depends on the team's assigned color.
+	 * @return x-coordinate of the tunnel's upper right corner
+	 */
 	public int getTunnelURX() {
 		int tunnelURX = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -132,6 +221,11 @@ public class Robot {
 		return tunnelURX;
 	}
 	
+	/**
+	 * This method gets the y-coordinate of the tunnel's upper right corner.
+	 * The tunnel (Red or Green) depends on the team's assigned color.
+	 * @return y-coordinate of the tunnel's upper right corner
+	 */
 	public int getTunnelURY() {
 		int tunnelURY = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -142,6 +236,11 @@ public class Robot {
 		return tunnelURY;
 	}
 	
+	/**
+	 * This method gets the x-coordinate of the search zone's lower left corner.
+	 * The search zone (Red or Green) depends on the team's assigned color.
+	 * @return x-coordinate of the search zone's lower left corner
+	 */
 	public int getSearchZoneLLX() {
 		int searchZoneLLX = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -152,6 +251,11 @@ public class Robot {
 		return searchZoneLLX;
 	}
 	
+	/**
+	 * This method gets the y-coordinate of the search zone's lower left corner.
+	 * The search zone (Red or Green) depends on the team's assigned color.
+	 * @return y-coordinate of the search zone's lower left corner
+	 */
 	public int getSearchZoneLLY() {
 		int searchZoneLLY = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -162,6 +266,11 @@ public class Robot {
 		return searchZoneLLY;
 	}
 	
+	/**
+	 * This method gets the x-coordinate of the search zone's upper right corner.
+	 * The search zone (Red or Green) depends on the team's assigned color.
+	 * @return x-coordinate of the search zone's upper right corner
+	 */
 	public int getSearchZoneURX() {
 		int searchZoneURX = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
@@ -172,6 +281,11 @@ public class Robot {
 		return searchZoneURX;
 	}
 	
+	/**
+	 * This method gets the y-coordinate of the search zone's upper right corner.
+	 * The search zone (Red or Green) depends on the team's assigned color.
+	 * @return y-coordinate of the search zone's upper right corner
+	 */
 	public int getSearchZoneURY() {
 		int searchZoneURY = 0;
 		if (getRedTeam() == TEAM_NUMBER) {
